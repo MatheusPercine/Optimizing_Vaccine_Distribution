@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex main"] 1777605022.37963 "main.aux" "main.bbl" "main" 1777605711.30273 0
-  "./elementos-postextuais/referencias.bib" 1777561875 8013 4d041db003038c6400672672280f0f3f ""
+["bibtex main"] 1777651635.07876 "main.aux" "main.bbl" "main" 1777651639.13959 0
+  "./elementos-postextuais/referencias.bib" 1777651130 8448 180ff6a7659ae42ec324162919c6647c ""
   "C:/Users/matheus/AppData/Local/Programs/MiKTeX/bibtex/bib/abntex2/abntex2-options.bib" 1543103229 5396 4eb260dac60f150ae608d45252853090 ""
   "C:/Users/matheus/AppData/Local/Programs/MiKTeX/bibtex/bst/abntex2/abntex2-alf.bst" 1543103230 60064 0819ac8568f9a482510a46e3a8a6f605 ""
-  "main.aux" 1777605710 57497 6d406633f024177a37d220ef9595179f "pdflatex"
+  "main.aux" 1777651638 57497 57e9c6228662f90cb4ee5f9c802ac946 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1777605707.65053 "c:/Users/matheus/Documents/TCC/documentacao/main.tex" "main.pdf" "main" 1777605711.3034 0
+["pdflatex"] 1777651635.32508 "c:/Users/matheus/Documents/TCC/Documentacao/documentacao_latex/main.tex" "main.pdf" "main" 1777651639.14017 0
   "C:/Users/matheus/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1777561389 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/matheus/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1777561231 13351240 ca8ba36feb8be543c7d8a4b3d776693d ""
   "C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -186,7 +186,7 @@
   "C:/Users/matheus/AppData/Local/Programs/MiKTeX/tex/latex/xfor/xfor.sty" 1233849756 2689 44855b72da58344b1c1d9b3087bce6ca ""
   "C:/Users/matheus/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "C:/Users/matheus/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "c:/Users/matheus/Documents/TCC/documentacao/main.tex" 1777575639 7769 ad059ffe1630b02ddb27b31c9b92b977 ""
+  "c:/Users/matheus/Documents/TCC/Documentacao/documentacao_latex/main.tex" 1777575639 7769 ad059ffe1630b02ddb27b31c9b92b977 ""
   "codigos/linguagens.tex" 1777570232 4300 6d3792da8779b7ca16793e7ec5ba0d0b ""
   "elementos-postextuais/anexo-1.tex" 1777570232 886 00649dee90087bd0e50bac21a91cdde4 ""
   "elementos-postextuais/anexo-2.tex" 1777570232 722 1078997a69c6b40b03538af840e5165e ""
@@ -206,7 +206,7 @@
   "elementos-textuais/capitulo-2.tex" 1777570232 7272 126cf01d8bc6c6344f85526ee85bdd63 ""
   "elementos-textuais/capitulo-3.tex" 1777570232 3126 c3ddfb8799765d0af7a5a21cc894682b ""
   "elementos-textuais/capitulo-4.tex" 1777594520 52433 2016c4475693166d8c53f09cbcea4bb9 ""
-  "elementos-textuais/capitulo-5.tex" 1777570232 28229 97a418d824aca0c70b11dad3eaf2dda1 ""
+  "elementos-textuais/capitulo-5.tex" 1777651632 28396 28391da6ae37657c1c458c3e32c00348 ""
   "elementos-textuais/capitulo-6.tex" 1777576914 13587 b5cb91e9bed55b5eefc6953d6cf4453f ""
   "elementos-textuais/capitulo-7.tex" 1777605705 11749 c8b38d93138a5898990deafff8730b94 ""
   "figuras/1-tempo_max_por_modelo.png" 1777568302 27492 634fbff666b0d4bca8e4ad05d75d7f00 ""
@@ -235,15 +235,15 @@
   "figuras/modelo_5_true.png" 1777567070 11380 8c9c1fd927f70bb9ea11bd76e575d528 ""
   "figuras/transportation_problem.png" 1777570232 56172 cac39ffd58df2696bf60ab9e14ba78e9 ""
   "formatacao.tex" 1777570232 8181 7d0856f1b47f966a46263c983dc4f8bc ""
-  "main.aux" 1777605710 57497 6d406633f024177a37d220ef9595179f "pdflatex"
-  "main.bbl" 1777605022 8495 16b77b7deea3547d781d5956774e493b "bibtex main"
+  "main.aux" 1777651638 57497 57e9c6228662f90cb4ee5f9c802ac946 "pdflatex"
+  "main.bbl" 1777651635 8495 16b77b7deea3547d781d5956774e493b "bibtex main"
   "main.gls" 0 -1 0 ""
-  "main.lof" 1777605710 2782 2e34c981007450baaa334b199c5a59e6 "pdflatex"
-  "main.lol" 1777605710 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "main.loq" 1777605710 104 a68af08fb91d6e51aa2f2526c5f90c76 "pdflatex"
-  "main.lot" 1777605710 29 9a4c7bc9daf7936d0a55d1536c7c4aff "pdflatex"
+  "main.lof" 1777651638 2782 2e34c981007450baaa334b199c5a59e6 "pdflatex"
+  "main.lol" 1777651638 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "main.loq" 1777651638 104 a68af08fb91d6e51aa2f2526c5f90c76 "pdflatex"
+  "main.lot" 1777651638 29 9a4c7bc9daf7936d0a55d1536c7c4aff "pdflatex"
   "main.tex" 1777575639 7769 ad059ffe1630b02ddb27b31c9b92b977 ""
-  "main.toc" 1777605710 9850 946516c673ffc8efd06e520df8d72779 "pdflatex"
+  "main.toc" 1777651638 9850 946516c673ffc8efd06e520df8d72779 "pdflatex"
   "url16023.sty" 1777570232 355 c5c805f7af03547bc161038576544e80 ""
   (generated)
   "main.aux"

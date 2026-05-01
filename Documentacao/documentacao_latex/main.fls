@@ -1,6 +1,6 @@
-PWD c:\Users\matheus\Documents\TCC\documentacao
+PWD c:\Users\matheus\Documents\TCC\Documentacao\documentacao_latex
 INPUT C:\Users\matheus\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\matheus\Documents\TCC\documentacao\main.tex
+INPUT c:\Users\matheus\Documents\TCC\Documentacao\documentacao_latex\main.tex
 OUTPUT main.log
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\tex\latex\abntex2\abntex2.cls
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\tex\latex\abntex2\abntex2.cls
