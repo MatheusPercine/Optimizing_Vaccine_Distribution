@@ -1,0 +1,176 @@
+\section{Modelagem do transporte intramunicipal de vacinas}
+
+A distribuição intramunicipal de vacinas corresponde à etapa final da cadeia logística, na qual as doses são transportadas da secretaria municipal de saúde para os pontos de aplicação, como postos de saúde e hospitais, ou seja, existe apenas um ponto de origem das vacinas.
+
+Para o caso intramunicipal, somente o modal rodoviário é considerado.
+
+\subsection{Variável de Decisão e Parâmetros}
+
+Seja:
+
+\[
+z_{jpv} \in \mathbb{Z}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $z_{jpv}$ representa a quantidade de vacinas do tipo $v$ transportadas do centro do município $j$ para o posto de destino $b$;
+    \item $j \in J$ representa os municípios;
+    \item $p \in P_j$ representa os postos de saúde pertencentes ao município $j$;
+    \item $v \in V$ representa os tipos de vacina.
+\end{itemize}
+
+Como se trata de unidades discretas (doses), temos:
+
+\begin{equation*}
+z_{jpv} \in \mathbb{Z}_{\geq 0}, \quad \forall j \in J, p \in P_j, v \in V
+\end{equation*}
+
+De forma análoga ao modelo intermunicipal, temos:
+
+\[
+\tau_{jp}^{rod} \in \mathbb{R}_{\geq 0}
+\]
+\[
+\delta^{rod} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $\tau_{jp}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o centro de distribuição municipal $j$ e o posto de destino $b$.
+    \item $\delta^{rod}$ representa o tempo de processamento logístico do modal rodoviário.
+\end{itemize}
+
+Seja:
+
+\begin{equation*}
+C_{jp} \in \mathbb{R}_{\geq 0}
+\end{equation*}
+
+o \textbf{Custo Total do transporte} entre os pontos $j$ e $b$.
+
+Dessa forma, o \textbf{Custo Total de transporte} é dado por:
+
+\[
+C_{jp} = \tau_{jp}^{rod} + \delta^{rod}
+\]
+
+No contexto intramunicipal, considera-se que o transporte é realizado exclusivamente por meio do modal rodoviário. Dessa forma, a capacidade de transporte não depende da escolha entre diferentes modais.
+
+Seja:
+
+\[
+q_{jp} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $q_{jp}$ representa a capacidade máxima de transporte entre o centro de distribuição do município $j$ e o posto de destino $p$.
+\end{itemize}
+
+e o \textbf{tempo de distribuição} das vacinas é:
+
+\[
+T = \max \left( \quad C_{jp} \quad \mid \quad z_{jpv} > 0 \quad \right)
+\]
+
+\subsection{Função Objetivo}
+
+A \textbf{função objetivo} é definida como:
+
+\begin{equation}
+\min z = \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\label{intramunicipal_sem_penalidade}
+\end{equation}
+
+O objetivo é minimizar o tempo total de distribuição das vacinas dentro do município.
+
+Para incorporar o risco de expiração das vacinas, introduz-se um fator de penalização associado ao tempo restante de validade no município. Seja:
+
+\[
+\rho_{jv} = \frac{1}{e_{jv}}
+\]
+onde:
+\begin{itemize}
+\item  $e_{jv}$ representa o tempo restante até a expiração da vacina do tipo $v$ disponível no município $j$.
+\item $\rho_{jv}$ é penalidade da vacina do tipo $v$ no município $j$
+\end{itemize}
+
+Dessa forma, a função objetivo passa a ser:
+\begin{equation}
+\min z = \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv}
+\label{intramunicipal_com_penalidade}
+\end{equation}
+
+Essa formulação prioriza a distribuição de vacinas com menor tempo restante de validade associado ao estoque no nível intramunicipal.
+
+\subsection{Restrições}
+
+A \textbf{restrição de oferta} diz respeito a quantidade total enviada por cada ponto de origem não poder exceder sua disponibilidade:
+
+\begin{equation*}
+\sum_{p \in P_j} z_{jpv} \le s_{jv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+onde:
+\begin{itemize}
+    \item $s_{jv}$ representa a quantidade disponível da vacina $t$ no ponto de origem $j$.
+\end{itemize}
+
+A \textbf{restrição de demanda} estabelece que cada ponto de destino deve receber exatamente sua demanda:
+
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+
+onde:
+\begin{itemize}
+    \item $r_{pv}$ representa a demanda da vacina $t$ no ponto de destino $p$.
+\end{itemize}
+
+A \textbf{restrição de capacidade} considera que a capacidade de transporte entre os pontos é limitada:
+
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+
+onde:
+\begin{itemize}
+    \item $q_{jp}$ representa a capacidade máxima de transporte entre $j$ e $p$.
+\end{itemize}
+
+A \textbf{restrição de viabilidade} temporal é definida para evitar perdas por expiração:
+
+\begin{equation*}
+z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+
+onde:
+\begin{itemize}
+    \item $e_{jv}$ representa o tempo restante até a expiração da vacina $v$ no ponto de origem $a$.
+\end{itemize}
+
+O modelo completo é dado por:
+
+\begin{equation*}
+\min z = \sum_{v} \sum_{j} \sum_{b} C_{jp} \cdot z_{jpv}
+\end{equation*}
+sujeito a:
+\begin{equation*}
+\sum_{b} z_{jpv} \le s_{jv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+\begin{equation*}
+z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+\begin{equation*}
+z_{jpv} \in \mathbb{Z}_{\geq 0}, \quad \forall j \in J, p \in P_j, v \in V
+\end{equation*}
+
+
+\bigskip

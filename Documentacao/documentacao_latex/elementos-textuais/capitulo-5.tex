@@ -1,0 +1,313 @@
+\chapter{APLICAÇÃO}
+
+\section{Análise dos Métodos de Resolução De Problemas de Otimização}
+
+Para a aplicação, deve-se escolher um método adequeado de resolução do problema e para isso se faz necessário analisar as possibilidades para selecioná-las ou descartá-las.
+
+\subsection{O Método Simplex}
+
+O método Simplex é um dos métodos mais tradicionais para a resolução de problemas de otimização. Os modelos clássicos de Programação Linear (PL) são caracterizados por um conjunto de hipóteses fundamentais que garantem sua validade matemática a aplicidade desse método. Entre essas hipóteses, destacam-se: 
+
+\begin{itemize}
+\item Proporcionalidade: estabelece que a contribuição de cada variável de decisão para a função objetivo e para as restrições deve ser diretamente proporcional ao seu valor. No problema em questão, essa hipótese é satisfeita, pois o custo total de transporte cresce proporcionalmente à quantidade de doses transportardas.
+
+\item Aditividade: afirma que o efeito total na função objetivo e nas restrições é a soma dos efeitos individuais de cada variável. No modelo de distribuição de vacinas, essa condição é atendida, uma vez que o Custo total de transporte é obtido pelos custos de tempo associados a cada rota, sem dependência entre diferentes fluxos.
+
+\item Determinismo: pressupõe que todos os parâmetros do modelo são conhecidos com certeza e não variam aleatoriamente. Essa condição é atendida pelo problema, pois os tempos de transporte, valores de ofertas, de demandas e etc são conhecidos previamente e tratados como constantes. 
+
+\item Divisibilidade (não integralidade): permite que as variáveis de decisão assumam quaisquer valores reais, inclusive fracionários. Essa condição não é atendida pelo problema de distribuição de vacinas, pois as variáveis representam quantidades discretas de doses, já que não faz sentido transportar "meia dose" de vacina. Mesmo que a solução contínua encontrada seja ótima do ponto de vista matemático, ela pode ser inviável na prática por sugerir valores não inteiros para as variáveis.
+\end{itemize}
+
+Dessa forma, a formulação do problema de otimização da distribuição de vacinas viola hipóteses de linearidade e não é de Programação Linear pura. Assim, a possibilidade de aplicação do método Simplex é descartada.
+
+
+\subsection{Gurobi Optimizer}
+
+Por se tratar de um Problema de Programação Linear Inteira (PPLI), exige-se o uso de métodos de resolução mais sofisticados, capazes de lidar explicitamente com restrições de integralidade.
+
+Entre os métodos utilizados para resolver problemas de Programação Linear Inteira, destaca-se o algoritmo Branch-and-Bound. Esse método funciona como uma busca organizada por todas as possíveis soluções, mas de forma inteligente. Inicialmente, o problema é resolvido ignorando a exigência de que as variáveis sejam inteiras, permitindo valores fracionários. Essa versão simplificada é mais fácil de resolver e fornece uma estimativa da melhor solução possível. Em seguida, o método divide o problema em vários subproblemas menores, nos quais as variáveis passam a ser restringidas gradualmente a valores inteiros. Ao longo desse processo, regiões do espaço de soluções que não podem levar a resultados melhores são descartadas, reduzindo significativamente o número de casos que precisam ser analisados.
+
+Além disso, abordagens mais avançadas, como o Branch-and-Cut, aprimoram esse processo ao adicionar novas restrições ao modelo durante a execução. Essas restrições, chamadas de cortes, servem para eliminar soluções fracionárias inviáveis de forma mais eficiente, sem excluir soluções inteiras válidas. Com isso, o método consegue convergir mais rapidamente para a solução ótima, tornando o processo computacional mais eficiente.
+
+Nesse contexto, para a resolução do modelo, foi utilizado o \textit{solver} Gurobi Optimizer que é uma ferramenta de otimização de alto desempenho projetada para resolver problemas de Programação Linear, Programação Linear Inteira e suas variações. Internamente, o solver combina algoritmos como Branch-and-Bound, Branch-and-Cut, heurísticas de busca e técnicas de pré-processamento, além de utilizar métodos eficientes como o Simplex e algoritmos de pontos interiores para resolver as relaxações contínuas dos subproblemas.
+
+A implementação computacional do modelo foi realizada na \textbf{linguagem de programação Python}, utilizando a biblioteca \texttt{gurobipy}, que constitui a interface oficial do Gurobi para essa linguagem. O Python foi escolhido por sua ampla utilização em aplicações científicas, facilidade de manipulação de dados e integração com bibliotecas de otimização. Nesse contexto, o papel do Python é servir como ambiente de modelagem e experimentação, enquanto o Gurobi atua como o mecanismo responsável pela resolução do problema de otimização propriamente dito.
+
+Uma das principais vantagens do Gurobi é sua capacidade de lidar com problemas de grande escala de forma eficiente. No problema abordado neste trabalho, o número de variáveis e restrições cresce rapidamente em função da quantidade de origens, destinos e tipos de vacinas. Nesse cenário, a utilização de métodos exatos implementados de forma otimizada é essencial para garantir a obtenção de soluções ótimas em tempo computacional viável.
+
+\subsection{Métodos Metaheurísticos}
+
+Além dos métodos exatos, existem abordagens baseadas em metaheurísticas, como:
+
+\begin{itemize}
+\item Algoritmos Genéticos (GA)
+\item Particle Swarm Optimization (PSO)
+\item Differential Evolution (DE)
+\end{itemize}
+
+Esses métodos são amplamente utilizados na resolução de problemas de otimização complexos, especialmente em cenários não lineares, não convexos ou de grande escala, nos quais métodos exatos se tornam computacionalmente inviáveis.
+
+Essas abordagens operam explorando o espaço de soluções de forma estocástica, buscando encontrar soluções de boa qualidade em tempo reduzido. No entanto, diferentemente dos métodos exatos, elas não garantem a obtenção da solução ótima global, podendo convergir para soluções subótimas.
+
+No contexto deste trabalho, o problema apresenta uma estrutura bem definida de Programação Linear Inteira, com função objetivo e restrições lineares. Essa característica permite a aplicação de métodos exatos altamente eficientes, como os implementados no solver Gurobi.
+
+Dessa forma, a utilização de métodos metaheurísticos  não se mostra adequada para o caso de um problema de programação linear inteiro de porte tratável, uma vez que métodos exatos já garantem a solução ótima em tempo viável.
+
+
+
+
+\section{Estudo de Caso Escolhido}
+
+O estudo de caso considerado neste trabalho consiste na modelagem da distribuição de vacinas no território brasileiro, com foco nas \textbf{27 capitais estaduais, incluindo o Distrito Federal}. A escolha das capitais como unidades espaciais do modelo deve-se à sua relevância administrativa e logística, uma vez que concentram infraestrutura de saúde, capacidade de armazenamento e papel estratégico na coordenação da distribuição regional.
+
+\textbf{Para cada capital, foram considerados dois postos de vacinação}, selecionados de forma a representar, ainda que de maneira simplificada, a rede local de atendimento. Reconhece-se que essa representação não contempla a totalidade dos postos existentes em cada município; contudo, essa simplificação foi adotada com o objetivo de manter a tratabilidade computacional do modelo, ao mesmo tempo em que preserva a capacidade de análise dos fluxos logísticos.
+
+No que se refere aos tipos de vacinas, foram selecionadas sete categorias diferentes visando a diversidade logística da aplicação do modelo:
+
+\begin{itemize}
+\item BCG;
+\item Hepatite B
+\item Pentavalente
+\item VIP
+\item VOP
+\item Febre Amarela
+\item Tríplice Viral
+
+A escolha do estudo de caso se baseia no critério de que deve ser um tal que sua complexidade seja grande o suficiente para explorar grande parte do potencial dos modelos, mas sem comprometer demais tratabilidade pelo computador ou inviabilizar a coleta humana dos dados por conta da grande quantidade dos mesmos.
+
+\end{itemize}
+
+
+
+
+\section{Métodos de Obtenção dos Dados}
+
+A aplicação dos modelos de otimização dependem da pré-existência de dados que influenciam diretamente a função objetivo e as restrições de viabilidade temporal do modelo e para isso se faz necessário planejar e executar métodos de obtenção dos mesmos.
+
+\subsection{Obtenção dos Dados de Custo em Horas}
+
+Os dados de tempo de deslocamento são fundamentais para a construção dos parâmetros $C_{ij}$, $C_{ik}$,  $C_{kj}$ e $C_{jp}$.
+
+Diante disso, torna-se necessário analisar os diferentes métodos possíveis para a obtenção desses dados, avaliando-os sob critérios como viabilidade prática, escalabilidade, custo, reprodutibilidade e adequação científica.
+
+Uma primeira ideia possível de obtenção seria a \textbf{coleta manual de Dados por meio do Google Maps} que mostra o tempo de deslocamento entre um ponto e outro do mapa de acordo com um certo modal escolhido. Apesar de fornecer valores bastante realistas, essa abordagem apresenta limitações severas. Em um cenário com $n$ localidades, seria necessário coletar aproximadamente $n^2$ pares origem-destino. Por exemplo, considerando as 27 capitais estaduais, isso resultaria em cerca de 729 consultas distintas. Tal volume de dados torna o processo impraticável do ponto de vista operacional, além de introduzir elevado risco de erros humanos durante a coleta.
+
+
+Outra possibilidade consiste na \textbf{utilização da API do Google Maps para a obtenção automatizada dos tempos de deslocamento entre localidades}. Essa abordagem apresenta vantagens em termos de automação e realismo dos dados. No entanto, essa alternativa também apresenta uma limitação importante, já que trata-se de um serviço pago, com custos que podem se tornar extremamente significativos à medida que o número de requisições aumenta. Outro ponto crítico diz respeito à dependência de serviços externos, o que compromete a reprodutibilidade do experimento. Dessa forma, apesar de sua precisão e automação, essa possibilidade também não é considerada a abordagem mais adequada para este trabalho.
+
+A abordagem adotada neste trabalho baseia-se no \textbf{uso da distância geodésica entre duas localidades}, calculada por meio da \textbf{fórmula de Haversine}. \cite{Wiki:Haversine}
+
+A distância geodésica representa a menor distância entre dois pontos sobre a superfície terrestre, considerando a curvatura da Terra. Seja $(\phi_a, \lambda_a)$ e $(\phi_b, \lambda_b)$ as coordenadas geográficas (latitude e longitude, em radianos) das localidades $a$ e $b$, respectivamente. A distância geodésica $D_{ab}$ é dada por:
+
+\begin{equation}
+\Delta_{ab} = 2R \cdot \arcsin\left( \sqrt{
+\sin^2\left(\frac{\phi_b - \phi_a}{2}\right) +
+\cos(\phi_a)\cos(\phi_b)\sin^2\left(\frac{\lambda_b - \lambda_a}{2}\right)
+} \right)
+\end{equation}
+
+onde $R$ representa o raio médio da Terra.
+
+No entanto, essa medida não reflete diretamente a distância percorrida pelo modal rodoviário, mas somente pelo modal aéreo. Para contornar essa limitação, introduz-se um fator de tortuosidade $\lambda > 1$, que ajusta a distância geodésica de forma a aproximá-la da distância real percorrida. Assim, o tempo de deslocamento no modal rodoviário é estimado por:
+
+\[
+\tau_{ab}^{rod} = \frac{\beta \cdot \Delta_{ab}}{\theta_{rod}}
+\]
+
+onde:
+\begin{itemize}
+    \item $\Delta_{ab}$ é a distância geodésica entre as localidades $a$ e $b$;
+    \item $\beta$ é o fator de tortuosidade;
+    \item $\theta_{rod}$ é a velocidade média do transporte rodoviário.
+\end{itemize}
+
+Para o modal aéreo, a distância geodésica é uma aproximação mais fiel do deslocamento entre localidades, permitindo a seguinte formulação:
+
+\[
+\tau_{ab}^{aereo} = \frac{\Delta_{ab}}{\theta_{aereo}}
+\]
+
+onde $\theta_{aereo}$ representa uma velocidade média efetiva do sistema logístico aéreo como um todo. Dessa forma, essa grandeza incorpora implicitamente etapas como o deslocamento do município de origem até o aeroporto, operações aeroportuárias (embarque, desembarque e inspeção) e o transporte final até o município de destino, permitindo uma modelagem agregada sem aumento da complexidade do modelo.
+
+Essa formulação é aplicada de forma uniforme aos diferentes tipos de deslocamento considerados na rede logística do modelo. Em particular, são definidos:
+
+\begin{itemize}
+    \item $\tau_{ij}^{rod}$ e $\tau_{ij}^{aereo}$: tempos de deslocamento entre municípios de origem $i \in I$ e destino $j \in J$;
+    \item $\tau_{ik}^{rod}$ e $\tau_{ik}^{aereo}$: tempos de deslocamento entre municípios $i \in I$ e centros estaduais $k \in K$;
+    \item $\tau_{kj}^{rod}$ e $\tau_{kj}^{aereo}$: tempos de deslocamento entre centros estaduais $k \in K$ e municípios de destino $j \in J$;
+    \item $\tau_{jp}^{rod}$: tempo de deslocamento entre município $j \in J$ e posto de vacinação $p \in P_j$.
+\end{itemize}
+
+No caso dos deslocamentos intramunicipais ($\tau_{jp}^{rod}$), considera-se exclusivamente o modal rodoviário, uma vez que se tratam de trajetos locais de curta distância e cogitar a possibilidade de uso do modal aéreo seria extremamente absurdo e aumentaria complexidade computacional sem necessidade.
+
+Essa abordagem apresenta diversas vantagens relevantes para o contexto do trabalho:
+
+\begin{itemize}
+    \item \textbf{Escalabilidade}: permite o cálculo automático de todos os pares origem-destino, mesmo em cenários com grande número de localidades;
+    \item \textbf{Reprodutibilidade}: depende apenas de dados estáticos (coordenadas geográficas), garantindo que os experimentos possam ser replicados;
+    \item \textbf{Ausência de custos financeiros}: não requer o uso de serviços pagos ou APIs externas;
+\end{itemize}
+
+% O principal desafio dessa abordagem está na definição adequada do fator de tortuosidade $\beta$. Para lidar com essa questão, propõe-se uma calibração empírica do parâmetro, a partir da comparação entre os tempos estimados pelo modelo e valores reais obtidos para um conjunto reduzido de pares de localidades. Esses valores de referência podem ser obtidos manualmente por ferramentas como o Google Maps, considerando o modal rodoviário. A partir dessa calibração, busca-se determinar um valor de $\beta$ que produza estimativas coerentes com a realidade.
+
+Dessa forma, a abordagem baseada em distância geodésica com correção por fator de tortuosidade é adotada neste trabalho como a alternativa mais adequada para a obtenção dos dados de custo de transporte.
+
+
+
+\subsection{Obtenção dos Dados de Municípios}
+
+Para a obtenção da longitude e latitude dos municípios utilizou-se dados oficiais do IBGE \cite{IBGE:2022}. Estes dados servirão para os cálculos de dados Custo, em horas, entre duas localidades. 
+
+Já para os dados da população de cada capital a fonte vem diretamente da Wikipédia \cite{Wiki:CapitaisPopulacao} e servirão para calcular os dados de demanda de cada posto.
+
+
+\subsection{Obtenção dos Dados dos Centros Estaduais}
+
+Embora, na prática, um estado possa possuir múltiplas unidades administrativas e logísticas associadas à distribuição de vacinas, a inclusão de múltiplos centros estaduais por estado não agrega valor analítico ao modelo proposto, pois isso implicaria:
+
+\begin{itemize}
+    \item a criação de rotas artificialmente distintas entre centros localizados na mesma região geográfica, muitas vezes na própria capital, sem impacto significativo nos custos de transporte;
+    \item o aumento substancial do número de variáveis e restrições do modelo, elevando sua complexidade computacional;
+    \item a introdução de graus de liberdade que não correspondem a decisões logísticas relevantes no nível de abstração adotado.
+\end{itemize}
+
+Como consequência, a modelagem com múltiplos centros estaduais tenderia a introduzir ruído na solução, permitindo escolhas equivalentes do ponto de vista prático, distintas do ponto de vista matemático e sem contribuição efetiva para a análise.
+
+Dessa forma, em modelos com intermediação estadual opta-se por representar cada estado por um único centro estadual agregado, o qual deve ser interpretado como uma abstração logística.
+
+As coordenadas geográficas dos centros estaduais foram obtidas a partir de uma base de dados pública disponível online \cite{ricardobeat:2010}, contendo pontos representativos para cada unidade federativa brasileira. Embora essa fonte não seja oficial, os valores foram considerados adequados para fins de modelagem, uma vez que os valores de coordenadas representam os centros de capitais, o que é coerente com a realidade, já que a infraestrutura estadual está localizada principalmente nas capitais. Logo, as coordenadas dos centros estaduais são próximas às dos respectivos municípios e, como consequência, os custos de transporte entre centros estaduais e capitais ($C_{kj}$) tendem a ser reduzidos, sendo predominantemente influenciados pelos tempos de processamento logístico.
+
+
+\subsection{Obtenção dos Dados de Postos de Vacinação}
+
+Para representar a etapa intramunicipal da distribuição, foram considerados postos de vacinação associados a cada município do estudo.
+
+Para cada capital, foram selecionados dois postos reais de saúde, cujas coordenadas geográficas (latitude e longitude) foram obtidas por meio da plataforma Google Maps \cite {GoogleMaps:2026}, o que resultou na consulta de dados de 54 postos de saúde no total.
+
+Para a obtenção dos dados de demanda dos postos por vacinas foi definida por uma estimativa simplificada com base em uma abordagem híbrida, combinando critérios epidemiológicos e simplificações estruturais à modelagem.
+
+A porcentagem de vacinação para atingir a imunidade de rebanho varia conforme a doença, mas geralmente situa-se entre $70\%$ e $95\%$ da população. Porém, para fins de simplificação, será considerado como objetivo atingir a imunidade de rebanho da população de cada capital e a porcentagem de vacinação a ser atingida será de $82,5\%$ uma  média entre $70\%$ e $95\%$.
+
+Dados empíricos da Secretaria Estadual de São Paulo \cite {SESSP:2025} indicam que, para determinadas vacinas, como a de febre amarela, no estado de São Paulo, a cobertura populacional pode atingir aproximadamente $70\%$. Com base nessa evidência, e visando manter a consistência e simplicidade do modelo, assume-se neste trabalho que essa taxa de cobertura inicial é válida para todos os tipos de vacina considerados.
+
+Dessa forma, a demanda passa a representar apenas a fração da população ainda não imunizada para se atingir a imunidade de rebanho, ou seja, $12,5\%$ ($82,5\%$ -  $70\%$). Assume-se, para fins de simplificação, que essa cobertura é desejada para todos os tipos de vacina considerados.
+
+Dessa forma, para cada município $j \in J$ e para cada tipo de vacina $v \in V$, define-se uma demanda proporcional à sua população, dada por:
+
+\[
+D_{jv} = \epsilon \cdot \text{Pop}_j
+\]
+
+onde $\text{Pop}_j$ representa a população do município e $\epsilon \in (0,1)$ corresponde à fração da população a ser imunizada para se atingir a imunidade de rebanho, ou seja, adota-se $\epsilon = 0{,}125$, representando um nível elevado de cobertura vacinal suficiente para atingir a imunidade de rebanho.
+
+Como o modelo considera apenas um subconjunto reduzido de postos de vacinação por município, não seria adequado atribuir a esses postos a totalidade da demanda municipal. Por isso, assume-se que os postos modelados representam apenas uma fração da capacidade total de atendimento do município. Assim, define-se a demanda efetivamente considerada no modelo como:
+
+\[
+d_{jv} = \gamma \cdot D_{iv}
+\]
+
+onde $\gamma \in (0,1)$ representa a fração da rede de vacinação capturada pelo conjunto de postos considerados. Neste trabalho, adota-se $\gamma = 0{,}1$, assumindo, para fins de simplificação, que os postos modelados representam aproximadamente $10\%$ da capacidade total de vacinação do município.
+
+A demanda modelada de cada município para cada tipo de vacina é então distribuída entre os postos $p \in P(j)$. Como foram considerados exatamente dois postos por município, adota-se uma divisão uniforme:
+
+\[
+d_{jpv} = \frac{d_{jv}}{|P(j)|}, \quad \forall p \in P(j),\; v \in V
+\]
+
+onde  $d_{jpv}$ representa a demanda da vacina $v$ pelo posto $p$ no município de destino $j$
+
+
+
+\subsection{Definição dos Dados de Oferta de Vacinas}
+
+A obtenção de dados reais de oferta de vacinas por município apresenta limitações significativas, uma vez que tais informações são de acesso restrito. 
+
+Diante dessa limitação, optou-se pela construção de um conjunto de dados gerados de maneira artificial para os parâmetros de oferta $o_{iv}$, de forma a viabilizar a realização dos experimentos e garantir a capacidade de observar diferentes comportamentos logísticos nos modelos propostos. 
+
+Em particular, foram considerados dois conjuntos distintos de dados de oferta, associados a diferentes configurações do sistema.
+
+\begin{itemize}
+    \item \textbf{Cenário Apenas Intramunicipal:} neste caso, assume-se que cada município deve ser capaz de atender sua própria demanda sem recorrer a outros municípios, já que não possui essa possibilidade. Assim, os valores de oferta foram definidos de modo que a oferta de cada município é suficiente para suprir a demanda de seus respectivos postos de vacinação. Essa escolha é necessária para garantir a viabilidade do modelo, uma vez que que a restrição de demanda exige que a demanda seja atendida.
+    
+    \item \textbf{Cenários com intermunicipalidade:} para os modelos que permitem transporte entre municípios, , foi utilizado um segundo conjunto de dados de oferta, construído de forma a garantir que a oferta total da rede seja suficiente para atender a demanda agregada, mas sem impor autossuficiência a nível municipal. Essa escolha é fundamental para permitir a ocorrência de fluxos intermunicipais no modelo, uma vez que, caso todos os municípios fossem autossuficientes, não haveria incentivo para o transporte entre eles e, nos modelos unificados, apenas veríamos a etapa intramunicipal ocorrer.
+\end{itemize}
+
+
+\subsection{Obtenção dos Dados de Expiração das Vacinas}
+
+O parâmetro $e_{iv}$ representa o tempo restante, em horas, até a expiração das doses da vacina $v \in V$ disponíveis no município $i \in I$. Esse parâmetro é fundamental para refletir a necessidade de que a distribuição ocorra antes do vencimento dos imunizantes, nos modelos com penalidade.
+
+Dados reais sobre prazos de validade e, principalmente, sobre o tempo restante de validade dos estoques municipais não são publicamente disponíveis, por envolverem informações operacionais sensíveis da cadeia de suprimentos de saúde. Dessa forma, optou-se por uma abordagem sintética de geração dos dados de expiração (em horas) de cada vacina $v$ para cada municipio $i$.
+
+A modelagem de $e_{iv}$ foi realizada em duas etapas. Inicialmente, para cada tipo de vacina $v \in V$, define-se um parâmetro $\phi_v$ correspondente à sua vida útil típica (em horas), considerando condições adequadas de armazenamento. Em seguida, introduz-se um fator de variabilidade $\delta_{iv} \in (0,1]$, que representa a fração da validade ainda disponível no momento da distribuição.
+
+
+
+
+\section{Definição dos Valores de Parâmetros}
+
+\subsection{Processamento Logístico e Penalização do Modal Aéreo}
+
+Para os tempos de processamento logístico para cada modal adotam-se os valores:
+
+\[
+\delta^{rod} = 0{,}5 \text{ horas}, \quad \delta^{aereo} = 2{,}0 \text{ horas}.
+\]
+
+O valor atribuído ao modal rodoviário reflete um processo logístico mais simples e direto, envolvendo apenas atividades básicas de conferência e descarga. Por outro lado, o modal aéreo exige um conjunto mais complexo de operações aeroportuárias, incluindo procedimentos de segurança, manuseio especializado e possíveis tempos de espera, justificando um tempo de processamento significativamente maior.
+
+Para a penalização do modal aéreo adota-se:
+
+\[
+\alpha = 1{,}3.
+\]
+
+Este valor foi escolhido de forma a manter o transporte aéreo como uma alternativa viável apenas em situações nas quais a redução de tempo de deslocamento seja suficientemente relevante para compensar seu maior custo operacional. Valores muito próximos de 1 tornariam os modais praticamente equivalentes, enquanto valores excessivamente elevados eliminariam artificialmente a viabilidade do modal aéreo, distorcendo a dinâmica logística do problema.
+
+\subsection{Capacidade de Transporte}
+
+Sejam $u_{ab}^{rod}$ e $u_{ab}^{aereo}$ as capacidades máximas de transporte entre duas localidades $a$ e $b$ para os modais rodoviário e aéreo, respectivamente.
+
+No modelo, adotam-se valores constantes para essas capacidades, independentes da origem e destino:
+
+\[
+u_{ab}^{rod} = 1\,200\,000 \quad \text{e} \quad u_{ab}^{aereo} = 1\,600\,000
+\]
+
+A adoção do valor para o modal rodoviário fundamenta-se em dados reais da operação logística do SUS. Sabe-se que um caminhão refrigerado padrão utilizado em campanhas nacionais comporta aproximadamente 300 mil doses \cite{g1:2021}. Considerando a alocação de uma frota de quatro caminhões ou a realização de múltiplos despachos por uma frota menor durante o horizonte da campanha, o limite agregado de 1,2 milhão de doses reflete de maneira realista o teto operacional de transferência em massa por rodovias.
+
+De forma análoga, a capacidade do modal aéreo é balizada na informação de que um voo comercial adaptado transporta cerca de 800 mil doses \cite{tvbrasil:2021}. Assumindo a disponibilidade de até dois voos fretados para rotas críticas de longa distância ou alta demanda, a capacidade agregada é estabelecida em 1,6 milhão de doses.
+
+A escolha de valores constantes simplifica a formulação ao evitar a introdução de variáveis e restrições excessivas sobre alocação diária de frota, mantendo a tratabilidade computacional do modelo estático ao mesmo tempo em que absorve a realidade de dimensionamento elástico (frota e viagens) do sistema público de saúde.
+
+
+\subsection{Velocidade Média dos Modais}
+
+Adotam-se os seguintes valores para as velocidades médias associadas aos modais rodoviário e aéreo, respectivamente:
+
+\[
+\theta_{rod} = 60 \text{ km/h} \quad \text{e} \quad \theta_{aereo} = 800 \text{ km/h}
+\]
+
+A velocidade média rodoviária de $60$ km/h representa uma aproximação conservadora para operações logísticas em território brasileiro, considerando condições reais como tráfego urbano, qualidade variável das rodovias e paradas operacionais.
+
+Para o transporte aéreo, a velocidade de $800$ km/h corresponde a uma média operacional compatível com aeronaves de médio porte utilizadas em logística regional, já considerando efeitos de decolagem, pouso e possíveis esperas operacionais \cite{latam:2026}
+
+Segundo informações da \cite{latam:2026}, a velocidade de cruzeiro de um avião comercial chega a $850$ km/h. Para incorporar tempos operacionais adicionais (como embarque e desembarque), velocidades de decolagem e pouso, será considerado um valor um pouco abaixo da velocidade de cruzeiro.
+
+\subsection{Fator de Tortuosidade da Distância Geodésica}
+
+Adota-se:
+
+\[
+\beta = 1.3
+\]
+
+Esse valor reflete o fato de que a distância real percorrida em redes rodoviárias é tipicamente superior à distância em linha reta entre dois pontos, devido a fatores como traçado das vias, obstáculos geográficos e organização da malha viária.
+
+O valor de $1.3$ foi escolhido por estar alinhado com estimativas amplamente utilizadas na literatura logística \cite{kweon2019}.
+
+
+\bigskip
+
+

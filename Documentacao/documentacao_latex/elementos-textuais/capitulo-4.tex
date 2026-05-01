@@ -1,0 +1,1139 @@
+\chapter{Modelagem do Transporte de Vacinas}
+
+Os modelos propostos não contemplam a etapa inicial de distribuição de vacinas a partir do nível federal. Assume-se que os estoques iniciais nos municípios já refletem a alocação realizada pelo Ministério da Saúde e o modelo começa depois disso. Dessa forma, o problema abordado concentra-se na redistribuição eficiente de vacinas entre municípios, considerando desequilíbrios locais de oferta e demanda.
+
+\section{Modelo Intermunicipal Sem Intermediação Estadual}
+
+Este modelo representa um cenário hipotético de operação descentralizada, na qual no qual municípios podem redistribuir vacinas diretamente entre si sem a necessidade de passagem por órgãos intermediários, como secretarias estaduais de saúde, conforme representado a seguir:
+
+\[
+\text{Município } i \;\longrightarrow\; \text{Município } j
+\]
+
+A adoção dessa abordagem tem como principal objetivo simplificar a estrutura do modelo e, ao mesmo tempo, possibilitar avaliar o desempenho, em termos de tempo, de uma estratégia de distribuição direta.
+
+\subsection{Variável de Decisão e Parâmetros}
+
+A \textbf{variável de decisão} é definida:
+\\
+\\
+\begin{equation*}
+    x_{ijv} \in \mathbb{Z}_{\geq 0} \quad \forall i \in I, j \in J, t \in V,
+\end{equation*}
+onde:
+\begin{itemize}
+    \item $I$ representa os municípios $i$ mapeados;
+    \item $J$ representa os municípios $j$ mapeados;
+    \item $v$ representa os tipos de vacina mapeados.
+    \item $x$ representa a quantidade de vacinas transportadas;
+    \item $i$ indica o município de origem $i$, que possui oferta da vacina que será transportada;
+    \item $j$ indica o município de destino $j$, que possui demanda pela vacina que será transportada;
+    \item $v$ indica o tipo de vacina que será transportada, ou seja, definido por uma tabela indicando o índice apropriado para cada tipo. Por exemplo:
+\end{itemize}
+
+\begin{quadro}[htb] 
+\centering
+\caption{Exemplo de uso da variável $v$}
+\label{quad:quadro1}
+% Trocamos tabularx por tabular e removemos a largura fixa
+\begin{tabular}{|c|l|} 
+\hline
+\textbf{$v$} & \textbf{Nome da vacina} \\
+\hline
+1 & BCG \\
+\hline
+2 & HEPATITE B \\
+\hline
+\end{tabular}
+\end{quadro}
+
+Além disso, como x representa a quantidade transportada, foi definido que seu valor deve ser um número inteiro e não-negativo, pois não faria sentido transportar meia dose de vacina, por exemplo. Desta forma, se trata de um \textbf{Problema de Programação Linear Inteira}.
+
+Além da variável de decisão, é importante definir alguns \textbf{parâmetros}.
+
+As principais opções reais de modais para o transporte de vacinas são o rodoviário e o aéreo e por isso eles serão considerados na modelagem. Esses modais possuem tempos de deslocamento diferentes para uma mesma distância, por isso se faz necessário definir esses \textbf{parâmetros de tempo}.
+
+Sejam:
+
+\[
+\tau_{ij}^{rod}, \quad \tau_{ij}^{areo} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $\tau_{ij}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o município de origem $i$ e o município de destino $j$.
+    \item $\tau_{ij}^{areo}$ é o tempo de deslocamento do modal aéreo entre o município de origem $i$ e o município de destino $j$.
+\end{itemize}
+
+No caso do transporte aéreo, o modelo não considera explicitamente apenas o tempo de voo entre os municípios. O tempo $\tau_{ij}^{areo}$ representa o tempo total agregado da operação logística aérea, incluindo:
+
+\begin{itemize}
+    \item transporte rodoviário do município de origem até o aeroporto;
+    \item tempo de voo entre aeroportos;
+    \item transporte rodoviário do aeroporto de destino até o município final.
+\end{itemize}
+
+Dessa forma, $\tau_{ij}^{areo}$ já incorpora implicitamente todas as etapas necessárias para a entrega via modal aéreo, mantendo o modelo compacto sem perda significativa de realismo.
+
+Na prática, o processo de distribuição de vacinas não se limita apenas ao tempo de deslocamento entre os pontos de origem e destino. Ao longo da cadeia logística, existem etapas intermediárias que incluem atividades como desembarque, descarga, conferência, armazenamento temporário e redistribuição das vacinas.
+
+Essas atividades introduzem um tempo adicional no processo, denominado neste trabalho como \textbf{tempo de processamento logístico} e tal tempo ocorre, principalmente, nos pontos de destino, como aeroportos, secretarias municipais de saúde ou centros de distribuição locais.
+
+O tempo de processamento logístico pode variar de acordo com o modal de transporte utilizado. No caso do transporte aéreo, por exemplo, há etapas adicionais como operações aeroportuárias, inspeções e manuseio especializado, que tendem a aumentar o tempo total de processamento. Já no transporte rodoviário, o fluxo tende a ser mais direto, resultando em tempos menores. Para capturar esse comportamento, são considerados tempos de processamento logístico distintos por modal.
+
+Modelar explicitamente essas etapas exigiria a introdução de novas variáveis de decisão e restrições, caracterizando um problema mais complexo e poderia comprometer a tratabilidade computacional. Em vez disso, os tempos de deslocamento e de processamento logístico e a escolha do modal mais adequado (rodoviário ou aéreo) serão incorporados, implicitamente, a \textbf{parâmetros de custo total}.
+
+Sejam:
+
+\[
+\delta^{rod}, \quad \delta^{areo} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $\delta^{rod}$ representa o tempo de processamento logístico do modal rodoviário.
+    \item $\delta^{areo}$ representa o tempo de processamento logístico do modal aéreo.
+\end{itemize}
+
+Ainda, é necessário considerar as diferenças de custo financeiro e de complexidade logística entre os dois tipos de modais. O transporte aéreo é mais rápido, porém mais caro financeiramente e mais complexo logisticamente.
+
+Seja:
+
+\[
+\alpha > 1
+\]
+
+um \textbf{fator de penalização associado ao transporte aéreo} e que reflete limitações operacionais e custos adicionais do transporte aéreo. 
+
+Essa abordagem permite modelar a preferência pelo transporte rodoviário em situações onde ambos os modais são viáveis, ao mesmo tempo em que mantém o transporte aéreo como alternativa para cenários em que o ganho de tempo é significativo. Essa abordagem permite capturar as diferenças operacionais entre modais sem aumentar a complexidade do modelo.
+
+Sejam:
+\begin{itemize}
+    \item $C_{ij}^{rod}$, o \textbf{Custo Total do transporte rodoviário};
+    \item $C_{ij}^{areo}$, o \textbf{Custo Total do transporte aéreo}.
+\end{itemize}
+
+
+Dessa forma, o \textbf{Custo Total de transporte por modal} é dado por:
+
+\[
+C_{ij}^{rod} = \tau_{ij}^{rod} + \delta^{rod}
+\]
+\[
+C_{ij}^{areo} = \alpha \cdot \tau_{ij}^{areo} + \delta^{areo}
+\]
+
+
+Dessa forma, define-se o \textbf{Custo Total de transporte} como:
+
+\[
+C_{ij} = \min \left( \quad C_{ij}^{rod} \quad , \quad C_{ij}^{areo} \quad \right),  \quad C_{ij} \in \mathbb{R}_{\geq 0}
+\]
+
+Assim, o custo total de transporte $C_{ij}$ é definido como o menor tempo efetivo entre os modais disponíveis.
+
+Essa abordagem não introduz novas variáveis de decisão e, dessa forma, mantém a eficiência computacional do modelo, ao mesmo tempo em que aumenta sua aderência à realidade operacional do sistema de distribuição de vacinas.
+
+Além das diferenças de tempo entre os modais de transporte, é necessário considerar que a \textbf{capacidade de transporte} também pode variar de acordo com o modal utilizado.
+
+Sejam:
+\[
+u_{ij}^{\text{rod}}, \quad u_{ij}^{\text{areo}} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $u_{ij}^{\text{rod}}$ representa a capacidade máxima agregada de transporte entre os municípios $i$ e $j$ utilizando o modal rodoviário;
+    \item $u_{ij}^{\text{areo}}$ representa a capacidade máxima agregada de transporte entre os municípios $i$ e $j$ utilizando o modal aéreo.
+\end{itemize}
+
+Neste trabalho, a capacidade $u_{ab}$ não descreve o limite de um único veículo isolado, mas sim a \textbf{capacidade agregada de fluxo logístico} viabilizada pelo modal ao longo do horizonte de planejamento da campanha de distribuição. Essa abstração engloba a capacidade de um veículo multiplicada pelo tamanho da frota alocada para a rota e pelo número de viagens (ciclos) realizados no período.
+
+Dessa forma, a capacidade efetiva de transporte entre os municípios $i$ e $j$ é definida de forma consistente com o custo escolhido, conforme:
+
+\begin{equation}
+u_{ij} =
+\begin{cases}
+u_{ij}^{\text{rod}}, & \text{se } C_{ij}^{\text{rod}} \le C_{ij}^{\text{areo}} \\
+u_{ij}^{\text{areo}}, & \text{caso contrário}
+\end{cases}
+\end{equation}
+
+Essa modelagem mantém a simplicidade do problema, evitando o aumento do número de variáveis de decisão, ao mesmo tempo em que incorpora diferenças operacionais relevantes entre os modais de transporte.
+
+Com a variável de decisão e parâmetros definidos, pode-se definir o tempo de execução do plano de distribuição de vacinas, ou seja, quanto tempo levou até a última entrega chegar desde que a distribuição foi iniciada.
+
+Considerando que as entregas intermunicipais ocorrem em paralelo, o tempo total de distribuição é determinado pela entrega que leva mais tempo a ser concluída. Dessa forma, o \textbf{tempo de distribuição} corresponde ao maior tempo de transporte entre todos os fluxos realizados no sistema.
+
+Assim, o tempo de distribuição é dado por:
+
+
+\[
+T = \max \left\{ C_{ij} \;\middle|\; x_{ijv} > 0 \right\}
+\]
+
+onde:
+\begin{itemize}
+    \item $T$ é o tempo de distribuição das vacinas.
+\end{itemize}
+
+\subsection{Função Objetivo}
+
+Assim, a \textbf{função objetivo} ficou definida da seguinte forma:
+
+\begin{equation}
+    \min z = \sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv}
+    \label{eq:intermunicipal_sem_penalidade}
+\end{equation}
+
+Portanto, o problema modelado tem como objetivo \textbf{minimizar o tempo necessário para entregar a quantidade necessária das doses de vacinas ofertadas para os municípios com demanda}.
+
+Pode-se, ainda, fazer uma modificação da função anterior adicionando uma \textbf{penalidade $\rho_{iv}$} para a vacina de tipo $v$ do município $i$ de acordo com o tempo de expiração, para que, no processo de transporte, haja o menor número de doses expiradas possível. Assim, temos:
+
+
+\[ 0 < \rho_{iv} \le 1, \]  \\
+onde:
+\begin{itemize}
+    \item dado um tempo de expiração $e_{iv}$, ou seja, tempo para a vacina $v$ retida no município $i$ expirar, então a penalidade é definida por: $\rho_{iv} = \frac{1}{e_{iv}}$.
+\end{itemize}
+
+Assim, a função objetivo modificada fica definida da seguinte forma:
+
+\begin{equation}
+    \min z = \sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv} \cdot \rho_{iv}
+    \label{eq:intermunicipal_com_penalidade}
+\end{equation}
+
+Esta função tem um objetivo ligeiramente diferente: \textbf{minimizar o tempo ponderado pelo risco de expiração}.
+
+Finalmente, algumas restrições precisam ser levadas em consideração para este problema.
+
+\subsection{Restrições}
+
+\textbf{A primeira restrição} é a \textbf{restrição de oferta} de cada vacina $v$ em cada município $i$. 
+O número de vacinas transportadas pode ser menor que número de vacinas ofertadas no local de origem e, no máximo, pode-se transportar uma quantidade igual a quantidade ofertada pela origem. Assim, temos:
+
+\begin{equation*}
+    \sum_{j} x_{ijv} \le o_{iv}, \quad \forall i \in I, \; v \in V
+\end{equation*}
+onde:
+\begin{itemize}
+    \item $o_{ik}$ representa a quantidade de vacinas do tipo $v$ ofertadas no município $i$;
+\end{itemize}
+
+Seria um erro se a restrição fosse definida desta forma:
+\begin{equation*}
+    \sum_{j} x_{ijv} = o_{iv}, \quad \forall i \in I, \; v \in V
+\end{equation*}
+pois, nesse caso, todas as vacinas ofertadas seriam obrigadas a serem transportadas e, num cenário real, do conjunto de vacinas ofertadas pode sobrar vacina pode ou não haver destino viável.
+
+\textbf{A segunda restrição} é a \textbf{restrição de demanda} da vacina $v$ por cada município $j$. 
+O número de vacinas transportadas deve ser exatamente a quantidade demandada para que não haja falta ou desperdício. Assim, temos:
+
+\begin{equation*}
+    \sum_{i} x_{ijv} = d_{jv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+onde:
+\begin{itemize}
+    \item $d_{jv}$ representa a quantidade de vacinas do tipo $v$ demandadas no município $j$;
+    \item $J$ representa os municípios $j$ mapeados.
+\end{itemize}
+
+E, nesse caso, estamos forçando o atendimento total da demanda.
+
+Seria um erro se a restrição fosse definida desta forma:
+\begin{equation*}
+    \sum_{i} x_{ijv} \le d_{jv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+pois isso implicaria que se pode não atender a demanda e o modelo pode simplesmente não entregar nada (minimiza custo = 0).
+
+\textbf{A terceira restrição} é a \textbf{restrição de capacidade agregada} de entrega de vacinas da origem $i$ ao destino $j$. 
+O número de vacinas transportadas não pode exceder a capacidade máxima agregada. Assim, temos:
+
+\begin{equation*}
+    \sum_{v} x_{ijv} \le u_{ij}, \quad \forall i \in I, j \in J
+\end{equation*}
+onde:
+\begin{itemize}
+    \item $u_{ij}$ representa a capacidade máxima (limite superior) de vacinas que pode ser transportada do município $i$ para o município $j$.
+\end{itemize}
+
+Assume-se que diferentes tipos de vacina compartilham a mesma capacidade de transporte, o que é consistente com a operação logística real, na qual múltiplos imunizantes são transportados conjuntamente no mesmo veículo.
+
+\textbf{A quarta restrição} é a \textbf{restrição de viabilidade temporal} e é relativa à ideia de remover pares onde o tempo de transporte é maior que o tempo restante até o vencimento. Assim, temos:
+
+\begin{equation*}
+x_{ijv} = 0, \quad \forall i \in I, \; j \in J, \; v \in V \text{ tais que } C_{ij} > e_{iv}
+\end{equation*}
+
+Em suma, o PPLI ficou definido assim:
+
+\begin{equation*}
+    \min z = \sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv}
+\end{equation*}
+sujeito a:
+\begin{equation*}
+    \sum_{j} x_{ijv} \le o_{ik}, \quad \forall i \in I, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+    \sum_{i} x_{ijv} = d_{jv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+    \sum_{v} x_{ijv} \le u_{ij}, \quad \forall i \in I, j \in J
+\end{equation*}
+
+\begin{equation*}
+x_{ijv} = 0, \quad \forall i \in I, \; j \in J, \; v \in V \text{ tais que } C_{ij} > e_{iv}
+\end{equation*}
+
+\begin{equation*}
+    x_{ijv} \in \mathbb{Z}_{\geq 0}, \quad \forall i \in I, j \in J, v \in V \quad \text{(restrição de não-negatividade)}
+\end{equation*}
+
+
+\section{Modelo Intermunicipal Com Intermediação Estadual}
+
+Este modelo busca representar o trajeto físico real considerando o intermédio de órgãos estaduais (como a secretaria estadual) no transporte de vacinas entre municípios.
+
+Usaremos
+\[ k \in K \]
+para representar o centro estadual $k$ dentre os centros estaduais $K$ mapeados.
+
+Com isso, o fluxo pode ser representado da seguinte forma:
+
+\[
+\text{Município } i \;\longrightarrow\; \text{Estado } k \;\longrightarrow\; \text{Município } j
+\]
+
+\subsection{Variável de Decisão e Parâmetros}
+
+Para o transporte, são necessárias duas etapas de fluxo:
+
+\begin{enumerate}
+    \item Município $i \longrightarrow$ Estado $k$ \\
+    Para essa etapa, temos:
+    \[ x_{ikv} \quad \text{e} \quad C_{ik}\]
+    onde:
+    \begin{itemize}
+    \item $x_{ikv}$ representa a quantidade de vacinas do tipo $v$ transportadas do município $i$ ao centro estadual $k$;
+    \item $C_{ik}$ representa o \textbf{custo total} (em horas) para se transportar vacinas do município $i$ ao centro estadual $k$.
+    \end{itemize}.
+    
+    \item Estado $k \longrightarrow$ Município $j$ \\
+    Para essa etapa, temos:
+    \[y_{kjv} \quad \text{e} \quad C_{kj}\]
+    onde:
+     \begin{itemize}
+    \item $y_{kjv}$ representa a quantidade de vacinas do tipo $v$ transportadas do centro estadual $k$ ao município $j$.
+    \item $C_{kj}$ representa o \textbf{custo total} (em horas) para se transportar vacinas do centro estadual $k$ ao município $j$.
+    \end{itemize}.
+\end{enumerate}
+
+Foram definidas duas variáveis de decisão distintas ( $x_{ikv}$ e $y_{kjv}$ ) para a representação de quantidade de vacinas transportadas.
+A separação dessas variáveis é necessária, pois os fluxos de entrada e saída de um centro intermediário podem apresentar distribuições diferentes mesmo que esteja sendo considerado a conservação do fluxo entre etapas. Por exemplo, para um determinado tipo de vacina $v$ em um centro $k$, pode-se ter:
+
+\begin{itemize}
+\item Fluxo de entrada:
+\[
+x_{1kt} = 10, \quad x_{2kt} = 5 \quad \Rightarrow \quad \sum_{i \in I} x_{ikv} = 15
+\]
+
+\item Fluxo de saída:
+\[
+y_{k3t} = 8, \quad y_{k4t} = 7 \quad \Rightarrow \quad \sum_{j \in J} y_{kjv} = 15
+\]
+\end{itemize}
+
+Observa-se que, embora os fluxos individuais de entrada e saída sejam distintos, o total de vacinas que entra no centro é igual ao total que sai. Dessa forma, a separação entre $x_{ikv}$ e $y_{kjv}$ permite refletir a realidade operacional do sistema logístico.
+
+De forma análoga ao modelo intermunicipal sem intermediação estadual, temos:
+
+\[
+\tau_{ik}^{rod}, \quad \tau_{ik}^{areo}, \tau_{kj}^{rod}, \quad \tau_{kj}^{areo} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $\tau_{ik}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o município de origem $i$ e o centro estadual de destino $k$.
+    \item $\tau_{ik}^{areo}$ é o tempo de deslocamento do modal aéreo entre o município de origem $i$ e o centro estadual de destino $k$.
+    \item $\tau_{kj}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o centro estadual de origem $k$ e o município de destino $j$.
+    \item $\tau_{kj}^{areo}$ é o tempo de deslocamento do modal aéreo entre o centro estadual de origem $k$ e o município de destino $j$.
+\end{itemize}
+
+Sejam:
+\begin{itemize}
+    \item $C_{ik}^{rod}$, o \textbf{Custo Total do transporte rodoviário da primeira etapa};
+    \item $C_{ik}^{areo}$, o \textbf{Custo Total do transporte aéreo  da primeira etapa}.
+    \item $C_{kj}^{rod}$, o \textbf{Custo Total do transporte rodoviário da segunda etapa};
+    \item $C_{kj}^{areo}$, o \textbf{Custo Total do transporte aéreo  da segunda etapa}.
+\end{itemize}
+
+
+Dessa forma, o \textbf{Custo Total de transporte por modal por etapa} é dado por:
+
+\[
+C_{ik}^{rod} = \tau_{ik}^{rod} + \delta^{rod}
+\]
+\[
+C_{ik}^{areo} = \alpha \cdot \tau_{ik}^{areo} + \delta^{areo}
+\]
+\[
+C_{kj}^{rod} = \tau_{kj}^{rod} + \delta^{rod}
+\]
+\[
+C_{kj}^{areo} = \alpha \cdot \tau_{kj}^{areo} + \delta^{areo}
+\]
+
+
+Dessa forma, define-se o \textbf{Custo Total de transporte por Etapa} como:
+
+\[
+C_{ik} = \min \left( \quad C_{ik}^{rod} \quad , \quad C_{ik}^{areo} \quad \right),  \quad C_{ik} \in \mathbb{R}_{\geq 0}
+\]
+\[
+C_{kj} = \min \left( \quad C_{kj}^{rod} \quad , \quad C_{kj}^{areo} \quad \right),  \quad C_{kj} \in \mathbb{R}_{\geq 0}
+\]
+
+Da mesma forma que no modelo anterior, é necessário considerar que a \textbf{capacidade de transporte} varia de acordo com o modal.
+
+Para a \textbf{primeira etapa} (município $i$ $\rightarrow$ estado $k$), sejam:
+
+\[
+u_{ik}^{\text{rod}}, \quad u_{ik}^{\text{areo}} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $u_{ik}^{\text{rod}}$ representa a capacidade máxima agregada de transporte entre o município $i$ e o centro estadual $k$ via modal rodoviário;
+    \item $u_{ik}^{\text{areo}}$ representa a capacidade máxima agregada de transporte entre o município $i$ e o centro estadual $k$ via modal aéreo.
+\end{itemize}
+
+A capacidade efetiva da primeira etapa é então definida de forma consistente com o custo escolhido:
+
+\begin{equation}
+u_{ik} =
+\begin{cases}
+u_{ik}^{\text{rod}}, & \text{se } C_{ik}^{\text{rod}} \le C_{ik}^{\text{areo}} \\
+u_{ik}^{\text{areo}}, & \text{caso contrário}
+\end{cases}
+\end{equation}
+
+De forma análoga, para a \textbf{segunda etapa} (estado $k$ $\rightarrow$ município $j$), sejam:
+
+\[
+u_{kj}^{\text{rod}}, \quad u_{kj}^{\text{areo}} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $u_{kj}^{\text{rod}}$ representa a capacidade máxima de transporte entre o centro estadual $k$ e o município $j$ via modal rodoviário;
+    \item $u_{kj}^{\text{areo}}$ representa a capacidade máxima de transporte entre o centro estadual $k$ e o município $j$ via modal aéreo.
+\end{itemize}
+
+A capacidade efetiva da segunda etapa é definida por:
+
+\begin{equation}
+u_{kj} =
+\begin{cases}
+u_{kj}^{\text{rod}}, & \text{se } C_{kj}^{\text{rod}} \le C_{kj}^{\text{areo}} \\
+u_{kj}^{\text{areo}}, & \text{caso contrário}
+\end{cases}
+\end{equation}
+
+
+Quanto ao tempo de distribuição de vacinas, o tempo total de entrega de uma dose corresponderia, conceitualmente, à soma dos tempos das duas etapas do transporte: do município de origem ao centro estadual e do centro estadual ao município de destino.
+
+Entretanto, a modelagem adotada não permite o rastreamento explícito de cada unidade de vacina ao longo de todo o percurso, já que as variáveis de decisão representam fluxos agregados e isso impede de associar os trechos das duas etapas a uma mesma unidade transportada. Dessa forma, não é possível determinar diretamente o tempo exato de distribuição de uma dose específica. 
+
+Em vez disso, opta-se por calcular, em um pós-processamento da solução ótima, um \textbf{limite superior} para o tempo total de distribuição, a partir da composição de arcos com fluxo positivo.
+
+Define-se, portanto, o \textbf{Limite Superior do Tempo de Distribuição} como:
+
+\[
+L = \max \left\{ \; C_{ik} + C_{kj} 
+\;\middle|\;
+x_{ikv} > 0,\; y_{kjv} > 0
+\; \right\}
+\]
+
+onde:
+\begin{itemize}
+    \item $L$ representa um limite superior para o tempo total de distribuição;
+    \item $C_{ik}$ é o tempo de transporte entre o município de origem $i$ e o centro estadual $k$;
+    \item $C_{kj}$ é o tempo de transporte entre o centro estadual $k$ e o município de destino $j$;
+    \item $x_{ikv}$ e $y_{kjv}$ são as variáveis de decisão associadas aos fluxos nas duas etapas do sistema.
+\end{itemize}
+
+Essa formulação não garante que os dois trechos considerados pertençam ao mesmo caminho físico percorrido por uma única dose, uma vez que não há rastreamento individual das unidades. Assim, o valor de $L$ deve ser interpretado como um \textbf{limite superior}, isto é, uma estimativa conservadora do pior tempo possível compatível com os fluxos positivos da solução ótima.
+
+Ainda assim, esse limite superior fornece uma aproximação útil do tempo total de distribuição e pode ser utilizado como uma \textbf{referência de desempenho} para avaliar a eficiência temporal do sistema logístico.
+
+
+\subsection{Função Objetivo}
+
+Dessa forma, a \textbf{função objetivo} fica definida:
+
+\begin{equation}
+    \min z = \sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv} \quad + \quad \sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
+    \label{eq:intermunicipal_estendido}
+\end{equation}
+
+ou, com a penalidade:
+
+\begin{equation}
+    \min z = \sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv} \cdot \rho_{iv} \quad + \quad \sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
+    \label{eq:intermunicipal_estendido}
+\end{equation}
+
+onde a primeira parcela representa o custo da primeira etapa do fluxo e a segunda parcela representa o custo da segunda etapa.
+
+A penalidade é aplicada na origem, pois o risco de expiração está associado ao tempo restante no município de origem.
+
+\subsection{Restrições}
+
+Para garantir a coerência geográfica e administrativa do fluxo logístico, é necessário impor restrições adicionais que assegurem que a intermediação estadual ocorra exclusivamente por meio do centro estadual $k$ pertencente ao estado de destino do município $j$ atendido.
+
+Para isso, sejam $\text{estado}(k)$ e $\text{estado}(j)$ funções que retornam o estado associado ao centro estadual $k$ e ao município $j$, respectivamente.
+
+A \textbf{Restrição de Consistência Estadual} é dada por:
+
+\[
+y_{kjv} = 0, \quad \forall (k, j) \in K \times J \mid \text{estado}(k) \neq \text{estado}(j), \forall v \in V
+\]
+
+Essa restrição bloqueia a saída de vacinas de centros estaduais {k} cujo estado seja diferente do estado do município {j}, forçando-se a escolher um centro diferente até que seja escolhido um centro {k} do mesmo estado que $j$.
+
+A \textbf{restrição de oferta} garante que a quantidade total de vacinas enviadas por um município de origem não exceda o estoque disponível daquele município para cada tipo de vacina.
+
+\begin{equation*}
+\sum_{k} x_{ikv} \le o_{ik}, \quad \forall i \in I,\; v \in V
+\end{equation*}
+
+A \textbf{restrição de demanda} assegura que toda a demanda por vacinas em cada município de destino seja completamente atendida.
+
+\begin{equation*}
+\sum_{k} y_{kjv} = d_{jv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+A \textbf{restrição de conservação de fluxo} garante que, para cada centro intermediário, a quantidade total de vacinas recebidas seja igual à quantidade total redistribuída, não havendo acúmulo ou perda de vacinas no centro.
+
+\begin{equation*}
+\sum_{i} x_{ikv} = \sum_{j} y_{kjv}, \quad \forall k \in K,\; v \in V
+\end{equation*}
+
+A \textbf{primeira restrição de capacidade agregada} é relativa a capacidade de transporte da primeira etapa do fluxo e, nesta restrição, a quantidade de vacinas transportadas não pode ultrapassar esse limite. Logo, temos:
+\begin{equation*}
+\sum_{v} x_{ikv} \le u_{ik}, \quad \forall i \in I, \; k \in K
+\end{equation*}
+onde:
+\begin{itemize}
+    \item $u_{ik}$ representa a capacidade de transporte do veículo na primeira etapa do fluxo.
+\end{itemize}
+
+A \textbf{segunda restrição de capacidade agregada} é relativa a capacidade de transporte da segunda etapa do fluxo e, nesta restrição, a quantidade de vacinas transportadas não pode ultrapassar esse limite. Logo, temos:
+\begin{equation*}
+\sum_{v} y_{kjv} \le u_{kj}, \quad \forall k \in K, \; j \in J
+\end{equation*}
+onde:
+\begin{itemize}
+    \item $u_{kj}$ representa a capacidade de transporte do veículo na segunda etapa do fluxo.
+\end{itemize}
+
+A \textbf{restrição de viabilidade temporal} é relativa à ideia de remover pares onde o tempo de transporte é maior que o tempo restante até o vencimento. Assim, temos:
+
+\begin{equation*}
+    x_{ikv} = 0, \quad \forall i \in I, \; k \in K, \; v \in V \text{ tais que } C_{ik} > e_{iv}
+\end{equation*}
+
+A restrição de viabilidade temporal é aplicada apenas na primeira etapa do fluxo. Caso o tempo de transporte entre o município de origem e o centro estadual exceda o tempo restante até a expiração da vacina, o envio é proibido.
+
+Não é necessário impor restrições adicionais sobre os fluxos de saída dos centros estaduais, pois a restrição de conservação de fluxo garante que, na ausência de entrada viável, não haverá saída correspondente, assegurando a consistência do modelo.
+
+
+A \textbf{restrição de não-negatividade} assegura que as quantidades de vacinas transportadas não podem ser negativas e devem ser números inteiros.
+\begin{equation*}
+x_{ikv}, y_{kjv} \in \mathbb{Z}_{\geq 0}, \quad \forall i \in I, k \in K, j \in J, v \in V
+\end{equation*}
+
+Em suma, o PPLI ficou definido assim:
+
+\begin{equation*}
+    \min z = \sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv} \quad + \quad \sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
+\end{equation*}
+
+sujeito a:
+
+\begin{equation*}
+y_{kjv} = 0, \quad \forall (k, j) \in K \times J \mid \text{estado}(k) \neq \text{estado}(j), \forall v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{k} x_{ikv} \le o_{ik}, \quad \forall i \in I,\; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{k} y_{kjv} = d_{jv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{i} x_{ikv} = \sum_{j} y_{kjv}, \quad \forall k \in K,\; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} x_{ikv} \le u_{ik}, \quad \forall i \in I, \; k \in K
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} y_{kjv} \le u_{kj}, \quad \forall k \in K, \; j \in J
+\end{equation*}
+
+\begin{equation*}
+    x_{ikv} = 0, \quad \forall i \in I, \; k \in K, \; v \in V \text{ tais que } C_{ik} > e_{iv}
+\end{equation*}
+
+\begin{equation*}
+x_{ikv}, y_{kjv} \in \mathbb{Z}_{\geq 0}, \quad \forall i \in I, k \in K, j \in J, v \in V
+\end{equation*}
+
+\bigskip
+
+\section{Modelagem do transporte intramunicipal de vacinas}
+
+A distribuição intramunicipal de vacinas corresponde à etapa final da cadeia logística, na qual as doses são transportadas da secretaria municipal de saúde para os pontos de aplicação, como postos de saúde e hospitais, ou seja, existe apenas um ponto de origem das vacinas.
+
+Para o caso intramunicipal, somente o modal rodoviário é considerado.
+
+\subsection{Variável de Decisão e Parâmetros}
+
+Seja:
+
+\[
+z_{jpv} \in \mathbb{Z}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $z_{jpv}$ representa a quantidade de vacinas do tipo $v$ transportadas do centro do município $j$ para o posto de destino $p$;
+    \item $j \in J$ representa os municípios;
+    \item $p \in P_j$ representa os postos de saúde pertencentes ao município $j$;
+    \item $v \in V$ representa os tipos de vacina.
+\end{itemize}
+
+Como se trata de unidades discretas (doses), temos:
+
+\begin{equation*}
+z_{jpv} \in \mathbb{Z}_{\geq 0}, \quad \forall j \in J, p \in P_j, v \in V
+\end{equation*}
+
+De forma análoga ao modelo intermunicipal, temos:
+
+\[
+\tau_{jp}^{rod} \in \mathbb{R}_{\geq 0}
+\]
+\[
+\delta^{rod} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $\tau_{jp}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o centro de distribuição municipal $j$ e o posto de destino $p$.
+    \item $\delta^{rod}$ representa o tempo de processamento logístico do modal rodoviário.
+\end{itemize}
+
+Seja:
+
+\begin{equation*}
+C_{jp} \in \mathbb{R}_{\geq 0}
+\end{equation*}
+
+o \textbf{Custo Total do transporte} entre os pontos $j$ e $p$.
+
+Dessa forma, o \textbf{Custo Total de transporte} é dado por:
+
+\[
+C_{jp} = \tau_{jp}^{rod} + \delta^{rod}
+\]
+
+No contexto intramunicipal, considera-se que o transporte é realizado exclusivamente por meio do modal rodoviário. Dessa forma, a capacidade de transporte não depende da escolha entre diferentes modais.
+
+Seja:
+
+\[
+q_{jp} \in \mathbb{R}_{\geq 0}
+\]
+
+onde:
+\begin{itemize}
+    \item $q_{jp}$ representa a capacidade máxima de transporte entre o centro de distribuição do município $j$ e o posto de destino $p$.
+\end{itemize}
+
+Seguindo um raciocínio análogo ao do modelo intermunicipal sem intermediação estadual, o \textbf{tempo de distribuição} das vacinas é dado por:
+
+\[
+T = \max \left( \quad C_{jp} \quad \mid \quad z_{jpv} > 0 \quad \right)
+\]
+
+\subsection{Função Objetivo}
+
+A \textbf{função objetivo} é definida como:
+
+\begin{equation}
+\min z = \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\label{intramunicipal_sem_penalidade}
+\end{equation}
+
+O objetivo é minimizar o tempo total de distribuição das vacinas dentro do município.
+
+Para incorporar o risco de expiração das vacinas, introduz-se um fator de penalização associado ao tempo restante de validade no município. Seja:
+
+\[
+\rho_{jv} = \frac{1}{e_{jv}}
+\]
+onde:
+\begin{itemize}
+\item  $e_{jv}$ representa o tempo restante até a expiração da vacina do tipo $v$ disponível no município $j$.
+\item $\rho_{jv}$ é penalidade da vacina do tipo $v$ no município $j$
+\end{itemize}
+
+Dessa forma, a função objetivo passa a ser:
+\begin{equation}
+\min z = \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv}
+\label{intramunicipal_com_penalidade}
+\end{equation}
+
+Essa formulação prioriza a distribuição de vacinas com menor tempo restante de validade associado ao estoque no nível intramunicipal.
+
+\subsection{Restrições}
+
+A \textbf{restrição de oferta} diz respeito a quantidade total enviada por cada ponto de origem não poder exceder sua disponibilidade:
+
+\begin{equation*}
+\sum_{p \in P_j} z_{jpv} \le s_{jv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+onde:
+\begin{itemize}
+    \item $s_{jv}$ representa a quantidade disponível da vacina $t$ no ponto de origem $j$.
+\end{itemize}
+
+A \textbf{restrição de demanda} estabelece que cada ponto de destino deve receber exatamente sua demanda:
+
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+
+onde:
+\begin{itemize}
+    \item $r_{pv}$ representa a demanda da vacina $t$ no ponto de destino $p$.
+\end{itemize}
+
+A \textbf{restrição de capacidade agregada} considera que a capacidade de transporte entre os pontos é limitada:
+
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+
+onde:
+\begin{itemize}
+    \item $q_{jp}$ representa a capacidade máxima de transporte entre $j$ e $p$.
+\end{itemize}
+
+A \textbf{restrição de viabilidade} temporal é definida para evitar perdas por expiração:
+
+\begin{equation*}
+z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+
+onde:
+\begin{itemize}
+    \item $e_{jv}$ representa o tempo restante até a expiração da vacina $v$ no ponto de origem $j$.
+\end{itemize}
+
+O modelo completo é dado por:
+
+\begin{equation*}
+\min z = \sum_{v} \sum_{j} \sum_{b} C_{jp} \cdot z_{jpv}
+\end{equation*}
+sujeito a:
+\begin{equation*}
+\sum_{b} z_{jpv} \le s_{jv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+\begin{equation*}
+z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+\begin{equation*}
+z_{jpv} \in \mathbb{Z}_{\geq 0}, \quad \forall j \in J, p \in P_j, v \in V
+\end{equation*}
+
+
+\bigskip
+
+\section{Modelo Unificado Sem Intermediação Estadual}
+
+Este modelo considera transportes direto entre municípios sem o intermédio de órgãos estaduais.
+
+A ideia de unificação representa a integração dos modelos intermunicipal e intramunicipal em uma única formulação matemática. O objetivo é representar, de forma unificada, todo o fluxo logístico das vacinas, desde a redistribuição entre municípios até a entrega final nos postos de vacinação. A principal motivação dessa abordagem é permitir a otimização global do sistema.
+
+\subsection{Variáveis de Decisão e Parâmetros}
+
+O modelo unificado considera dois níveis de decisão:
+
+\begin{itemize}
+    \item Transporte intermunicipal:
+    \[
+    x_{ijv}
+    \]
+    onde $x_{ijv}$ representa a quantidade de vacinas do tipo $v$ transportadas do município $i$ para o município $j$.
+    
+    \item Transporte intramunicipal:
+    \[
+    z_{jpv}
+    \]
+    onde $z_{jpv}$ representa a quantidade de vacinas do tipo $v$ transportadas do ponto de origem $j$ para o posto de destino $p$ dentro de um município.
+\end{itemize}
+
+Neste modelo, a distribuição de vacinas pode ocorrer em duas etapas distintas: uma etapa intermunicipal e outra intramunicipal.
+
+Embora o tempo total de entrega de uma dose de vacina, do ponto de origem até o destino final, seja conceitualmente dado pela soma dos tempos das etapas intermunicipal e intramunicipal, o modelo proposto não permite o rastreamento explícito do percurso completo de cada unidade transportada, já que as variáveis de decisão representam fluxos agregados.
+
+Dessa forma, não é possível determinar diretamente, durante a otimização, o tempo exato de distribuição de uma dose específica. Em vez disso, opta-se por calcular, em um pós-processamento da solução ótima, um \textbf{limite superior} para o tempo total de distribuição, a partir da composição de arcos com fluxo positivo.
+
+Define-se, portanto, o \textbf{limite superior do tempo de distribuição} como:
+
+\[
+L = \max \left\{ \; C_{ij} + C_{jp} 
+\;\middle|\;
+x_{ijv} > 0,\; z_{jpv} > 0
+\; \right\}
+\]
+
+onde:
+\begin{itemize}
+    \item $L$ representa um limite superior para o tempo total de distribuição das vacinas;
+\end{itemize}
+
+Ressalta-se que essa formulação não garante que os dois trechos considerados pertençam ao mesmo caminho físico percorrido por uma única dose, uma vez que não há rastreamento individual das unidades. Assim, o valor de $L$ deve ser interpretado como um \textbf{limite superior}, isto é, uma estimativa conservadora do pior tempo possível compatível com os fluxos positivos da solução ótima.
+
+Ainda assim, esse limite superior fornece uma aproximação útil do tempo total de distribuição e pode ser utilizado como uma \textbf{referência de desempenho} para avaliar a eficiência temporal do sistema logístico.
+
+Com a unificação, torna-se possível estabelecer uma relação entre os tempos de expiração $e_{iv}$ e $e_{jv}$. Intuitivamente, $e_{jv}$ pode ser interpretado como o tempo remanescente de expiração das vacinas do tipo $v$ disponíveis no município $j$ após a etapa de redistribuição intermunicipal.
+
+No entanto, devido à estrutura do modelo, não é possível rastrear explicitamente a origem de cada unidade de vacina que chega ao município $j$ com as variáveis de decisão. Ou seja, não se sabe exatamente quanto cada município $i$ contribuiu para o estoque final de $j$. Como consequência, não é possível calcular de forma exata o tempo de expiração remanescente com base nas variáveis de decisão do modelo.
+
+Diante dessa limitação, define-se $e_{jv}$ como um parâmetro estimado \textit{a priori}, isto é, calculado antes da resolução do modelo. A ideia adotada é considerar que o conjunto de vacinas que chega ao município $j$ representa uma mistura das vacinas disponíveis nos municípios de origem. Assim, assume-se que essa mistura reflete, em termos agregados, a distribuição das ofertas iniciais $o_{iv}$ na rede.
+Além disso, deve-se considerar que as vacinas perdem tempo de validade durante o transporte. Dessa forma, uma vacina que sai de $i$ com validade $e_{iv}$ chega a $j$ com validade reduzida, tem seu tempo de expiração reduzido por:
+
+\[
+e_{iv} - C_{ij}
+\]
+
+Com base nessas hipóteses, define-se $e_{jv}$ como uma média ponderada dos tempos remanescentes de expiração das vacinas provenientes de cada município de origem, utilizando como pesos as ofertas iniciais $o_{iv}$. Assim, tem-se:
+
+\begin{equation*}
+e_{jv} =
+\frac{
+\sum_{i \in I} o_{iv} \cdot \left( e_{iv} - C_{ij} \right)
+}{
+\sum_{i \in I} o_{iv}
+},
+\quad \forall j \in J,\; v \in V
+\end{equation*}
+
+\subsection{Função Objetivo}
+
+A \textbf{função objetivo} unificada é dada por:
+
+\begin{equation}
+\min z = 
+\sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv}
+\;+\;
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\label{unificado_sem_penalidade}
+\end{equation}
+
+A primeira parcela representa o custo do transporte intermunicipal, enquanto a segunda representa o custo da distribuição intramunicipal.
+
+Para incorporar o risco de expiração, pode-se adicionar os fatores de penalidade e a função objetivo passa a ser:
+
+\begin{equation}
+\min z = 
+\sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv} \cdot \rho_{iv}
+\;+\;
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv}
+\label{unificado_com_penalidade}
+\end{equation}
+
+Essa formulação prioriza o transporte de vacinas com menor tempo restante até a expiração em ambos os níveis da cadeia logística.
+
+\subsection{Restrições}
+
+As \textbf{Restrições Intermunicipais} a serem reaproveitadas são:
+
+\begin{equation*}
+\sum_{j} x_{ijv} \le o_{iv}, \quad \forall i \in I, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} x_{ijv} \le u_{ij}, \quad \forall i \in I, j \in J
+\end{equation*}
+
+\begin{equation*}
+x_{ijv} \in \mathbb{Z}_{\geq 0}
+\end{equation*}
+
+A restrição de demanda no nível intermunicipal foi removida no modelo unificado, uma vez que a demanda final por vacinas é imposta explicitamente no nível intramunicipal, por meio dos postos de vacinação, ou seja, a demanda de um município é dada pela soma da demanda dos seus postos de saúde.
+
+A manutenção simultânea da restrição de demanda no nível intermunicipal e no nível intramunicipal introduziria redundância e potencial inconsistência no modelo, podendo torná-lo inviável caso os valores agregados não coincidam exatamente.
+
+As \textbf{Restrições Intramunicipais} a serem reaproveitadas são:
+
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+
+\begin{equation*}
+z_{jpv} \in \mathbb{Z}_{\geq 0}
+\end{equation*}
+
+A restrição de oferta no nível intramunicipal foi removida devido à reformulação da estrutura de acoplamento entre os níveis intermunicipal e intramunicipal.
+
+No modelo unificado, a quantidade de vacinas disponível para distribuição dentro de cada município é determinada endogenamente pela soma do estoque inicial local com o fluxo recebido de outros municípios. Dessa forma, a imposição de uma restrição adicional limitando a saída com base em um parâmetro fixo de oferta tornaria o modelo inconsistente, pois poderia restringir indevidamente o fluxo de vacinas disponível para atendimento da demanda final.
+
+As \textbf{restrições de viabilidade temporal} são aplicadas separadamente em cada nível da cadeia logística. Essa abordagem decorre do fato de que o modelo não rastreia explicitamente o percurso completo de cada unidade de vacina desde o município de origem até o ponto de vacinação final.
+
+Dessa forma, não é possível impor diretamente uma restrição baseada na soma dos tempos das etapas intermunicipal e intramunicipal para uma mesma unidade transportada e que seja da forma:
+
+\[
+C_{ij} + C_{jp} \le e_{iv}
+\]
+
+Assim, adota-se uma aproximação em que a viabilidade temporal é garantida localmente em cada etapa do processo. Isso assegura que as vacinas não permaneçam em trânsito por um tempo superior ao seu prazo de validade em nenhuma das etapas, mantendo a coerência com a estrutura do modelo e sua tratabilidade computacional. Dessa forma, temos:
+
+\begin{equation*}
+x_{ijv} = 0, \quad \forall i \in I, \; j \in J, \; v \in V \text{ tais que } C_{ij} > e_{iv}
+\end{equation*}
+
+\begin{equation*}
+z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+
+A integração entre os níveis intermunicipal e intramunicipal é consolidada por meio da \textbf{Restrição de Conservação e Disponibilidade de Estoque} que garante que o sistema respeite a realidade física do estoque em cada localidade.
+
+Esta restrição descreve o que acontece com o estoque de vacinas de cada município que pode receber vacinas de outras localidades ou fornece-las para outros municípios ou postos. Logo, a lógica matemática estabelece que a soma de tudo o que sai do município (seja para o consumo interno em seus postos ou para exportação a outras localidades) não pode ser superior à soma de tudo o que o município dispõe (seu estoque inicial somado ao que ele recebeu de fora durante o processo). 
+
+Dessa forma, a restrição é expressa como:
+
+\begin{equation*}
+\sum_{p \in P_j} z_{jpv} + \sum_{j' \neq j} x_{jj'v} \le o_{jv} + \sum_{i \neq j} x_{ijv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+Esta formulação elimina a necessidade de variáveis intermediárias de estoque final, pois o balanço é verificado globalmente. Além de prevenir a criação artificial de doses no modelo, o uso de uma desigualdade ($\le$) permite que o sistema opte por manter parte das vacinas armazenadas se não houver demanda imediata, refletindo a flexibilidade necessária em operações logísticas reais.
+
+
+Em suma, o PPLI fica definido assim:
+
+\begin{equation*}
+\min z = 
+\sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv}
+\;+\;
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\end{equation*}
+
+sujeito a:
+
+\begin{equation*}
+\sum_{j} x_{ijv} \le o_{iv}, \quad \forall i \in I, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} x_{ijv} \le u_{ij}, \quad \forall i \in I, j \in J
+\end{equation*}
+
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+
+\begin{equation*}
+\sum_{p \in P_j} z_{jpv} + \sum_{j' \neq j} x_{jj'v} \le o_{jv} + \sum_{i \neq j} x_{ijv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+x_{ijv} = 0, \quad \forall i \in I, \; j \in J, \; v \in V \text{ tais que } C_{ij} > e_{iv}
+\end{equation*}
+
+\begin{equation*}
+z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+
+\begin{equation*}
+x_{ijv}, z_{jpv} \in \mathbb{Z}_{\geq 0}
+\end{equation*}
+
+\section{Modelo Unificado Com Intermediação Estadual}
+
+Para representar a intermediação estadual, incorpora-se um nível adicional na modelagem intermunicipal.
+
+\subsection{Variáveis de Decisão e Parâmetros}
+
+\begin{itemize}
+    \item $x_{ikv}$: fluxo do município $i$ para o centro estadual $k$;
+    \item $y_{kjv}$: fluxo do centro estadual $k$ para o município $j$;
+    \item $z_{jpv}$: fluxo intramunicipal.
+\end{itemize}
+
+Da mesma forma que modelo anterior, do ponto de vista operacional, o tempo total de entrega de uma dose de vacina corresponderia à soma dos tempos dessas três etapas. No entanto, de forma análoga ao modelo sem intermediação estadual, a estrutura matemática adotada não permite o rastreamento explícito do fluxo completo de cada unidade ao longo de toda a cadeia logística, pois não existe uma variável que represente simultaneamente o percurso completo de uma vacina desde a origem até o destino final. Como consequência, não é possível garantir que os fluxos modelados em cada etapa correspondam à mesma unidade transportada, inviabilizando a soma direta dos tempos por trajeto completo.
+
+Dessa forma, opta-se por uma abordagem consistente com a modelagem proposta, na qual o tempo total de distribuição é definido como a soma dos piores tempos de cada etapa.
+
+
+Assim, o \textbf{tempo total de distribuição} é dado por:
+
+\[
+T = \max \left\{ \; C_{ik} \;\middle|\; x_{ikv} > 0 \; \right\} + 
+\max \left\{ \; C_{kj} \;\middle|\; y_{kjv} > 0 \; \right\} + 
+\max \left\{ \; C_{jp} \;\middle|\; z_{jpv} > 0 \; \right\}
+\]
+
+onde:
+\begin{itemize}
+    \item $T$ representa o tempo total de distribuição das vacinas;
+    \item $C_{ik}$ é o custo (tempo) do transporte entre o município de origem e o centro estadual;
+    \item $C_{kj}$ é o custo (tempo) do transporte entre o centro estadual e o município de destino;
+    \item $C_{jp}$ é o custo (tempo) do transporte intramunicipal.
+\end{itemize}
+
+Além disso, como no modelo anterior, torna-se possível estabelecer uma relação entre os tempos de expiração $e_{iv}$ e $e_{jv}$. Diante da impossibilidade de rastreio explícito de cada unidade de vacina, $e_{jv}$ também será definido como um parâmetro estimado \textit{a priori}.
+
+Como no modelo com intermediação estadual a degradação temporal das vacinas ocorre em duas etapas, será necessário dividir o cálculo de $e_{jv}$ entre essas duas etapas.
+
+Na primeira etapa, por um raciocínio análogo ao do modelo anterior, define-se o tempo médio de expiração no centro estadual $k$ como uma média ponderada dos tempos remanescentes de expiração das vacinas provenientes de cada município de origem, utilizando como pesos as ofertas iniciais $o_{iv}$. Além disso, considera-se a perda de validade ao longo do transporte dada por ($e_{iv} - C_{ik}$).
+
+Dessa forma, define-se o tempo médio de expiração no centro estadual $k$ como:
+
+\begin{equation*}
+e_{kv} =
+\frac{
+\sum_{i \in I} o_{iv} \cdot \left( e_{iv} - C_{ik} \right)
+}{
+\sum_{i \in I} o_{iv}
+},
+\quad \forall k \in K,\; v \in V
+\end{equation*}
+
+Na segunda etapa, o problema se torna mais delicado. Diferentemente da primeira etapa, na qual é possível relacionar diretamente os municípios de origem $i$ com o ponto intermediário $k$, aqui não existe mais uma ligação explícita entre os municípios de origem $i$ e o município de destino final $j$.
+
+Intuitivamente, as vacinas que chegam ao município $j$ já passaram por um processo de agregação no centro estadual $k$. Nesse processo, vacinas provenientes de diferentes origens são misturadas, perdendo-se completamente a informação sobre suas origens individuais. Como consequência, não é mais possível utilizar diretamente as ofertas iniciais $o_{iv}$ como pesos, nem reconstruir com precisão a contribuição de cada origem no estoque final de $j$.
+
+Para contornar essa limitação, adota-se uma aproximação baseada na ideia de que os centros estaduais mais próximos (com menor tempo de transporte $C_{kj}$) do município de destino $j$ recebem um peso matematicamente maior ($\frac{1}{C_{kj}}$) no cálculo da validade média que chega ao município. Além disso, considera-se novamente a perda de validade ao longo do transporte até o município $j$ dada por ($e_{kv} - C_{kj}$).
+
+Dessa forma, define-se o tempo médio de expiração no município $j$ como
+
+\begin{equation*}
+e_{jv} =
+\frac{
+\sum_{k \in K} \frac{1}{C_{kj}} \cdot \left( e_{kv} - C_{kj} \right)
+}{
+\sum_{k \in K} \frac{1}{C_{kj}}
+},
+\quad \forall j \in J,\; v \in V
+\end{equation*}
+
+Além disso, assume-se que $C_{kj} > 0$, uma vez que sempre existe um custo temporal associado ao deslocamento entre o centro estadual e o município de destino.
+
+\subsection{Função Objetivo}
+
+\begin{equation}
+\min z =
+\sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv}
++
+\sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
++
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\label{unificado_estendido}
+\end{equation}
+
+ou, com as penalidades:
+
+\begin{equation}
+\min z =
+\sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv} \cdot \rho_{iv}
++
+\sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
++
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv}
+\label{unificado_estendido}
+\end{equation}
+
+\subsection{Restrições}
+
+Seguindo um raciocínio análogo do modelo anterior, as \textbf{restrições de viabilidade temporal} são aplicadas separadamente em cada etapa da cadeia logística (municipal, estadual e intramunicipal). Essa abordagem decorre do fato de que o modelo não rastreia explicitamente o percurso completo de cada unidade de vacina ao longo das três etapas.
+
+A \textbf{Restrição de Conservação e Disponibilidade de Estoque} também deve ser implementada neste modelo seguindo um raciocínio análogo do modelo anterior e fazendo-se as adaptações necessárias considerando o intermédio dos centros estaduais.
+
+Dessa forma, as restrições são:
+
+\[
+y_{kjv} = 0, \quad \forall (k, j) \in K \times J \mid \text{estado}(k) \neq \text{estado}(j), \forall v \in V
+\]
+
+\begin{equation*}
+\sum_{k} x_{ikv} \le o_{iv}, \quad \forall i \in I, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{i} x_{ikv} = \sum_{j} y_{kjv}, \quad \forall k \in K, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} x_{ikv} \le u_{ik}, \quad \forall i \in I, k \in K
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} y_{kjv} \le u_{kj}, \quad \forall k \in K, j \in J
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+
+\begin{equation*}
+y_{kjv} = 0, \quad \forall (k, j) \in K \times J \mid \text{estado}(k) \neq \text{estado}(j), \forall v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{p \in P_j} z_{jpv} + \sum_{k \in K} x_{jkv} \le o_{jv} + \sum_{k \in K} y_{kjv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+    x_{ikv} = 0, \quad \forall i \in I, \; k \in K, \; v \in V \text{ tais que } C_{ik} > e_{iv}
+\end{equation*}
+
+\begin{equation*}
+    z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+
+\begin{equation*}
+x_{ikv}, y_{kjv}, z_{jpv} \in \mathbb{Z}_{\geq 0}
+\end{equation*}
+
+\bigskip

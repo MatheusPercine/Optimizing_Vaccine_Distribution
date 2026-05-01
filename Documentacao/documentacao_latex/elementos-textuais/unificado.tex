@@ -1,0 +1,285 @@
+\section{Modelo Unificado Sem Intermediação Estadual}
+
+Este modelo considera transportes direto entre municípios e sem o intermédio de órgãos estaduais.
+
+A ideia de unificação representa a integração dos modelos intermunicipal e intramunicipal em uma única formulação matemática. O objetivo é representar, de forma unificada, todo o fluxo logístico das vacinas, desde a redistribuição entre municípios até a entrega final nos postos de vacinação. A principal motivação dessa abordagem é permitir a otimização global do sistema.
+
+\subsection{Variáveis de Decisão e Parâmetros}
+
+O modelo unificado considera dois níveis de decisão:
+
+\begin{itemize}
+    \item Transporte intermunicipal:
+    \[
+    x_{ijv}
+    \]
+    onde $x_{ijv}$ representa a quantidade de vacinas do tipo $v$ transportadas do município $i$ para o município $j$.
+    
+    \item Transporte intramunicipal:
+    \[
+    z_{jpv}
+    \]
+    onde $z_{jpv}$ representa a quantidade de vacinas do tipo $v$ transportadas do ponto de origem $a$ para o ponto de destino $b$ dentro de um município.
+\end{itemize}
+
+Neste modelo, a distribuição de vacinas ocorre em duas etapas distintas: uma etapa intermunicipal e outra intramunicipal.
+
+Embora o tempo total de entrega de uma dose de vacina, do ponto de origem até o destino final, seja conceitualmente dado pela soma dos tempos dessas etapas, o modelo proposto não permite o rastreamento explícito do percurso completo de cada unidade transportada. Dessa forma, não é possível, do ponto de vista matemático, associar diretamente as etapas intermunicipal e intramunicipal a uma mesma unidade de vacina e, consequentemente, somar seus tempos de forma exata.
+
+Assim, como aproximação consistente com a estrutura do modelo, o tempo total de distribuição é definido a soma dos piores tempos de cada etapa. Considerando que as operações ocorrem em paralelo, essa abordagem permite estimar o tempo necessário até a conclusão da última entrega.
+
+Portanto, o \textbf{tempo total de distribuição} é dado por:
+
+\[
+T = \max \left\{ \; C_{ij} \;\middle|\; x_{ijv} > 0 \; \right\} + 
+\max \left\{ \; C_{jp} \;\middle|\; z_{jpv} > 0 \; \right\}
+\]
+
+onde:
+\begin{itemize}
+    \item $T$ representa o tempo total de distribuição das vacinas;
+    \item $C_{ij}$ é o custo (tempo) do transporte intermunicipal;
+    \item $C_{jp}$ é o custo (tempo) do transporte intramunicipal.
+\end{itemize}
+
+\subsection{Função Objetivo}
+
+A \textbf{função objetivo} unificada é dada por:
+
+\begin{equation}
+\min z = 
+\sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv}
+\;+\;
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\label{unificado_sem_penalidade}
+\end{equation}
+
+A primeira parcela representa o custo do transporte intermunicipal, enquanto a segunda representa o custo da distribuição intramunicipal.
+
+Para incorporar o risco de expiração, pode-se adicionar o fator de penalidade e a função objetivo passa a ser:
+
+\begin{equation}
+\min z = 
+\sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv} \cdot \rho_{iv}
+\;+\;
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv}
+\label{unificado_com_penalidade}
+\end{equation}
+
+Essa formulação prioriza o transporte de vacinas com menor tempo restante até a expiração em ambos os níveis da cadeia logística.
+
+\subsection{Restrições}
+
+As \textbf{Restrições Intermunicipais} a serem reaproveitadas são:
+
+\begin{equation*}
+\sum_{j} x_{ijv} \le o_{iv}, \quad \forall i \in I, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} x_{ijv} \le u_{ij}, \quad \forall i \in I, j \in J
+\end{equation*}
+
+\begin{equation*}
+x_{ijv} \in \mathbb{Z}_{\geq 0}
+\end{equation*}
+
+A restrição de demanda no nível intermunicipal foi removida no modelo unificado, uma vez que a demanda final por vacinas é imposta explicitamente no nível intramunicipal, por meio dos postos de vacinação.
+
+A manutenção simultânea da restrição de demanda no nível intermunicipal e no nível intramunicipal introduziria redundância e potencial inconsistência no modelo, podendo torná-lo inviável caso os valores agregados não coincidam exatamente.
+
+As \textbf{Restrições Intramunicipais} a serem reaproveitadas são:
+
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+
+\begin{equation*}
+z_{jpv} \in \mathbb{Z}_{\geq 0}
+\end{equation*}
+
+A restrição de oferta no nível intramunicipal foi removida devido à reformulação da estrutura de acoplamento entre os níveis intermunicipal e intramunicipal.
+
+No modelo unificado, a quantidade de vacinas disponível para distribuição dentro de cada município é determinada endogenamente pela soma do estoque inicial local com o fluxo recebido de outros municípios. Dessa forma, a imposição de uma restrição adicional limitando a saída com base em um parâmetro fixo de oferta tornaria o modelo inconsistente, pois poderia restringir indevidamente o fluxo de vacinas disponível para atendimento da demanda final.
+
+As \textbf{restrições de viabilidade temporal} são aplicadas separadamente em cada nível da cadeia logística. Essa abordagem decorre do fato de que o modelo não rastreia explicitamente o percurso completo de cada unidade de vacina desde o município de origem até o ponto de vacinação final.
+
+Dessa forma, não é possível impor diretamente uma restrição baseada na soma dos tempos das etapas intermunicipal e intramunicipal para uma mesma unidade transportada e que seja da forma:
+
+\[
+C_{ij} + C_{jp} \le e_{iv}
+\]
+
+Assim, adota-se uma aproximação em que a viabilidade temporal é garantida localmente em cada etapa do processo. Isso assegura que as vacinas não permaneçam em trânsito por um tempo superior ao seu prazo de validade em nenhuma das etapas, mantendo a coerência com a estrutura do modelo e sua tratabilidade computacional. Dessa forma, temos:
+
+\begin{equation*}
+x_{ijv} = 0, \quad \forall i \in I, \; j \in J, \; v \in V \text{ tais que } C_{ij} > e_{iv}
+\end{equation*}
+
+\begin{equation*}
+z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+
+Além disso, uma nova foi definida para este modelo, a \textbf{Restrição de Limite de Disponibilidade}:
+
+\begin{equation*}
+\sum_{p \in P_j} z_{jpv} \le 
+s_{jv} +\sum_{i} x_{ijv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+A restrição intramunicipal de oferta está  incorporada nesta nova restrição, que considera o estoque inicial local e o fluxo recebido de outros municípios. Essa restrição garante que a quantidade total de vacinas distribuídas internamente por um município $j$ para seus postos de vacinação não exceda a quantidade total disponível naquele município.
+
+O termo $s_{jv}$ representa o estoque inicial da vacina $v$ já existente no município antes da redistribuição intermunicipal, enquanto o termo $\sum_{i} x_{ijv}$ representa o fluxo total recebido de outros municípios. Dessa forma, a soma desses dois termos define a disponibilidade total de vacinas no município após a etapa intermunicipal.
+
+A formulação em forma de desigualdade (e não igualdade) permite que parte do estoque permaneça armazenada no município, refletindo cenários reais nos quais nem todas as vacinas disponíveis precisam ser imediatamente distribuídas aos postos. Isso evita a imposição de um uso forçado de todo o estoque e contribui para a viabilidade do modelo, além de aumentar sua aderência à realidade operacional.
+
+Em suma, o PPLI fica definido assim:
+
+\begin{equation*}
+\min z = 
+\sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv}
+\;+\;
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\end{equation*}
+
+sujeito a:
+
+\begin{equation*}
+\sum_{j} x_{ijv} \le o_{iv}, \quad \forall i \in I, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} x_{ijv} \le u_{ij}, \quad \forall i \in I, j \in J
+\end{equation*}
+
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+
+\begin{equation*}
+\sum_{p \in P_j} z_{jpv} \le 
+s_{jv} +\sum_{i} x_{ijv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+x_{ijv} = 0, \quad \forall i \in I, \; j \in J, \; v \in V \text{ tais que } C_{ij} > e_{iv}
+\end{equation*}
+
+\begin{equation*}
+z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+
+\begin{equation*}
+x_{ijv}, z_{jpv} \in \mathbb{Z}_{\geq 0}
+\end{equation*}
+
+\section{Modelo Unificado Com Intermediação Estadual}
+
+Para representar a intermediação estadual, incorpora-se um nível adicional na modelagem intermunicipal.
+
+\subsection{Variáveis de Decisão e Parâmetros}
+
+\begin{itemize}
+    \item $x_{ikv}$: fluxo do município $i$ para o centro estadual $k$;
+    \item $y_{kjv}$: fluxo do centro estadual $k$ para o município $j$;
+    \item $z_{jpv}$: fluxo intramunicipal.
+\end{itemize}
+
+Da mesma forma que modelo anterior, do ponto de vista operacional, o tempo total de entrega de uma dose de vacina corresponderia à soma dos tempos dessas três etapas. No entanto, de forma análoga ao modelo sem intermediação estadual, a estrutura matemática adotada não permite o rastreamento explícito do fluxo completo de cada unidade ao longo de toda a cadeia logística, pois não existe uma variável que represente simultaneamente o percurso completo de uma vacina desde a origem até o destino final. Como consequência, não é possível garantir que os fluxos modelados em cada etapa correspondam à mesma unidade transportada, inviabilizando a soma direta dos tempos por trajeto completo.
+
+Dessa forma, opta-se por uma abordagem consistente com a modelagem proposta, na qual o tempo total de distribuição é definido como a soma dos piores tempos de cada etapa.
+
+Assim, o \textbf{tempo total de distribuição} é dado por:
+
+\[
+T = \max \left\{ \; C_{ik} \;\middle|\; x_{ikv} > 0 \; \right\} + 
+\max \left\{ \; C_{kj} \;\middle|\; y_{kjv} > 0 \; \right\} + 
+\max \left\{ \; C_{jp} \;\middle|\; z_{jpv} > 0 \; \right\}
+\]
+
+onde:
+\begin{itemize}
+    \item $T$ representa o tempo total de distribuição das vacinas;
+    \item $C_{ik}$ é o custo (tempo) do transporte entre o município de origem e o centro estadual;
+    \item $C_{kj}$ é o custo (tempo) do transporte entre o centro estadual e o município de destino;
+    \item $C_{jp}$ é o custo (tempo) do transporte intramunicipal.
+\end{itemize}
+
+\subsection{Função Objetivo}
+
+\begin{equation}
+\min z =
+\sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv}
++
+\sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
++
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\label{unificado_estendido}
+\end{equation}
+
+ou, com a penalidade:
+
+\begin{equation}
+\min z =
+\sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv} \cdot \rho_{iv}
++
+\sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
++
+\sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv}
+\label{unificado_estendido}
+\end{equation}
+
+\subsection{Restrições}
+
+Seguindo um raciocínio análogo do modelo anterior, as restrições de viabilidade temporal são aplicadas separadamente em cada etapa da cadeia logística (municipal, estadual e intramunicipal). Essa abordagem decorre do fato de que o modelo não rastreia explicitamente o percurso completo de cada unidade de vacina ao longo das três etapas.
+
+\begin{equation*}
+\sum_{k} x_{ikv} \le o_{iv}, \quad \forall i \in I, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{i} x_{ikv} = \sum_{j} y_{kjv}, \quad \forall k \in K, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{p \in P_j} z_{jpv} \le 
+s_{jv} +\sum_{k} y_{kjv}, \quad \forall j \in J, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} x_{ikv} \le u_{ik}, \quad \forall i \in I, k \in K
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} y_{kjv} \le u_{kj}, \quad \forall k \in K, j \in J
+\end{equation*}
+
+\begin{equation*}
+\sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
+\end{equation*}
+
+\begin{equation*}
+    x_{ikv} = 0, \quad \forall i \in I, \; k \in K, \; t \in T \text{ tais que } C_{ik} > e_{iv}
+\end{equation*}
+
+\begin{equation*}
+    z_{jpv} = 0, \quad \forall j \in J, \; p \in P_j, \; v \in V \text{ tais que } C_{jp} > e_{jv}
+\end{equation*}
+
+\begin{equation*}
+x_{ikv}, y_{kjv}, z_{jpv} \in \mathbb{Z}_{\geq 0}
+\end{equation*}
+
+\bigskip

@@ -1,0 +1,270 @@
+\chapter{Resultados e Análise}
+
+Os dados dos resultados foram exportados no formato csv e para a exibição dos mesmos foi utilizada a ferramenta Power BI que é capaz de gerar diversos gráficos com certa praticidade e tendo arquivos .csv como entrada. Ainda alguns dados também foram gerados pelo terminal do próprio python.
+
+Os modelos foram referenciados com índices para que os textos não fiquem tão extensos. Dessa forma, foram definidos os índices 1,2,3,4 e 5 e referenciam, respectivamente, os modelos que foram criados nesta ordem.
+
+Como já explicado, o modelo 3 (modelol intramunicipal) foi o único que usou dados diferentes de oferta.
+
+\section{Comparação entre Modelos}
+
+\begin{figure}[H]
+    \centering
+    \caption{Tempo Máximo Por Modelo}
+    \includegraphics[width=14cm,height=7.0cm]{figuras/1-tempo_max_por_modelo.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico1_powerbi}
+\end{figure}
+
+Os tempos máximos podem significar o Tempo Total de Distribuição ou o Limite Superior, o qual é uma aproximação.
+
+Podemos verificar que quase não há diferença nos tempos entre um modelo sem penalidade e sua versão com penalidade. Observamos também o significativo impacto no tempo que as intermediações estaduais causam.  Como esperado, o modelo 5 possui o maior tempo para distribuição de vacinas já que incorpora três etapas e seu tempo de distribuição foi maior do que 8 horas.
+
+\begin{figure}[H]
+    \centering
+    \caption{Valor da Função Objetivo Por Modelo}
+    \includegraphics[width=14cm,height=7.0cm]{figuras/2-funcao_objetivo_por_modelo.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico2_powerbi}
+\end{figure}
+
+Diferentemente do gráfico anterior, este denota uma grande diferença no valor da função objetivo entre um modelo sem penalidade e sua versão com penalidade. Observamos também que o modelo 1 obteve o maior valor.
+
+\begin{figure}[H]
+    \centering
+    \caption{Custo Médio (Em Horas) por Dose Por Modelo}
+    \includegraphics[width=14cm,height=7.0cm]{figuras/3-custo_medio_por_dose_por_modelo.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico3_powerbi}
+\end{figure}
+
+Para a obtenção dos dados desse gráfico foi gerada uma média ponderada para os dados de custo tendo a quantidade de doses movimentadas como peso. Observa-se que o modelo 1 obteve o maior valor e para os outros modelos o valor não variou muito.
+
+\begin{figure}[H]
+    \centering
+    \caption{Total de Doses Movimentadas Por Modelo}
+    \includegraphics[width=14cm,height=7.0cm]{figuras/4-doses_movimentadas_por_modelo.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico4_powerbi}
+\end{figure}
+
+Com exceção do modelo 2, o total de doses movimentadas foi aumentado conforme mais etapas logísticas tinha o modelo.  O modelo 2 apresentou o maior valor de doses movimentadas.
+
+\begin{figure}[H]
+    \centering
+    \caption{Percentual de Uso dos Modais}
+    \includegraphics[width=15cm,height=9.0cm]{figuras/5-percentual_modais.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico5_powerbi}
+\end{figure}
+
+Para o modelo 1 somente o modal aéreo foi utilizado. Isso que está de acordo com consultas no google maps, já que o modal aéreo é sempre mais rápido para deslocamento entre capitais. No modelo 3, a única opção disponível já era o modal rodoviário. Nos outros modelos, há predominância do modal rodoviário.
+
+Também nota-se uma pequena diferença nas porcentagens quando comparamos um modelo sem penalidade e sua versão com penalidade.
+
+\section{Resultados Individuais dos Modelos}
+
+Além da comparação entre os modelos, também é possível analisar o que acontece dentro de cada modelo de forma independente dos demais.
+
+\subsection{Resultados do Modelo 1}
+
+\begin{figure}[H]
+    \centering
+    \caption{Os 10 Maiores Tempos Por Rota}
+    \includegraphics[width=11cm,height=10.0cm]{figuras/9-maiores_tempos_mod1.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico6_powerbi}
+\end{figure}
+
+Observa-se que quase não há diferença entre os tempos das rotas de um modelo sem penalidade e sua versão com penalidade. Também nota-se que há muitas rotas em comum entre um gráfico e outro, apesar de os conjuntos de rotas serem diferentes entre si.
+
+Os gráficos também mostram o total de doses movimentadas por rota e nota-se que não há relação direta entre esse valor e o tempo da rota. O trajeto das linhas também é diferente entre um gráfico e outro, apesar de existir certa similaridade.
+
+Com o python, foi possível obter o tipo de vacina da entrega que leva mais tempo para ser concluída, além de informações detalhadas das rotas gargalo por etapa (ij, jk, ik ou jp):
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - sem penalidade}
+    \includegraphics[width=9cm,height=1.2cm]{figuras/modelo_1_false.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal1_python}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - com penalidade}
+    \includegraphics[width=9cm,height=1.2cm]{figuras/modelo_1_true.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal2_python}
+\end{figure}
+
+Para os dados fornecidados pelo terminal com Python, verifica-se que rotas gargalo e seus detalhamentos são diferentes entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas.
+
+\subsection{Resultados do Modelo 2}
+
+\begin{figure}[H]
+    \centering
+    \caption{Os 10 Maiores Tempos Por Rota}
+    \includegraphics[width=11cm,height=10.0cm]{figuras/10-maiores_tempos_mod2.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico7_powerbi}
+\end{figure}
+
+Observa-se que quase não há diferença entre os tempos das rotas de um modelo sem penalidade e sua versão com penalidade. Também nota-se que há muitas rotas em comum entre um gráfico e outro, apesar de os conjuntos de rotas serem diferentes entre si.
+
+Nota-se que não há relação direta entre o total de doses movimentadas e o tempo da rota. O trajeto das linhas também é diferente entre um gráfico e outro.
+
+
+\begin{figure}[H]
+    \centering
+    \caption{Percentual de Tipos de Rota}
+    \includegraphics[width=11cm,height=5.0cm]{figuras/6-percentual_rotas_mod2.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico8_powerbi}
+\end{figure}
+
+Verifica-se predomínio, em mais da metade, das rotas do tipo ik (do município para outro Estado), o que denota que muitos municípios demandaram vacinas de municípios de outros Estados. O restante é preenchido pelas rotas do tipo kj, na qual o Estado realiza o abastecimento de sua capital.
+
+Vacina do maior tempo de entrega e rotas gargalo por etapa:
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - sem penalidade}
+    \includegraphics[width=9cm,height=1.5cm]{figuras/modelo_2_false.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal3_python}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - com penalidade}
+    \includegraphics[width=9cm,height=1.5cm]{figuras/modelo_2_true.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal4_python}
+\end{figure}
+
+Verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade.O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas.
+
+\subsection{Resultados do Modelo 3}
+
+\begin{figure}[H]
+    \centering
+    \caption{Os 10 Maiores Tempos Por Rota}
+    \includegraphics[width=12cm,height=10.0cm]{figuras/11-maiores_tempos_mod3.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico9_powerbi}
+\end{figure}
+
+Observa-se que quase não há diferença entre os tempos das rotas de um modelo sem penalidade e sua versão com penalidade. Também nota-se que as rotas são exatamente iguais entre um gráfico e estão na mesma ordem.
+
+Nota-se que não há relação direta entre o total de doses movimentadas e o tempo da rota. O trajeto das linhas é quase o mesmo entre um gráfico e outro.
+
+Vacina do maior tempo de entrega e rota gargalo:
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - sem penalidade}
+    \includegraphics[width=8.5cm,height=1.0cm]{figuras/modelo_3_false.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal5_python}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - com penalidade}
+    \includegraphics[width=8.5cm,height=1.0cm]{figuras/modelo_3_true.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal6_python}
+\end{figure}
+
+Verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade.O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas.
+
+\subsection{Resultados do Modelo 4}
+
+\begin{figure}[H]
+    \centering
+    \caption{Os 10 Maiores Tempos Por Rota}
+    \includegraphics[width=11cm,height=10.0cm]{figuras/12-maiores_tempos_mod4.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico10_powerbi}
+\end{figure}
+
+Observa-se que quase não há diferença entre os tempos das rotas de um modelo sem penalidade e sua versão com penalidade. Também nota-se que há muitas rotas em comum entre um gráfico e outro, apesar de os conjuntos de rotas serem diferentes entre si.
+
+Nota-se que não há relação direta entre o total de doses movimentadas e o tempo da rota. O trajeto das linhas também é diferente entre um gráfico e outro, apesar de possuírem certa similaridade.
+
+\begin{figure}[H]
+    \centering
+    \caption{Percentual de Tipos de Rota}
+    \includegraphics[width=12cm,height=6.0cm]{figuras/7-percentual_rotas_mod4.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico11_powerbi}
+\end{figure}
+
+Verifica-se predomínio, em, aproximadamente 75\%, das rotas do tipo jp, na qual o município realiza o abastecimento de seus postos. O restante (aproximadamente 25\%) é preenchido pelas rotas do tipo ij, o que corresponde a casos em que um município precisou pegar doses da oferta de outro município.
+
+Vacina do maior tempo de entrega e rotas gargalo por etapa:
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - sem penalidade}
+    \includegraphics[width=8cm,height=1.2cm]{figuras/modelo_4_false.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal7_python}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - com penalidade}
+    \includegraphics[width=8cm,height=1.2cm]{figuras/modelo_4_true.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal8_python}
+\end{figure}
+
+Verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade.O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas.
+
+\subsection{Resultados do Modelo 5}
+
+\begin{figure}[H]
+    \centering
+    \caption{Os 10 Maiores Tempos Por Rota}
+    \includegraphics[width=11cm,height=10.0cm]{figuras/13-maiores_tempos_mod5.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico12_powerbi}
+\end{figure}
+
+Observa-se que quase não há diferença entre os tempos das rotas de um modelo sem penalidade e sua versão com penalidade. Também nota-se que as rotas são exatamente iguais entre um gráfico e estão na mesma ordem.
+
+Nota-se que não há relação direta entre o total de doses movimentadas e o tempo da rota. O trajeto das linhas é quase o mesmo entre um gráfico e outro.
+
+\begin{figure}[H]
+    \centering
+    \caption{Percentual de Tipos de Rota}
+    \includegraphics[width=16cm,height=6.0cm]{figuras/8-percentual_rotas_mod5.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico13_powerbi}
+\end{figure}
+
+Verifica-se predomínio, em pouco mais da metade, do uso das rotas do tipo jp, na qual o município realiza o abastecimento de seus postos. O tipo de ik aparece em segundo lugar com aproximadamente 23\% e esse número denota que, na maioria das vezes não foi necessário usar esse tipo de rota tipicamente acionada quando é necessário usar a oferta de outro município. O restante (aproximadamente 14\%) é preenchido pelas rotas do tipo kj, na qual o Estado realiza o abastecimento de sua capital. 
+
+Vacina do maior tempo de entrega e rotas gargalo por etapa:
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - sem penalidade}
+    \includegraphics[width=9cm,height=1.6cm]{figuras/modelo_5_false.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal9_python}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Informações do Terminal Com Python - com penalidade}
+    \includegraphics[width=9cm,height=1.6cm]{figuras/modelo_5_true.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:terminal10_python}
+\end{figure}
+
+Verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade.O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas.
+
+\bigskip
