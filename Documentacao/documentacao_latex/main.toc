@@ -57,51 +57,52 @@
 \contentsline {section}{\numberline {5.2}Estudo de Caso Escolhido}{52}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Métodos de Obtenção dos Dados}{53}{section.5.3}%
 \contentsline {subsection}{\numberline {5.3.1}Obtenção dos Dados de Custo em Horas}{53}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Obtenção dos Dados de Municípios}{55}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.2}Obtenção dos Dados de Municípios}{56}{subsection.5.3.2}%
 \contentsline {subsection}{\numberline {5.3.3}Obtenção dos Dados dos Centros Estaduais}{56}{subsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.3.4}Obtenção dos Dados de Postos de Vacinação}{56}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.4}Obtenção dos Dados de Postos de Vacinação}{57}{subsection.5.3.4}%
 \contentsline {subsection}{\numberline {5.3.5}Definição dos Dados de Oferta de Vacinas}{58}{subsection.5.3.5}%
-\contentsline {subsection}{\numberline {5.3.6}Obtenção dos Dados de Expiração das Vacinas}{58}{subsection.5.3.6}%
+\contentsline {subsection}{\numberline {5.3.6}Obtenção dos Dados de Expiração das Vacinas}{59}{subsection.5.3.6}%
 \contentsline {section}{\numberline {5.4}Definição dos Valores de Parâmetros}{59}{section.5.4}%
 \contentsline {subsection}{\numberline {5.4.1}Processamento Logístico e Penalização do Modal Aéreo}{59}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Capacidade de Transporte}{59}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.2}Capacidade de Transporte}{60}{subsection.5.4.2}%
 \contentsline {subsection}{\numberline {5.4.3}Velocidade Média dos Modais}{60}{subsection.5.4.3}%
-\contentsline {subsection}{\numberline {5.4.4}Fator de Tortuosidade da Distância Geodésica}{60}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.4}Fator de Tortuosidade da Distância Geodésica}{61}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.5}Fator de Tortuosidade da Distância Geodésica}{61}{subsection.5.4.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados e Análise}}{61}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Comparação entre Modelos}{61}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Resultados Individuais dos Modelos}{64}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Resultados do Modelo 1}{64}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Resultados do Modelo 2}{66}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}Resultados do Modelo 3}{68}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {6.2.4}Resultados do Modelo 4}{69}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {6.2.5}Resultados do Modelo 5}{71}{subsection.6.2.5}%
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados e Análise}}{63}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Comparação entre Modelos}{63}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Resultados Individuais dos Modelos}{66}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Resultados do Modelo 1}{66}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Resultados do Modelo 2}{68}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Resultados do Modelo 3}{70}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.2.4}Resultados do Modelo 4}{71}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {6.2.5}Resultados do Modelo 5}{73}{subsection.6.2.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Discussão e Conclusão}}{73}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Nível de Complexidade do Problema}{73}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Limitações da Modelagem}{75}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Limitações da Aplicação dos Modelos}{76}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Conclusões Finais}{77}{section.7.4}%
+\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Discussão e Conclusão}}{75}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Nível de Complexidade do Problema}{75}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Limitações da Modelagem}{77}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Limitações da Aplicação dos Modelos}{78}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Conclusões Finais}{79}{section.7.4}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{78}{section*.23}%
-\contentsline {chapter}{GLOSSÁRIO}{80}{section*.23}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{80}{section*.23}%
+\contentsline {chapter}{GLOSSÁRIO}{82}{section*.23}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{\textbf {Análise dos relatórios mensais de uso do serviço de renovação de empréstimos}}}{81}{chapter.A}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{\textbf {Análise dos relatórios mensais de uso do serviço de renovação de empréstimos}}}{83}{chapter.A}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{\textbf {Análise dos relatórios mensais de uso do serviço de empréstimo domiciliar}}}{82}{chapter.B}%
+\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{\textbf {Análise dos relatórios mensais de uso do serviço de empréstimo domiciliar}}}{84}{chapter.B}%
 \cftinsert {AAA}
 \renewcommand *{\cftappendixname }{ANEXO \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{\textbf {Demonstrativo de frequência diária ago./set. 2001}}}{83}{chapter.anexochapback.1}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{\textbf {Demonstrativo de frequência diária ago./set. 2001}}}{85}{chapter.anexochapback.1}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{\textbf {Demonstrativo de frequência diária jan./dez. 2002}}}{84}{chapter.anexochapback.2}%
+\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{\textbf {Demonstrativo de frequência diária jan./dez. 2002}}}{86}{chapter.anexochapback.2}%

@@ -66,8 +66,7 @@ P = {
 
 # Costantes
 # Hipotese pedida: capacidade constante por modal, independente da origem/destino.
-constantes_df = pd.read_csv(
-    "caso_nacional/constantes.csv", usecols=[0, 1]).dropna()
+constantes_df = pd.read_csv("caso_nacional/constantes.csv", usecols=[0, 1]).dropna()
 col_constante = constantes_df.columns[0]
 col_valor = constantes_df.columns[1]
 

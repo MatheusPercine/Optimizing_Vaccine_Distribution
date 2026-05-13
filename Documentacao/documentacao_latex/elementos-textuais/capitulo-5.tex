@@ -110,7 +110,9 @@ A distância geodésica representa a menor distância entre dois pontos sobre a 
 
 onde $R$ representa o raio médio da Terra.
 
-No entanto, essa medida não reflete diretamente a distância percorrida pelo modal rodoviário, mas somente pelo modal aéreo. Para contornar essa limitação, introduz-se um fator de tortuosidade $\lambda > 1$, que ajusta a distância geodésica de forma a aproximá-la da distância real percorrida. Assim, o tempo de deslocamento no modal rodoviário é estimado por:
+No entanto, essa medida não reflete diretamente a distância percorrida pelo modal rodoviário, mas somente pelo modal aéreo. Para contornar essa limitação, introduz-se um fator de tortuosidade $\beta > 1$, que ajusta a distância geodésica de forma a aproximá-la da distância real percorrida. Esse parâmetro reflete o fato de que a distância real percorrida em redes rodoviárias é tipicamente superior à distância em linha reta entre dois pontos, devido a fatores como traçado das vias, obstáculos geográficos e organização da malha viária.
+
+Assim, o tempo de deslocamento no modal rodoviário é estimado por:
 
 \[
 \tau_{ab}^{rod} = \frac{\beta \cdot \Delta_{ab}}{\theta_{rod}}
@@ -266,6 +268,7 @@ Para a penalização do modal aéreo adota-se:
 
 Este valor foi escolhido de forma a manter o transporte aéreo como uma alternativa viável apenas em situações nas quais a redução de tempo de deslocamento seja suficientemente relevante para compensar seu maior custo operacional. Valores muito próximos de 1 tornariam os modais praticamente equivalentes, enquanto valores excessivamente elevados eliminariam artificialmente a viabilidade do modal aéreo, distorcendo a dinâmica logística do problema.
 
+
 \subsection{Capacidade de Transporte}
 
 Sejam $u_{ab}^{rod}$ e $u_{ab}^{aereo}$ as capacidades máximas de transporte entre duas localidades $a$ e $b$ para os modais rodoviário e aéreo, respectivamente.
@@ -297,6 +300,7 @@ Para o transporte aéreo, a velocidade de $800$ km/h corresponde a uma média op
 
 Segundo informações da \cite{latam:2026}, a velocidade de cruzeiro de um avião comercial chega a $850$ km/h. Para incorporar tempos operacionais adicionais (como embarque e desembarque), velocidades de decolagem e pouso, será considerado um valor um pouco abaixo da velocidade de cruzeiro.
 
+
 \subsection{Fator de Tortuosidade da Distância Geodésica}
 
 Adota-se:
@@ -309,6 +313,78 @@ Esse valor reflete o fato de que a distância real percorrida em redes rodoviár
 
 O valor de $1.3$ foi escolhido por estar alinhado com estimativas amplamente utilizadas na literatura logística \cite{kweon2019}.
 
+\subsection{Fator de Tortuosidade da Distância Geodésica}
+
+Neste trabalho, adota-se um fator de tortuosidade $\beta$, tal que:
+
+\[
+\Delta_{ab}^{real} = \beta \cdot \Delta_{ab}
+\]
+
+onde:
+\begin{itemize}
+    \item $\Delta_{ab}^{real}$ representa a distância real, em km, para o deslocamento rodoviário;
+    \item $\Delta_{ab}$ representa a distância geodésica, em km, entre as localidades $a$ e $b$;
+    \item $\beta > 1$ é o fator de tortuosidade.
+\end{itemize}
+
+Na literatura, valores próximos de:
+
+\[
+\beta = 1.3
+\]
+
+são frequentemente adotados para representar a tortuosidade média de redes rodoviárias \cite{kweon2019}.
+
+Com o objetivo de validar empiricamente a escolha do valor desse parâmetro, foi realizada uma análise experimental utilizando 20 pares distintos de capitais brasileiras. Para cada par de municípios, foram calculadas:
+\begin{itemize}
+    \item a distância geodésica $\Delta_{ab}$, obtida pela fórmula de Haversine;
+    \item a distância rodoviária real $\Delta_{ab}^{real}$, obtida por consultas no Google Maps.
+\end{itemize}
+
+A partir desses valores, calculou-se individualmente o fator de tortuosidade para cada par analisado:
+
+\[
+\beta_{ab} = \frac{\Delta_{ab}^{real}}{\Delta_{ab}}
+\]
+
+Após a obtenção dos 20 valores amostrais, foram calculadas medidas estatísticas descritivas para avaliar o comportamento do parâmetro. Os resultados obtidos são apresentados na Tabela~\ref{tab:beta_estatisticas}.
+
+\begin{table}[H]
+\centering
+\caption{Estatísticas do fator de tortuosidade obtido empiricamente}
+\label{tab:beta_estatisticas}
+\begin{tabular}{lc}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\
+\hline
+Média & 1.3582 \\
+Mediana & 1.3069 \\
+Desvio padrão & 0.1983 \\
+Mínimo & 1.1427 \\
+Máximo & 1.8714 \\
+\hline
+\end{tabular}
+\end{table}
+
+Observa-se que os valores encontrados apresentam forte convergência com fatores de correção amplamente utilizados na literatura logística para aproximação entre distâncias euclidianas e distâncias rodoviárias reais.
+
+Além disso, embora a média amostral obtida tenha sido aproximadamente $1.35$, optou-se por considerar a mediana como principal referência estatística para validação do parâmetro. Em estatística aplicada a transportes, a mediana é frequentemente preferível à média em cenários sujeitos à presença de valores extremos, pois apresenta menor sensibilidade a outliers.
+
+No conjunto analisado, o valor máximo igual a $1.8714$ é referente a rota entre Manaus (no Norte) e Teresina (no Nordeste) e denota uma rota extremamente sinuosa capaz de elevar artificialmente a média amostral. A mediana, por sua vez, apresentou valor aproximado de $1.307$, mantendo forte aderência ao valor de referência utilizado na literatura.
+
+Dessa forma, considerando simultaneamente:
+\begin{itemize}
+    \item a validação empírica realizada com trajetos reais;
+    \item a robustez estatística da mediana frente a valores extremos;
+    \item e a consistência com referências acadêmicas da área logística;
+\end{itemize}
+
+adotou-se neste trabalho o seguinte valor para o fator de tortuosidade:
+
+\[
+\boxed{\beta = 1.3}
+\]
 
 \bigskip
 
