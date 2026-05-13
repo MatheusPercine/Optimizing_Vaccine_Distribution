@@ -67,7 +67,6 @@
 \contentsline {subsection}{\numberline {5.4.2}Capacidade de Transporte}{60}{subsection.5.4.2}%
 \contentsline {subsection}{\numberline {5.4.3}Velocidade Média dos Modais}{60}{subsection.5.4.3}%
 \contentsline {subsection}{\numberline {5.4.4}Fator de Tortuosidade da Distância Geodésica}{61}{subsection.5.4.4}%
-\contentsline {subsection}{\numberline {5.4.5}Fator de Tortuosidade da Distância Geodésica}{61}{subsection.5.4.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados e Análise}}{63}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Comparação entre Modelos}{63}{section.6.1}%

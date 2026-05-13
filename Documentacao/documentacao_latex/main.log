@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.30)  13 MAY 2026 19:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.30)  13 MAY 2026 19:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1143,7 +1143,7 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 {C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}]) (main.toc [14
 
 ] [15]
-Overfull \hbox (4.55563pt too wide) in paragraph at lines 98--98
+Overfull \hbox (4.55563pt too wide) in paragraph at lines 97--97
  \T1/lmr/bx/n/12 DE USO DO SER-VI«O DE EM-PR…S-TIMO 
  []
 
@@ -1157,7 +1157,7 @@ Cap\'{\i }tulo 2.
 [19
 
 ]
-<figuras/transportation_problem.png, id=358, 326.4195pt x 353.52075pt>
+<figuras/transportation_problem.png, id=356, 326.4195pt x 353.52075pt>
 File: figuras/transportation_problem.png Graphic file (type png)
 <use figuras/transportation_problem.png>
 Package pdftex.def Info: figuras/transportation_problem.png  used on input line 74.
@@ -1198,19 +1198,19 @@ Cap\'{\i }tulo 5.
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 36.
  (C:\Users\matheus\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61]) (elementos-textuais/capitulo-6.tex [62
+) [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61
 pdfTeX warning (ext4): destination with the same identifier (name{table.5.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1 \chapter
-            {Resultados e An√°lise}]
+l.360 
+      ]) (elementos-textuais/capitulo-6.tex [62]
 Cap\'{\i }tulo 6.
-<figuras/1-tempo_max_por_modelo.png, id=617, 1040.08575pt x 444.4605pt>
+<figuras/1-tempo_max_por_modelo.png, id=613, 1040.08575pt x 444.4605pt>
 File: figuras/1-tempo_max_por_modelo.png Graphic file (type png)
 <use figuras/1-tempo_max_por_modelo.png>
 Package pdftex.def Info: figuras/1-tempo_max_por_modelo.png  used on input line 14.
 (pdftex.def)             Requested size: 398.33142pt x 199.1712pt.
-<figuras/2-funcao_objetivo_por_modelo.png, id=618, 1040.688pt x 446.8695pt>
+<figuras/2-funcao_objetivo_por_modelo.png, id=614, 1040.688pt x 446.8695pt>
 File: figuras/2-funcao_objetivo_por_modelo.png Graphic file (type png)
 <use figuras/2-funcao_objetivo_por_modelo.png>
 Package pdftex.def Info: figuras/2-funcao_objetivo_por_modelo.png  used on input line 26.
@@ -1223,12 +1223,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.2}) h
                                                   \__shipout_drop_firstpage_...
 l.30 
       <./figuras/1-tempo_max_por_modelo.png>]
-<figuras/3-custo_medio_por_dose_por_modelo.png, id=624, 1043.097pt x 441.44925pt>
+<figuras/3-custo_medio_por_dose_por_modelo.png, id=620, 1043.097pt x 441.44925pt>
 File: figuras/3-custo_medio_por_dose_por_modelo.png Graphic file (type png)
 <use figuras/3-custo_medio_por_dose_por_modelo.png>
 Package pdftex.def Info: figuras/3-custo_medio_por_dose_por_modelo.png  used on input line 36.
 (pdftex.def)             Requested size: 398.3387pt x 199.16898pt.
-<figuras/4-doses_movimentadas_por_modelo.png, id=625, 1043.69925pt x 442.65375pt>
+<figuras/4-doses_movimentadas_por_modelo.png, id=621, 1043.69925pt x 442.65375pt>
 File: figuras/4-doses_movimentadas_por_modelo.png Graphic file (type png)
 <use figuras/4-doses_movimentadas_por_modelo.png>
 Package pdftex.def Info: figuras/4-doses_movimentadas_por_modelo.png  used on input line 46.
@@ -1244,7 +1244,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.4}) h
                                                   \__shipout_drop_firstpage_...
 l.50 
       <./figuras/2-funcao_objetivo_por_modelo.png> <./figuras/3-custo_medio_por_dose_por_modelo.png>]
-<figuras/5-percentual_modais.png, id=632, 778.70924pt x 439.6425pt>
+<figuras/5-percentual_modais.png, id=628, 778.70924pt x 439.6425pt>
 File: figuras/5-percentual_modais.png Graphic file (type png)
 <use figuras/5-percentual_modais.png>
 Package pdftex.def Info: figuras/5-percentual_modais.png  used on input line 56.
@@ -1260,12 +1260,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.6}) h
                                                   \__shipout_drop_firstpage_...
 l.62 
       <./figuras/4-doses_movimentadas_por_modelo.png> <./figuras/5-percentual_modais.png>]
-<figuras/9-maiores_tempos_mod1.png, id=640, 498.06075pt x 426.393pt>
+<figuras/9-maiores_tempos_mod1.png, id=636, 498.06075pt x 426.393pt>
 File: figuras/9-maiores_tempos_mod1.png Graphic file (type png)
 <use figuras/9-maiores_tempos_mod1.png>
 Package pdftex.def Info: figuras/9-maiores_tempos_mod1.png  used on input line 74.
 (pdftex.def)             Requested size: 312.99715pt x 284.53673pt.
-<figuras/modelo_1_false.png, id=641, 373.99725pt x 46.37325pt>
+<figuras/modelo_1_false.png, id=637, 373.99725pt x 46.37325pt>
 File: figuras/modelo_1_false.png Graphic file (type png)
 <use figuras/modelo_1_false.png>
 Package pdftex.def Info: figuras/modelo_1_false.png  used on input line 88.
@@ -1276,12 +1276,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.7}) h
                                                   \__shipout_drop_firstpage_...
 l.91 \end{figure}
                   <./figuras/9-maiores_tempos_mod1.png>]
-<figuras/modelo_1_true.png, id=647, 375.20175pt x 43.96425pt>
+<figuras/modelo_1_true.png, id=643, 375.20175pt x 43.96425pt>
 File: figuras/modelo_1_true.png Graphic file (type png)
 <use figuras/modelo_1_true.png>
 Package pdftex.def Info: figuras/modelo_1_true.png  used on input line 96.
 (pdftex.def)             Requested size: 256.07845pt x 34.14505pt.
-<figuras/10-maiores_tempos_mod2.png, id=648, 543.2295pt x 426.393pt>
+<figuras/10-maiores_tempos_mod2.png, id=644, 543.2295pt x 426.393pt>
 File: figuras/10-maiores_tempos_mod2.png Graphic file (type png)
 <use figuras/10-maiores_tempos_mod2.png>
 Package pdftex.def Info: figuras/10-maiores_tempos_mod2.png  used on input line 108.
@@ -1297,7 +1297,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.9}) h
                                                   \__shipout_drop_firstpage_...
 l.112 
        <./figuras/modelo_1_false.png> <./figuras/modelo_1_true.png>]
-<figuras/6-percentual_rotas_mod2.png, id=655, 407.72325pt x 175.25475pt>
+<figuras/6-percentual_rotas_mod2.png, id=651, 407.72325pt x 175.25475pt>
 File: figuras/6-percentual_rotas_mod2.png Graphic file (type png)
 <use figuras/6-percentual_rotas_mod2.png>
 Package pdftex.def Info: figuras/6-percentual_rotas_mod2.png  used on input line 121.
@@ -1313,17 +1313,17 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.11}) 
                                                   \__shipout_drop_firstpage_...
 l.127 
        <./figuras/10-maiores_tempos_mod2.png> <./figuras/6-percentual_rotas_mod2.png>]
-<figuras/modelo_2_false.png, id=662, 361.95226pt x 54.2025pt>
+<figuras/modelo_2_false.png, id=658, 361.95226pt x 54.2025pt>
 File: figuras/modelo_2_false.png Graphic file (type png)
 <use figuras/modelo_2_false.png>
 Package pdftex.def Info: figuras/modelo_2_false.png  used on input line 133.
 (pdftex.def)             Requested size: 256.08212pt x 42.68138pt.
-<figuras/modelo_2_true.png, id=663, 361.95226pt x 55.407pt>
+<figuras/modelo_2_true.png, id=659, 361.95226pt x 55.407pt>
 File: figuras/modelo_2_true.png Graphic file (type png)
 <use figuras/modelo_2_true.png>
 Package pdftex.def Info: figuras/modelo_2_true.png  used on input line 141.
 (pdftex.def)             Requested size: 256.08212pt x 42.67957pt.
-<figuras/11-maiores_tempos_mod3.png, id=664, 611.28375pt x 431.211pt>
+<figuras/11-maiores_tempos_mod3.png, id=660, 611.28375pt x 431.211pt>
 File: figuras/11-maiores_tempos_mod3.png Graphic file (type png)
 <use figuras/11-maiores_tempos_mod3.png>
 Package pdftex.def Info: figuras/11-maiores_tempos_mod3.png  used on input line 153.
@@ -1339,12 +1339,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.13}) 
                                                   \__shipout_drop_firstpage_...
 l.157 
        <./figuras/modelo_2_false.png> <./figuras/modelo_2_true.png>]
-<figuras/modelo_3_false.png, id=671, 428.802pt x 43.96425pt>
+<figuras/modelo_3_false.png, id=667, 428.802pt x 43.96425pt>
 File: figuras/modelo_3_false.png Graphic file (type png)
 <use figuras/modelo_3_false.png>
 Package pdftex.def Info: figuras/modelo_3_false.png  used on input line 167.
 (pdftex.def)             Requested size: 241.84828pt x 28.45297pt.
-<figuras/modelo_3_true.png, id=672, 428.802pt x 43.362pt>
+<figuras/modelo_3_true.png, id=668, 428.802pt x 43.362pt>
 File: figuras/modelo_3_true.png Graphic file (type png)
 <use figuras/modelo_3_true.png>
 Package pdftex.def Info: figuras/modelo_3_true.png  used on input line 175.
@@ -1365,12 +1365,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.16}) 
                                                   \__shipout_drop_firstpage_...
 l.181 
        <./figuras/11-maiores_tempos_mod3.png> <./figuras/modelo_3_false.png> <./figuras/modelo_3_true.png>]
-<figuras/12-maiores_tempos_mod4.png, id=680, 576.35326pt x 428.802pt>
+<figuras/12-maiores_tempos_mod4.png, id=676, 576.35326pt x 428.802pt>
 File: figuras/12-maiores_tempos_mod4.png Graphic file (type png)
 <use figuras/12-maiores_tempos_mod4.png>
 Package pdftex.def Info: figuras/12-maiores_tempos_mod4.png  used on input line 187.
 (pdftex.def)             Requested size: 312.97621pt x 284.5347pt.
-<figuras/7-percentual_rotas_mod4.png, id=681, 338.4645pt x 169.8345pt>
+<figuras/7-percentual_rotas_mod4.png, id=677, 338.4645pt x 169.8345pt>
 File: figuras/7-percentual_rotas_mod4.png Graphic file (type png)
 <use figuras/7-percentual_rotas_mod4.png>
 Package pdftex.def Info: figuras/7-percentual_rotas_mod4.png  used on input line 199.
@@ -1381,17 +1381,17 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.17}) 
                                                   \__shipout_drop_firstpage_...
 l.203 
        <./figuras/12-maiores_tempos_mod4.png>]
-<figuras/modelo_4_false.png, id=688, 394.47375pt x 54.80475pt>
+<figuras/modelo_4_false.png, id=684, 394.47375pt x 54.80475pt>
 File: figuras/modelo_4_false.png Graphic file (type png)
 <use figuras/modelo_4_false.png>
 Package pdftex.def Info: figuras/modelo_4_false.png  used on input line 211.
 (pdftex.def)             Requested size: 227.62119pt x 34.14499pt.
-<figuras/modelo_4_true.png, id=689, 396.2805pt x 54.80475pt>
+<figuras/modelo_4_true.png, id=685, 396.2805pt x 54.80475pt>
 File: figuras/modelo_4_true.png Graphic file (type png)
 <use figuras/modelo_4_true.png>
 Package pdftex.def Info: figuras/modelo_4_true.png  used on input line 219.
 (pdftex.def)             Requested size: 227.62973pt x 34.14499pt.
-<figuras/13-maiores_tempos_mod5.png, id=690, 614.89725pt x 425.79076pt>
+<figuras/13-maiores_tempos_mod5.png, id=686, 614.89725pt x 425.79076pt>
 File: figuras/13-maiores_tempos_mod5.png Graphic file (type png)
 <use figuras/13-maiores_tempos_mod5.png>
 Package pdftex.def Info: figuras/13-maiores_tempos_mod5.png  used on input line 231.
@@ -1412,7 +1412,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.20}) 
                                                   \__shipout_drop_firstpage_...
 l.235 
        <./figuras/7-percentual_rotas_mod4.png> <./figuras/modelo_4_false.png> <./figuras/modelo_4_true.png>]
-<figuras/8-percentual_rotas_mod5.png, id=698, 513.71925pt x 172.2435pt>
+<figuras/8-percentual_rotas_mod5.png, id=694, 513.71925pt x 172.2435pt>
 File: figuras/8-percentual_rotas_mod5.png Graphic file (type png)
 <use figuras/8-percentual_rotas_mod5.png>
 Package pdftex.def Info: figuras/8-percentual_rotas_mod5.png  used on input line 243.
@@ -1423,12 +1423,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.21}) 
                                                   \__shipout_drop_firstpage_...
 l.247 
        <./figuras/13-maiores_tempos_mod5.png>]
-<figuras/modelo_5_false.png, id=704, 383.031pt x 70.46326pt>
+<figuras/modelo_5_false.png, id=700, 383.031pt x 70.46326pt>
 File: figuras/modelo_5_false.png Graphic file (type png)
 <use figuras/modelo_5_false.png>
 Package pdftex.def Info: figuras/modelo_5_false.png  used on input line 255.
 (pdftex.def)             Requested size: 256.09174pt x 45.52531pt.
-<figuras/modelo_5_true.png, id=705, 385.44pt x 70.46326pt>
+<figuras/modelo_5_true.png, id=701, 385.44pt x 70.46326pt>
 File: figuras/modelo_5_true.png Graphic file (type png)
 <use figuras/modelo_5_true.png>
 Package pdftex.def Info: figuras/modelo_5_true.png  used on input line 263.
@@ -1521,17 +1521,17 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 27119 strings out of 467691
- 498688 string characters out of 5414019
+ 27117 strings out of 467691
+ 498666 string characters out of 5414019
  983512 words of memory out of 5000000
- 55451 multiletter control sequences out of 15000+600000
+ 55450 multiletter control sequences out of 15000+600000
  668535 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  99i,12n,107p,2602b,729s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (88 pages, 1149151 bytes).
+Output written on main.pdf (88 pages, 1147595 bytes).
 PDF statistics:
- 1187 PDF objects out of 1200 (max. 8388607)
- 257 named destinations out of 1000 (max. 500000)
- 822 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1180 PDF objects out of 1200 (max. 8388607)
+ 256 named destinations out of 1000 (max. 500000)
+ 814 words of extra memory for PDF output out of 10000 (max. 10000000)
 
