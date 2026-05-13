@@ -5,7 +5,14 @@ import math
 import os
 import random
 
-execucao_df = pd.read_csv("caso_nacional/execucao.csv").dropna()
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+
+def path(*parts):
+    return os.path.join(base_dir, *parts)
+
+
+execucao_df = pd.read_csv(path("caso_nacional", "execucao.csv")).dropna()
 
 # print("Escolha o modelo a ser executado (1 - Intermunicipal):")
 # modelo = int(input())
@@ -13,7 +20,7 @@ execucao_df = pd.read_csv("caso_nacional/execucao.csv").dropna()
 # penalidade = False
 
 # Lê e transforma 'Variavel' em índice, depois transpõe (vira de lado)
-df = pd.read_csv("caso_nacional/execucao.csv").set_index('Variavel').T
+df = pd.read_csv(path("caso_nacional", "execucao.csv")).set_index('Variavel').T
 
 # Agora 'modelo' e 'penalidade' são colunas acessíveis diretamente
 modelo = int(df['modelo'].iloc[0])
@@ -24,7 +31,7 @@ penalidade = str(df['penalidade'].iloc[0]).lower() == 'true'
 # =========================
 
 # conjunto de todos os municipios (origem e destino) (primeira coluna do CSV: apenas nomes)
-M_df = pd.read_csv("caso_nacional/municipios.csv")
+M_df = pd.read_csv(path("caso_nacional", "municipios.csv"))
 
 # Criar dicionário: {'Nome_Municipio': 'UF'}
 
@@ -43,15 +50,15 @@ I = M_df.iloc[:, 0].dropna().astype(str).tolist()
 J = M_df.iloc[:, 0].dropna().astype(str).tolist()
 
 # Estados (simplificação de "secretaria estadual de saúde")
-K = pd.read_csv("caso_nacional/estados.csv",
+K = pd.read_csv(path("caso_nacional", "estados.csv"),
                 usecols=[0]).iloc[:, 0].dropna().astype(str).tolist()
 
 # tipos de vacina
-V = pd.read_csv("caso_nacional/vacinas.csv",
+V = pd.read_csv(path("caso_nacional", "vacinas.csv"),
                 usecols=[0]).iloc[:, 0].dropna().astype(str).tolist()
 
 # Postos por municipio (CSV com duas colunas: municipio, posto)
-postos_df = pd.read_csv("caso_nacional/postos.csv")
+postos_df = pd.read_csv(path("caso_nacional", "postos.csv"))
 col_municipio = "municipio"
 col_posto = "posto"
 
@@ -67,7 +74,7 @@ P = {
 # Costantes
 # Hipotese pedida: capacidade constante por modal, independente da origem/destino.
 constantes_df = pd.read_csv(
-    "caso_nacional/constantes.csv", usecols=[0, 1]).dropna()
+    path("caso_nacional", "constantes.csv"), usecols=[0, 1]).dropna()
 col_constante = constantes_df.columns[0]
 col_valor = constantes_df.columns[1]
 
@@ -115,7 +122,8 @@ for j in J:
                 })
 
 df_demanda_postos = pd.DataFrame(rows_demanda_postos)
-df_demanda_postos.to_csv("caso_nacional/demanda_postos.csv", index=False)
+df_demanda_postos.to_csv(
+    path("caso_nacional", "demanda_postos.csv"), index=False)
 
 
 # ========================================================
@@ -155,7 +163,7 @@ demanda_municipios_df = pd.DataFrame(
     ]
 )
 demanda_municipios_df.to_csv(
-    "caso_nacional/demanda_municipios.csv", index=False)
+    path("caso_nacional", "demanda_municipios.csv"), index=False)
 
 # ========================================================
 # GERAÇÃO DE CENÁRIOS DE OFERTA (INTRA VS INTER)
@@ -219,13 +227,13 @@ for v in V:
 
 # Salva os dois arquivos
 pd.DataFrame(rows_intra).to_csv(
-    "caso_nacional/oferta_o_intra.csv", index=False)
+    path("caso_nacional", "oferta_o_intra.csv"), index=False)
 pd.DataFrame(rows_inter).to_csv(
-    "caso_nacional/oferta_o_inter.csv", index=False)
+    path("caso_nacional", "oferta_o_inter.csv"), index=False)
 
 
 # Oferta nos centros municipais (CSV com colunas: municipio, vacina, oferta)
-oferta_o_df = pd.read_csv("caso_nacional/oferta_o.csv",
+oferta_o_df = pd.read_csv(path("caso_nacional", "oferta_o.csv"),
                           usecols=[0, 1, 2]).dropna()
 col_municipio = oferta_o_df.columns[0]
 col_vacina = oferta_o_df.columns[1]
@@ -241,7 +249,9 @@ o = {
 s = dict(o)
 
 
-def exportar_oferta_s_csv(s, caminho="caso_nacional/oferta_s.csv"):
+def exportar_oferta_s_csv(s, caminho=None):
+    if caminho is None:
+        caminho = path("caso_nacional", "oferta_s.csv")
     s_df = pd.DataFrame(
         [
             {"municipio": municipio, "vacina": vacina, "oferta": oferta}
@@ -295,7 +305,7 @@ q = {(j, p): 10000 for j in J for p in P[j]}
 
 # Tempo até expiração (horas) - etapa intermunicipal
 expiracao_iv_df = pd.read_csv(
-    "caso_nacional/expiracao_iv.csv", usecols=[0, 1, 2]).dropna()
+    path("caso_nacional", "expiracao_iv.csv"), usecols=[0, 1, 2]).dropna()
 col_municipio = expiracao_iv_df.columns[0]
 col_vacina = expiracao_iv_df.columns[1]
 col_tempo = expiracao_iv_df.columns[2]
@@ -314,7 +324,9 @@ e_iv = {
 e_jv = dict(e_iv)
 
 
-def exportar_expiracao_jv_csv(e_jv, caminho="caso_nacional/expiracao_jv.csv"):
+def exportar_expiracao_jv_csv(e_jv, caminho=None):
+    if caminho is None:
+        caminho = path("caso_nacional", "expiracao_jv.csv")
     e_jv_df = pd.DataFrame(
         [
             {"municipio": municipio, "vacina": vacina, "tempo_expiracao": tempo}
@@ -432,7 +444,7 @@ municipios_coordenadas = {
     for _, row in M_df.iterrows()
 }
 
-estados_df = pd.read_csv("caso_nacional/estados.csv")
+estados_df = pd.read_csv(path("caso_nacional", "estados.csv"))
 
 estados_coordenadas = {
     row["estado"]: (float(row["latitude"]), float(row["longitude"]))
@@ -1330,18 +1342,22 @@ def modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, rho_jv):
 
 def exportar_detalhes(modelo, penalidade, lista_rotas):
     """Gera o CSV individual de cada execução (1 de 10 possíveis)."""
-    if not os.path.exists("resultados_caso_nacional"):
-        os.makedirs("resultados_caso_nacional")
+    resultados_dir = path("resultados_caso_nacional")
+    if not os.path.exists(resultados_dir):
+        os.makedirs(resultados_dir)
 
     df = pd.DataFrame(lista_rotas)
-    nome_arq = f"resultados_caso_nacional/detalhes_mod{modelo}_pen{str(penalidade).upper()}.csv"
+    nome_arq = path(
+        "resultados_caso_nacional",
+        f"detalhes_mod{modelo}_pen{str(penalidade).upper()}.csv"
+    )
     df.to_csv(nome_arq, index=False)
     print(f"\n-> Arquivo de detalhes gerado: {nome_arq}")
 
 
 def registrar_comparativo(resumo):
     """Anexa os resultados globais ao CSV de comparação (o 11º arquivo)."""
-    caminho = "resultados_caso_nacional/comparativo_modelos.csv"
+    caminho = path("resultados_caso_nacional", "comparativo_modelos.csv")
     df_novo = pd.DataFrame([resumo])
 
     # Se o arquivo não existe, cria com cabeçalho. Se existe, anexa.
@@ -1445,7 +1461,8 @@ def executar_modelomodelo_intermunicipal_sem_intermediacao_estadual(penalidade, 
         print(f"\nTotal de doses movimentadas: {total_doses}")
         print(f"\nTempo Total de Distribuicao: {resultado['T']:.3f} horas")
         print(f"\nVacina do maior tempo: {resultado['vacina']}")
-        print(f"\nGargalo Etapa ij - {resultado['T']:.3f} horas (Rota: {resultado['rota']} ({resultado['doses']} doses))")
+        print(
+            f"\nGargalo Etapa ij - {resultado['T']:.3f} horas (Rota: {resultado['rota']} ({resultado['doses']} doses))")
 
         print("-"*60)
 
@@ -1695,7 +1712,8 @@ def executar_modelo_intramunicipal(penalidade, rho_jv):
         print(f"\nTotal de doses movimentadas: {total_doses}")
         print(f"\nTempo Total de Distribuicao: {resultado['T']:.3f} horas")
         print(f"\nVacina do maior tempo: {resultado['vacina']}")
-        print(f"\nGargalo Etapa jp - {resultado['T']:.3f} horas (Rota: {resultado['rota']} ({resultado['doses']} doses))")
+        print(
+            f"\nGargalo Etapa jp - {resultado['T']:.3f} horas (Rota: {resultado['rota']} ({resultado['doses']} doses))")
 
         print("-"*60)
 
