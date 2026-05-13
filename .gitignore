@@ -8,3 +8,22 @@
 *.out
 *.synctex.gz
 *.toc
+
+# LaTeX build artifacts
+Documentacao/documentacao_latex/*.aux
+Documentacao/documentacao_latex/*.log
+Documentacao/documentacao_latex/*.fdb_latexmk
+Documentacao/documentacao_latex/*.fls
+Documentacao/documentacao_latex/*.lof
+Documentacao/documentacao_latex/*.lot
+Documentacao/documentacao_latex/*.toc
+Documentacao/documentacao_latex/*.synctex.gz
+Documentacao/documentacao_latex/*.bbl
+Documentacao/documentacao_latex/*.blg
+Documentacao/documentacao_latex/*.out
+Documentacao/documentacao_latex/*.glo
+Documentacao/documentacao_latex/*.ist
+Documentacao/documentacao_latex/*.gls
+Documentacao/documentacao_latex/*.lol
+Documentacao/documentacao_latex/*.loq
+Documentacao/documentacao_latex/*.pdf
