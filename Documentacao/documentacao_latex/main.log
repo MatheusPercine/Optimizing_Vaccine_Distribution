@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.30)  1 MAY 2026 13:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.30)  13 MAY 2026 14:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1143,7 +1143,7 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 {C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}]) (main.toc [14
 
 ] [15]
-Overfull \hbox (4.55563pt too wide) in paragraph at lines 97--97
+Overfull \hbox (4.55563pt too wide) in paragraph at lines 101--101
  \T1/lmr/bx/n/12 DE USO DO SER-VI�O DE EM-PR�S-TIMO 
  []
 
@@ -1157,7 +1157,7 @@ Cap\'{\i }tulo 2.
 [19
 
 ]
-<figuras/transportation_problem.png, id=354, 326.4195pt x 353.52075pt>
+<figuras/transportation_problem.png, id=366, 326.4195pt x 353.52075pt>
 File: figuras/transportation_problem.png Graphic file (type png)
 <use figuras/transportation_problem.png>
 Package pdftex.def Info: figuras/transportation_problem.png  used on input line 74.
@@ -1167,11 +1167,22 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.2.1}) h
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.120 \subsection
-                 {Limitações do Modelo Clássico} <./figuras/transportation_problem.png>] [22]) (elementos-textuais/capitulo-3.tex [23]
+                 {Limitações do Modelo Clássico} <./figuras/transportation_problem.png>] [22] [23]
+<figuras/grafico_shukla.png, id=389, 455.90324pt x 356.532pt>
+File: figuras/grafico_shukla.png Graphic file (type png)
+<use figuras/grafico_shukla.png>
+Package pdftex.def Info: figuras/grafico_shukla.png  used on input line 206.
+(pdftex.def)             Requested size: 312.99443pt x 199.17781pt.
+ [24
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.230     \item $
+                 doses(m)$ é o número de doses iniciais demandadas pela cl... <./figuras/grafico_shukla.png>] [25] [26] [27]) (elementos-textuais/capitulo-3.tex [28]
 Cap\'{\i }tulo 3.
-[24
+[29
 
-]) (elementos-textuais/capitulo-4.tex [25]
+]) (elementos-textuais/capitulo-4.tex [30]
 Cap\'{\i }tulo 4.
 
 Underfull \hbox (badness 10000) in paragraph at lines 17--20
@@ -1183,173 +1194,168 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--20
 
  []
 
-[26
+[31
 
-] [27
+] [32
 pdfTeX warning (ext4): destination with the same identifier (name{quadro.4.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.81 
-     ] [28] [29] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48]) (elementos-textuais/capitulo-5.tex [49]
+     ] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51] [52] [53]) (elementos-textuais/capitulo-5.tex [54]
 Cap\'{\i }tulo 5.
-[50
+[55
 
 ]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 36.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 38.
  (C:\Users\matheus\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [51] [52] [53] [54] [55] [56] [57] [58] [59]) (elementos-textuais/capitulo-6.tex [60]
+) [56] [57] [58] [59] [60] [61] [62] [63] [64] [65]) (elementos-textuais/capitulo-6.tex [66]
 Cap\'{\i }tulo 6.
-<figuras/1-tempo_max_por_modelo.png, id=602, 1040.08575pt x 444.4605pt>
+<figuras/1-tempo_max_por_modelo.png, id=663, 1040.08575pt x 444.4605pt>
 File: figuras/1-tempo_max_por_modelo.png Graphic file (type png)
 <use figuras/1-tempo_max_por_modelo.png>
 Package pdftex.def Info: figuras/1-tempo_max_por_modelo.png  used on input line 14.
 (pdftex.def)             Requested size: 398.33142pt x 199.1712pt.
-<figuras/2-funcao_objetivo_por_modelo.png, id=603, 1040.688pt x 446.8695pt>
+<figuras/2-funcao_objetivo_por_modelo.png, id=664, 1040.688pt x 446.8695pt>
 File: figuras/2-funcao_objetivo_por_modelo.png Graphic file (type png)
 <use figuras/2-funcao_objetivo_por_modelo.png>
 Package pdftex.def Info: figuras/2-funcao_objetivo_por_modelo.png  used on input line 26.
 (pdftex.def)             Requested size: 398.33977pt x 199.16655pt.
-[61
+[67
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.2}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.30 
       <./figuras/1-tempo_max_por_modelo.png>]
-<figuras/3-custo_medio_por_dose_por_modelo.png, id=609, 1043.097pt x 441.44925pt>
+<figuras/3-custo_medio_por_dose_por_modelo.png, id=670, 1043.097pt x 441.44925pt>
 File: figuras/3-custo_medio_por_dose_por_modelo.png Graphic file (type png)
 <use figuras/3-custo_medio_por_dose_por_modelo.png>
 Package pdftex.def Info: figuras/3-custo_medio_por_dose_por_modelo.png  used on input line 36.
 (pdftex.def)             Requested size: 398.3387pt x 199.16898pt.
-<figuras/4-doses_movimentadas_por_modelo.png, id=610, 1043.69925pt x 442.65375pt>
+<figuras/4-doses_movimentadas_por_modelo.png, id=671, 1043.69925pt x 442.65375pt>
 File: figuras/4-doses_movimentadas_por_modelo.png Graphic file (type png)
 <use figuras/4-doses_movimentadas_por_modelo.png>
 Package pdftex.def Info: figuras/4-doses_movimentadas_por_modelo.png  used on input line 46.
 (pdftex.def)             Requested size: 398.32979pt x 199.17207pt.
- [62
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.50 
-     
+ [68
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.50 
+     
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.5}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.50 
       <./figuras/2-funcao_objetivo_por_modelo.png> <./figuras/3-custo_medio_por_dose_por_modelo.png>]
-<figuras/5-percentual_modais.png, id=617, 778.70924pt x 439.6425pt>
+<figuras/5-percentual_modais.png, id=678, 778.70924pt x 439.6425pt>
 File: figuras/5-percentual_modais.png Graphic file (type png)
 <use figuras/5-percentual_modais.png>
 Package pdftex.def Info: figuras/5-percentual_modais.png  used on input line 56.
 (pdftex.def)             Requested size: 426.79427pt x 256.07957pt.
- [63
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.5}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.62 
-     
+ [69
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.62 
+     
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.7}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.62 
       <./figuras/4-doses_movimentadas_por_modelo.png> <./figuras/5-percentual_modais.png>]
-<figuras/9-maiores_tempos_mod1.png, id=624, 498.06075pt x 426.393pt>
+<figuras/9-maiores_tempos_mod1.png, id=685, 498.06075pt x 426.393pt>
 File: figuras/9-maiores_tempos_mod1.png Graphic file (type png)
 <use figuras/9-maiores_tempos_mod1.png>
 Package pdftex.def Info: figuras/9-maiores_tempos_mod1.png  used on input line 74.
 (pdftex.def)             Requested size: 312.99715pt x 284.53673pt.
-<figuras/modelo_1_false.png, id=625, 373.99725pt x 46.37325pt>
+<figuras/modelo_1_false.png, id=686, 373.99725pt x 46.37325pt>
 File: figuras/modelo_1_false.png Graphic file (type png)
 <use figuras/modelo_1_false.png>
 Package pdftex.def Info: figuras/modelo_1_false.png  used on input line 88.
 (pdftex.def)             Requested size: 256.08954pt x 34.14441pt.
- [64
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.7}) has been already used, duplicate ignored
+ [70
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.8}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.91 \end{figure}
                   <./figuras/9-maiores_tempos_mod1.png>]
-<figuras/modelo_1_true.png, id=631, 375.20175pt x 43.96425pt>
+<figuras/modelo_1_true.png, id=692, 375.20175pt x 43.96425pt>
 File: figuras/modelo_1_true.png Graphic file (type png)
 <use figuras/modelo_1_true.png>
 Package pdftex.def Info: figuras/modelo_1_true.png  used on input line 96.
 (pdftex.def)             Requested size: 256.07845pt x 34.14505pt.
-<figuras/10-maiores_tempos_mod2.png, id=632, 543.2295pt x 426.393pt>
+<figuras/10-maiores_tempos_mod2.png, id=693, 543.2295pt x 426.393pt>
 File: figuras/10-maiores_tempos_mod2.png Graphic file (type png)
 <use figuras/10-maiores_tempos_mod2.png>
 Package pdftex.def Info: figuras/10-maiores_tempos_mod2.png  used on input line 108.
 (pdftex.def)             Requested size: 312.9845pt x 284.53673pt.
- [65
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.8}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.112 
-      
+ [71
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6.9}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.112 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.10}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.112 
        <./figuras/modelo_1_false.png> <./figuras/modelo_1_true.png>]
-<figuras/6-percentual_rotas_mod2.png, id=640, 407.72325pt x 175.25475pt>
+<figuras/6-percentual_rotas_mod2.png, id=701, 407.72325pt x 175.25475pt>
 File: figuras/6-percentual_rotas_mod2.png Graphic file (type png)
 <use figuras/6-percentual_rotas_mod2.png>
 Package pdftex.def Info: figuras/6-percentual_rotas_mod2.png  used on input line 121.
 (pdftex.def)             Requested size: 312.97733pt x 142.26575pt.
- [66
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.10}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.127 
-      
+ [72
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6.11}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.127 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.12}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.127 
        <./figuras/10-maiores_tempos_mod2.png> <./figuras/6-percentual_rotas_mod2.png>]
-<figuras/modelo_2_false.png, id=647, 361.95226pt x 54.2025pt>
+<figuras/modelo_2_false.png, id=708, 361.95226pt x 54.2025pt>
 File: figuras/modelo_2_false.png Graphic file (type png)
 <use figuras/modelo_2_false.png>
 Package pdftex.def Info: figuras/modelo_2_false.png  used on input line 133.
 (pdftex.def)             Requested size: 256.08212pt x 42.68138pt.
-<figuras/modelo_2_true.png, id=648, 361.95226pt x 55.407pt>
+<figuras/modelo_2_true.png, id=709, 361.95226pt x 55.407pt>
 File: figuras/modelo_2_true.png Graphic file (type png)
 <use figuras/modelo_2_true.png>
 Package pdftex.def Info: figuras/modelo_2_true.png  used on input line 141.
 (pdftex.def)             Requested size: 256.08212pt x 42.67957pt.
-<figuras/11-maiores_tempos_mod3.png, id=649, 611.28375pt x 431.211pt>
+<figuras/11-maiores_tempos_mod3.png, id=710, 611.28375pt x 431.211pt>
 File: figuras/11-maiores_tempos_mod3.png Graphic file (type png)
 <use figuras/11-maiores_tempos_mod3.png>
 Package pdftex.def Info: figuras/11-maiores_tempos_mod3.png  used on input line 153.
 (pdftex.def)             Requested size: 341.43047pt x 284.54092pt.
- [67
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.12}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.157 
-      
+ [73
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6.13}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.157 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.14}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.157 
        <./figuras/modelo_2_false.png> <./figuras/modelo_2_true.png>]
-<figuras/modelo_3_false.png, id=656, 428.802pt x 43.96425pt>
+<figuras/modelo_3_false.png, id=717, 428.802pt x 43.96425pt>
 File: figuras/modelo_3_false.png Graphic file (type png)
 <use figuras/modelo_3_false.png>
 Package pdftex.def Info: figuras/modelo_3_false.png  used on input line 167.
 (pdftex.def)             Requested size: 241.84828pt x 28.45297pt.
-<figuras/modelo_3_true.png, id=657, 428.802pt x 43.362pt>
+<figuras/modelo_3_true.png, id=718, 428.802pt x 43.362pt>
 File: figuras/modelo_3_true.png Graphic file (type png)
 <use figuras/modelo_3_true.png>
 Package pdftex.def Info: figuras/modelo_3_true.png  used on input line 175.
 (pdftex.def)             Requested size: 241.84828pt x 28.45291pt.
- [68
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.14}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.181 
-      
+ [74
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6.15}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1359,44 +1365,44 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.16}) 
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.181 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.17}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.181 
        <./figuras/11-maiores_tempos_mod3.png> <./figuras/modelo_3_false.png> <./figuras/modelo_3_true.png>]
-<figuras/12-maiores_tempos_mod4.png, id=665, 576.35326pt x 428.802pt>
+<figuras/12-maiores_tempos_mod4.png, id=726, 576.35326pt x 428.802pt>
 File: figuras/12-maiores_tempos_mod4.png Graphic file (type png)
 <use figuras/12-maiores_tempos_mod4.png>
 Package pdftex.def Info: figuras/12-maiores_tempos_mod4.png  used on input line 187.
 (pdftex.def)             Requested size: 312.97621pt x 284.5347pt.
-<figuras/7-percentual_rotas_mod4.png, id=666, 338.4645pt x 169.8345pt>
+<figuras/7-percentual_rotas_mod4.png, id=727, 338.4645pt x 169.8345pt>
 File: figuras/7-percentual_rotas_mod4.png Graphic file (type png)
 <use figuras/7-percentual_rotas_mod4.png>
 Package pdftex.def Info: figuras/7-percentual_rotas_mod4.png  used on input line 199.
 (pdftex.def)             Requested size: 341.45909pt x 170.72035pt.
- [69
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.17}) has been already used, duplicate ignored
+ [75
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.18}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.203 
        <./figuras/12-maiores_tempos_mod4.png>]
-<figuras/modelo_4_false.png, id=672, 394.47375pt x 54.80475pt>
+<figuras/modelo_4_false.png, id=733, 394.47375pt x 54.80475pt>
 File: figuras/modelo_4_false.png Graphic file (type png)
 <use figuras/modelo_4_false.png>
 Package pdftex.def Info: figuras/modelo_4_false.png  used on input line 211.
 (pdftex.def)             Requested size: 227.62119pt x 34.14499pt.
-<figuras/modelo_4_true.png, id=673, 396.2805pt x 54.80475pt>
+<figuras/modelo_4_true.png, id=734, 396.2805pt x 54.80475pt>
 File: figuras/modelo_4_true.png Graphic file (type png)
 <use figuras/modelo_4_true.png>
 Package pdftex.def Info: figuras/modelo_4_true.png  used on input line 219.
 (pdftex.def)             Requested size: 227.62973pt x 34.14499pt.
-<figuras/13-maiores_tempos_mod5.png, id=674, 614.89725pt x 425.79076pt>
+<figuras/13-maiores_tempos_mod5.png, id=735, 614.89725pt x 425.79076pt>
 File: figuras/13-maiores_tempos_mod5.png Graphic file (type png)
 <use figuras/13-maiores_tempos_mod5.png>
 Package pdftex.def Info: figuras/13-maiores_tempos_mod5.png  used on input line 231.
 (pdftex.def)             Requested size: 312.98358pt x 284.53116pt.
- [70
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.18}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.235 
-      
+ [76
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6.19}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1406,34 +1412,34 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.20}) 
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.235 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.21}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.235 
        <./figuras/7-percentual_rotas_mod4.png> <./figuras/modelo_4_false.png> <./figuras/modelo_4_true.png>]
-<figuras/8-percentual_rotas_mod5.png, id=682, 513.71925pt x 172.2435pt>
+<figuras/8-percentual_rotas_mod5.png, id=743, 513.71925pt x 172.2435pt>
 File: figuras/8-percentual_rotas_mod5.png Graphic file (type png)
 <use figuras/8-percentual_rotas_mod5.png>
 Package pdftex.def Info: figuras/8-percentual_rotas_mod5.png  used on input line 243.
 (pdftex.def)             Requested size: 455.26468pt x 170.72395pt.
- [71
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.21}) has been already used, duplicate ignored
+ [77
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.22}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.247 
        <./figuras/13-maiores_tempos_mod5.png>]
-<figuras/modelo_5_false.png, id=689, 383.031pt x 70.46326pt>
+<figuras/modelo_5_false.png, id=750, 383.031pt x 70.46326pt>
 File: figuras/modelo_5_false.png Graphic file (type png)
 <use figuras/modelo_5_false.png>
 Package pdftex.def Info: figuras/modelo_5_false.png  used on input line 255.
 (pdftex.def)             Requested size: 256.09174pt x 45.52531pt.
-<figuras/modelo_5_true.png, id=690, 385.44pt x 70.46326pt>
+<figuras/modelo_5_true.png, id=751, 385.44pt x 70.46326pt>
 File: figuras/modelo_5_true.png Graphic file (type png)
 <use figuras/modelo_5_true.png>
 Package pdftex.def Info: figuras/modelo_5_true.png  used on input line 263.
 (pdftex.def)             Requested size: 256.07324pt x 45.52531pt.
-) (elementos-textuais/capitulo-7.tex [72
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6.22}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1 \chapter
-            {Discussão e Conclusão}
+) (elementos-textuais/capitulo-7.tex [78
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6.23}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1443,17 +1449,27 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.24}) 
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.1 \chapter
+            {Discussão e Conclusão}
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.25}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.1 \chapter
             {Discussão e Conclusão} <./figuras/8-percentual_rotas_mod5.png> <./figuras/modelo_5_false.png> <./figuras/modelo_5_true.png>]
 Cap\'{\i }tulo 7.
-[73
+[79
 
-] [74] [75] [76]) (main.bbl [77]
+] [80] [81] [82]) (main.bbl [83]
 bibitemlist
-[78
+[84
 
-]) [79]
+] [85]
+Overfull \hbox (115.97679pt too wide) in paragraph at lines 197--203
+\T1/lmr/m/n/12 optimal-[]distribution-[]problem-[]of-[]covid-[]19-[]vaccines-[]russias-[]experience-[]using-[]linear-[]programming-[]method-[]16367$[][].  
+ []
+
+) [86]
 No file main.gls.
-[80
+[87
 
 ] (elementos-postextuais/apendice-1.tex
 AP\^ENDICE A.
@@ -1462,7 +1478,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--214
 
  []
 
-[81
+[88
 
 ] (elementos-postextuais/apendice-2.tex
 AP\^ENDICE B.
@@ -1471,14 +1487,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--217
 
  []
 
-[82] (elementos-postextuais/anexo-1.tex
+[89] (elementos-postextuais/anexo-1.tex
 ANEXO A.
 )
 Underfull \hbox (badness 10000) in paragraph at lines 4--237
 
  []
 
-[83
+[90
 
 ] (elementos-postextuais/anexo-2.tex
 ANEXO B.
@@ -1487,7 +1503,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 3--240
 
  []
 
-[84]
+[91]
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
@@ -1516,17 +1532,17 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 27108 strings out of 467691
- 498528 string characters out of 5414019
- 983429 words of memory out of 5000000
- 55444 multiletter control sequences out of 15000+600000
+ 27156 strings out of 467691
+ 499456 string characters out of 5414019
+ 984168 words of memory out of 5000000
+ 55469 multiletter control sequences out of 15000+600000
  668535 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  99i,12n,107p,2602b,729s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Users/matheus/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (86 pages, 1142770 bytes).
+Output written on main.pdf (93 pages, 1245141 bytes).
 PDF statistics:
- 1169 PDF objects out of 1200 (max. 8388607)
- 253 named destinations out of 1000 (max. 500000)
- 814 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1252 PDF objects out of 1440 (max. 8388607)
+ 276 named destinations out of 1000 (max. 500000)
+ 851 words of extra memory for PDF output out of 10000 (max. 10000000)
 

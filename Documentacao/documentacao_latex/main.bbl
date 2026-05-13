@@ -137,12 +137,27 @@ Dispon{\'\i}vel em:
   \url{https://abepro.org.br/biblioteca/TN\_STO\_291\_1644\_38767.pdf}. Acesso
   em: 9 abr. 2026.}
 
+\bibitem[Oliveira et al. 2023]{oliveira2023optimization}
+\abntrefinfo{Oliveira et al.}{OLIVEIRA et al.}{2023}
+{OLIVEIRA, C. et al. Optimization of the {COVID-19} vaccine distribution route
+  using the vehicle routing problem with time windows model and capacity
+  constraint.
+\textbf{Applied System Innovation}, MDPI, v.~6, n.~1, p.~17, 2023.
+Dispon{\'\i}vel em:
+  \url{https://doaj.org/article/f9476580ade0490982498535877dfcd1}.}
+
 \bibitem[{S{\~A}O PAULO (Estado)} 2025]{SESSP:2025}
 \abntrefinfo{{S{\~A}O PAULO (Estado)}}{{S{\~A}O PAULO (Estado)}}{2025}
 {{S{\~A}O PAULO (Estado)}. \textbf{Documento T{\'e}cnico: Vacina Febre
   Amarela}.
 S{\~a}o Paulo, 2025. Acesso em: 29 abr. 2026. Dispon{\'\i}vel em:
   \url{https://www.saude.sp.gov.br/resources/cve-centro-de-vigilancia-epidemiologica/areas-de-vigilancia/doencas-de-transmissao-por-vetores-e-zoonoses/doc/famarela/2025/doctecnico21032025\_vacina\_febre\_amarela\_correto.pdf}.}
+
+\bibitem[Shukla et al. 2022]{shukla2022optimizing}
+\abntrefinfo{Shukla et al.}{SHUKLA et al.}{2022}
+{SHUKLA, S. et al. Optimizing vaccine distribution via mobile clinics: a case
+  study on {COVID-19} vaccine distribution to long-term care facilities.
+\textbf{Vaccine}, Elsevier, v.~40, n.~5, p. 734--741, 2022.}
 
 \bibitem[Tomasi 2010]{ricardobeat:2010}
 \abntrefinfo{Tomasi}{TOMASI}{2010}
@@ -176,5 +191,14 @@ Dispon{\'\i}vel em:
 Acesso em: 28 abr. 2026. {\'{U}}ltima modifica{\c{c}}{\~{a}}o: 22 abr. 2026.
 Dispon{\'\i}vel em:
   \url{https://pt.wikipedia.org/wiki/Lista\_de\_capitais\_do\_Brasil\_por\_popula\%C3\%A7\%C3\%A3o}.}
+
+\bibitem[Zakharova et al. 2025]{zakharova2025optimal}
+\abntrefinfo{Zakharova et al.}{ZAKHAROVA et al.}{2025}
+{ZAKHAROVA, K. et al. Optimal distribution problem of {COVID-19} vaccines:
+  {Russia's} experience using linear programming method.
+\textbf{Electronic Journal of General Medicine}, Modestum, v.~22, n.~4, p.
+  em658, 2025.
+Dispon{\'\i}vel em:
+  \url{https://www.ejgm.co.uk/article/optimal-distribution-problem-of-covid-19-vaccines-russias-experience-using-linear-programming-method-16367}.}
 
 \end{thebibliography}
