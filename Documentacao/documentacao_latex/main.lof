@@ -1,25 +1,26 @@
 \babel@toc {brazil}{}\relax 
 \contentsline {figure}{\numberline {1}{\ignorespaces Esquema de Rede para o Problema de Transporte}}{21}{figure.2.1}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Tempo Máximo Por Modelo}}{61}{figure.6.2}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Valor da Função Objetivo Por Modelo}}{62}{figure.6.3}%
-\contentsline {figure}{\numberline {4}{\ignorespaces Custo Médio (Em Horas) por Dose Por Modelo}}{62}{figure.6.4}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Total de Doses Movimentadas Por Modelo}}{63}{figure.6.5}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Percentual de Uso dos Modais}}{63}{figure.6.6}%
-\contentsline {figure}{\numberline {7}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{64}{figure.6.7}%
-\contentsline {figure}{\numberline {8}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{65}{figure.6.8}%
-\contentsline {figure}{\numberline {9}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{65}{figure.6.9}%
-\contentsline {figure}{\numberline {10}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{66}{figure.6.10}%
-\contentsline {figure}{\numberline {11}{\ignorespaces Percentual de Tipos de Rota}}{66}{figure.6.11}%
-\contentsline {figure}{\numberline {12}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{67}{figure.6.12}%
-\contentsline {figure}{\numberline {13}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{67}{figure.6.13}%
-\contentsline {figure}{\numberline {14}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{68}{figure.6.14}%
-\contentsline {figure}{\numberline {15}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{68}{figure.6.15}%
-\contentsline {figure}{\numberline {16}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{68}{figure.6.16}%
-\contentsline {figure}{\numberline {17}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{69}{figure.6.17}%
-\contentsline {figure}{\numberline {18}{\ignorespaces Percentual de Tipos de Rota}}{70}{figure.6.18}%
-\contentsline {figure}{\numberline {19}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{70}{figure.6.19}%
-\contentsline {figure}{\numberline {20}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{70}{figure.6.20}%
-\contentsline {figure}{\numberline {21}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{71}{figure.6.21}%
-\contentsline {figure}{\numberline {22}{\ignorespaces Percentual de Tipos de Rota}}{72}{figure.6.22}%
-\contentsline {figure}{\numberline {23}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{72}{figure.6.23}%
-\contentsline {figure}{\numberline {24}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{72}{figure.6.24}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Grafo de fluxo transformado para o problema de atribuição de vacinas}}{24}{figure.2.2}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Tempo Máximo Por Modelo}}{67}{figure.6.3}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Valor da Função Objetivo Por Modelo}}{68}{figure.6.4}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Custo Médio (Em Horas) por Dose Por Modelo}}{68}{figure.6.5}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Total de Doses Movimentadas Por Modelo}}{69}{figure.6.6}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Percentual de Uso dos Modais}}{69}{figure.6.7}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{70}{figure.6.8}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{71}{figure.6.9}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{71}{figure.6.10}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{72}{figure.6.11}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Percentual de Tipos de Rota}}{72}{figure.6.12}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{73}{figure.6.13}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{73}{figure.6.14}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{74}{figure.6.15}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{74}{figure.6.16}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{74}{figure.6.17}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{75}{figure.6.18}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Percentual de Tipos de Rota}}{76}{figure.6.19}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{76}{figure.6.20}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{76}{figure.6.21}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Os 10 Maiores Tempos Por Rota}}{77}{figure.6.22}%
+\contentsline {figure}{\numberline {23}{\ignorespaces Percentual de Tipos de Rota}}{78}{figure.6.23}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Informações do Terminal Com Python - sem penalidade}}{78}{figure.6.24}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Informações do Terminal Com Python - com penalidade}}{78}{figure.6.25}%

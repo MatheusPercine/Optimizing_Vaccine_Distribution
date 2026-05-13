@@ -2,6 +2,8 @@
 
 Os arquivos da aplicação estão disponíveis no repositório do projeto no GitHub, no link: \url{https://github.com/MatheusPercine/Optimizing_Vaccine_Distribution}
 
+Os experimentos computacionais foram realizados em um computador LENOVO (modelo 83ME) equipado com processador 12th Gen Intel(R) Core(TM) i5-12450HX @ 2.40 GHz, possuindo 8 núcleos físicos e 12 processadores lógicos. O sistema conta com 16 GB de memória RAM (DDR5 com velocidade de 4800 MT/s) e armazenamento em SSD NVMe Samsung. O sistema operacional utilizado foi o Microsoft Windows 11 Home Single Language de 64 bits.
+
 \section{Análise dos Métodos de Resolução De Problemas de Otimização}
 
 Para a aplicação, deve-se escolher um método adequeado de resolução do problema e para isso se faz necessário analisar as possibilidades para selecioná-las ou descartá-las.
@@ -33,7 +35,7 @@ Além disso, abordagens mais avançadas, como o Branch-and-Cut, aprimoram esse p
 
 Nesse contexto, para a resolução do modelo, foi utilizado o \textit{solver} Gurobi Optimizer que é uma ferramenta de otimização de alto desempenho projetada para resolver problemas de Programação Linear, Programação Linear Inteira e suas variações. Internamente, o solver combina algoritmos como Branch-and-Bound, Branch-and-Cut, heurísticas de busca e técnicas de pré-processamento, além de utilizar métodos eficientes como o Simplex e algoritmos de pontos interiores para resolver as relaxações contínuas dos subproblemas.
 
-A implementação computacional do modelo foi realizada na \textbf{linguagem de programação Python}, utilizando a biblioteca \texttt{gurobipy}, que constitui a interface oficial do Gurobi para essa linguagem. O Python foi escolhido por sua ampla utilização em aplicações científicas, facilidade de manipulação de dados e integração com bibliotecas de otimização. Nesse contexto, o papel do Python é servir como ambiente de modelagem e experimentação, enquanto o Gurobi atua como o mecanismo responsável pela resolução do problema de otimização propriamente dito.
+A implementação computacional do modelo foi realizada na \textbf{linguagem de programação Python na versão 3.13.7}, utilizando a biblioteca \texttt{gurobipy} na versão 13.0.1, que constitui a interface oficial do Gurobi para essa linguagem. O Python foi escolhido por sua ampla utilização em aplicações científicas, facilidade de manipulação de dados e integração com bibliotecas de otimização. Nesse contexto, o papel do Python é servir como ambiente de modelagem e experimentação, enquanto o Gurobi atua como o mecanismo responsável pela resolução do problema de otimização propriamente dito.
 
 Uma das principais vantagens do Gurobi é sua capacidade de lidar com problemas de grande escala de forma eficiente. No problema abordado neste trabalho, o número de variáveis e restrições cresce rapidamente em função da quantidade de origens, destinos e tipos de vacinas. Nesse cenário, a utilização de métodos exatos implementados de forma otimizada é essencial para garantir a obtenção de soluções ótimas em tempo computacional viável.
 

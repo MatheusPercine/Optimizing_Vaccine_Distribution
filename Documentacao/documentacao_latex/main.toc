@@ -20,88 +20,92 @@
 \contentsline {subsection}{\numberline {2.1.5}Limitações do Modelo Clássico}{22}{subsection.2.1.5}%
 \contentsline {subsection}{\numberline {2.1.6}Programação Linear Inteira}{22}{subsection.2.1.6}%
 \contentsline {subsection}{\numberline {2.1.7}Relação com o Problema Proposto}{23}{subsection.2.1.7}%
+\contentsline {section}{\numberline {2.2}Trabalhos Correlatos}{23}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Otimização de Distribuição via Clínicas Móveis}{23}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Modelo de Otimização de Distribuição de Vacinas Pela Minimização da Mortalidade}{25}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Otimização da Distribuição de Vacinas Usando Problema de Roteamento de Veículo com Janelas de Tempo}{26}{subsection.2.2.3}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase []{Logística da Distribuição de Vacinas}}{24}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Monitoramento de Estoques}{24}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Etapas da Distribuição de Vacinas}{24}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Armazenagem}{24}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Modais de transporte}{25}{section.3.4}%
+\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase []{Logística da Distribuição de Vacinas}}{29}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Monitoramento de Estoques}{29}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Etapas da Distribuição de Vacinas}{29}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Armazenagem}{29}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Modais de transporte}{30}{section.3.4}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase []{Modelagem do Transporte de Vacinas}}{26}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Modelo Intermunicipal Sem Intermediação Estadual}{26}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Variável de Decisão e Parâmetros}{26}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Função Objetivo}{30}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Restrições}{31}{subsection.4.1.3}%
-\contentsline {section}{\numberline {4.2}Modelo Intermunicipal Com Intermediação Estadual}{32}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Variável de Decisão e Parâmetros}{33}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Função Objetivo}{36}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Restrições}{37}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Modelagem do transporte intramunicipal de vacinas}{39}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Variável de Decisão e Parâmetros}{39}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Função Objetivo}{40}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Restrições}{41}{subsection.4.3.3}%
-\contentsline {section}{\numberline {4.4}Modelo Unificado Sem Intermediação Estadual}{42}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Variáveis de Decisão e Parâmetros}{42}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Função Objetivo}{44}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Restrições}{44}{subsection.4.4.3}%
-\contentsline {section}{\numberline {4.5}Modelo Unificado Com Intermediação Estadual}{47}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Variáveis de Decisão e Parâmetros}{47}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Função Objetivo}{48}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Restrições}{49}{subsection.4.5.3}%
+\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase []{Modelagem do Transporte de Vacinas}}{31}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Modelo Intermunicipal Sem Intermediação Estadual}{31}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Variável de Decisão e Parâmetros}{31}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Função Objetivo}{35}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Restrições}{36}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Modelo Intermunicipal Com Intermediação Estadual}{37}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Variável de Decisão e Parâmetros}{38}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Função Objetivo}{41}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Restrições}{42}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Modelagem do transporte intramunicipal de vacinas}{44}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Variável de Decisão e Parâmetros}{44}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Função Objetivo}{45}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Restrições}{46}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Modelo Unificado Sem Intermediação Estadual}{47}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Variáveis de Decisão e Parâmetros}{47}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Função Objetivo}{49}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Restrições}{49}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Modelo Unificado Com Intermediação Estadual}{52}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Variáveis de Decisão e Parâmetros}{52}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Função Objetivo}{53}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Restrições}{54}{subsection.4.5.3}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{APLICAÇÃO}}{50}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Análise dos Métodos de Resolução De Problemas de Otimização}{50}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}O Método Simplex}{50}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Gurobi Optimizer}{51}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Métodos Metaheurísticos}{52}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Estudo de Caso Escolhido}{52}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Métodos de Obtenção dos Dados}{53}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Obtenção dos Dados de Custo em Horas}{53}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Obtenção dos Dados de Municípios}{55}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Obtenção dos Dados dos Centros Estaduais}{56}{subsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.3.4}Obtenção dos Dados de Postos de Vacinação}{56}{subsection.5.3.4}%
-\contentsline {subsection}{\numberline {5.3.5}Definição dos Dados de Oferta de Vacinas}{58}{subsection.5.3.5}%
-\contentsline {subsection}{\numberline {5.3.6}Obtenção dos Dados de Expiração das Vacinas}{58}{subsection.5.3.6}%
-\contentsline {section}{\numberline {5.4}Definição dos Valores de Parâmetros}{59}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Processamento Logístico e Penalização do Modal Aéreo}{59}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Capacidade de Transporte}{59}{subsection.5.4.2}%
-\contentsline {subsection}{\numberline {5.4.3}Velocidade Média dos Modais}{60}{subsection.5.4.3}%
-\contentsline {subsection}{\numberline {5.4.4}Fator de Tortuosidade da Distância Geodésica}{60}{subsection.5.4.4}%
+\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{APLICAÇÃO}}{55}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Análise dos Métodos de Resolução De Problemas de Otimização}{55}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}O Método Simplex}{55}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Gurobi Optimizer}{56}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Métodos Metaheurísticos}{57}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Estudo de Caso Escolhido}{57}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Métodos de Obtenção dos Dados}{58}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Obtenção dos Dados de Custo em Horas}{58}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Obtenção dos Dados de Municípios}{61}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Obtenção dos Dados dos Centros Estaduais}{61}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Obtenção dos Dados de Postos de Vacinação}{62}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.5}Definição dos Dados de Oferta de Vacinas}{63}{subsection.5.3.5}%
+\contentsline {subsection}{\numberline {5.3.6}Obtenção dos Dados de Expiração das Vacinas}{64}{subsection.5.3.6}%
+\contentsline {section}{\numberline {5.4}Definição dos Valores de Parâmetros}{64}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Processamento Logístico e Penalização do Modal Aéreo}{64}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Capacidade de Transporte}{65}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Velocidade Média dos Modais}{65}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Fator de Tortuosidade da Distância Geodésica}{66}{subsection.5.4.4}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados e Análise}}{61}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Comparação entre Modelos}{61}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Resultados Individuais dos Modelos}{64}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Resultados do Modelo 1}{64}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Resultados do Modelo 2}{66}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}Resultados do Modelo 3}{68}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {6.2.4}Resultados do Modelo 4}{69}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {6.2.5}Resultados do Modelo 5}{71}{subsection.6.2.5}%
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados e Análise}}{67}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Comparação entre Modelos}{67}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Resultados Individuais dos Modelos}{70}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Resultados do Modelo 1}{70}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Resultados do Modelo 2}{72}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Resultados do Modelo 3}{74}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.2.4}Resultados do Modelo 4}{75}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {6.2.5}Resultados do Modelo 5}{77}{subsection.6.2.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Discussão e Conclusão}}{73}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Nível de Complexidade do Problema}{73}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Limitações da Modelagem}{75}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Limitações da Aplicação dos Modelos}{76}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Conclusões Finais}{77}{section.7.4}%
+\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Discussão e Conclusão}}{79}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Nível de Complexidade do Problema}{79}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Limitações da Modelagem}{81}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Limitações da Aplicação dos Modelos}{82}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Conclusões Finais}{83}{section.7.4}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{78}{section*.23}%
-\contentsline {chapter}{GLOSSÁRIO}{80}{section*.23}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{84}{section*.23}%
+\contentsline {chapter}{GLOSSÁRIO}{87}{section*.23}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{\textbf {Análise dos relatórios mensais de uso do serviço de renovação de empréstimos}}}{81}{chapter.A}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{\textbf {Análise dos relatórios mensais de uso do serviço de renovação de empréstimos}}}{88}{chapter.A}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{\textbf {Análise dos relatórios mensais de uso do serviço de empréstimo domiciliar}}}{82}{chapter.B}%
+\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{\textbf {Análise dos relatórios mensais de uso do serviço de empréstimo domiciliar}}}{89}{chapter.B}%
 \cftinsert {AAA}
 \renewcommand *{\cftappendixname }{ANEXO \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{\textbf {Demonstrativo de frequência diária ago./set. 2001}}}{83}{chapter.anexochapback.1}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{\textbf {Demonstrativo de frequência diária ago./set. 2001}}}{90}{chapter.anexochapback.1}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{\textbf {Demonstrativo de frequência diária jan./dez. 2002}}}{84}{chapter.anexochapback.2}%
+\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{\textbf {Demonstrativo de frequência diária jan./dez. 2002}}}{91}{chapter.anexochapback.2}%
