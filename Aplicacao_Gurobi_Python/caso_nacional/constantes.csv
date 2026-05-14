@@ -1,6 +1,6 @@
 constante,valor
-U_ROD,1200000
-U_AEREO,1600000
+U_ROD,300000
+U_AEREO,800000
 delta_rod,0.5
 delta_aereo,2.0
 alpha,1.3

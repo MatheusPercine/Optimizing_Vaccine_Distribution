@@ -33,6 +33,15 @@ penalidade = str(df['penalidade'].iloc[0]).lower() == 'true'
 # conjunto de todos os municipios (origem e destino) (primeira coluna do CSV: apenas nomes)
 M_df = pd.read_csv(path("caso_nacional", "municipios.csv"))
 
+W_rod_mun = {
+    str(row["municipio"]): int(row["W_rod"])
+    for _, row in M_df.iterrows()
+}
+W_aereo_mun = {
+    str(row["municipio"]): int(row["W_aereo"])
+    for _, row in M_df.iterrows()
+}
+
 # Criar dicionário: {'Nome_Municipio': 'UF'}
 
 # Mapeamento Municipio -> Estado
@@ -50,8 +59,17 @@ I = M_df.iloc[:, 0].dropna().astype(str).tolist()
 J = M_df.iloc[:, 0].dropna().astype(str).tolist()
 
 # Estados (simplificação de "secretaria estadual de saúde")
-K = pd.read_csv(path("caso_nacional", "estados.csv"),
-                usecols=[0]).iloc[:, 0].dropna().astype(str).tolist()
+estados_df = pd.read_csv(path("caso_nacional", "estados.csv"))
+K = estados_df.iloc[:, 0].dropna().astype(str).tolist()
+
+W_rod_estado = {
+    str(row["estado"]): int(row["W_rod"])
+    for _, row in estados_df.iterrows()
+}
+W_aereo_estado = {
+    str(row["estado"]): int(row["W_aereo"])
+    for _, row in estados_df.iterrows()
+}
 
 # tipos de vacina
 V = pd.read_csv(path("caso_nacional", "vacinas.csv"),
@@ -300,9 +318,6 @@ def calcular_s_com_intermediacao_estadual():
 # Exporta tambem o s inicial derivado de o.
 exportar_oferta_s_csv(s)
 
-# q = u sempre se considerarmos transporte rodoviario
-q = {(j, p): 10000 for j in J for p in P[j]}
-
 # Tempo até expiração (horas) - etapa intermunicipal
 expiracao_iv_df = pd.read_csv(
     path("caso_nacional", "expiracao_iv.csv"), usecols=[0, 1, 2]).dropna()
@@ -431,8 +446,6 @@ rho_jv = {
 
 U_ROD = int(constantes["U_ROD"])   # Capacidade por modal (doses)
 U_AEREO = int(constantes["U_AEREO"])  # Capacidade por modal (doses)
-# q = u sempre se considerarmos transporte rodoviario
-q = {(j, p): int(constantes["U_ROD"]) for j in J for p in P[j]}
 
 
 # ===================================
@@ -443,8 +456,6 @@ municipios_coordenadas = {
     row["municipio"]: (float(row["latitude"]), float(row["longitude"]))
     for _, row in M_df.iterrows()
 }
-
-estados_df = pd.read_csv(path("caso_nacional", "estados.csv"))
 
 estados_coordenadas = {
     row["estado"]: (float(row["latitude"]), float(row["longitude"]))
@@ -630,19 +641,28 @@ for j in J:
 
 # Capacidade efetiva alinhada ao modal de menor custo em cada arco.
 u_ij = {
-    (i, j): U_ROD if C_ij_rod[i, j] <= C_ij_aereo[i, j] else U_AEREO
+    (i, j): (W_rod_mun.get(i, 0) * U_ROD)
+    if C_ij_rod[i, j] <= C_ij_aereo[i, j]
+    else (W_aereo_mun.get(i, 0) * U_AEREO)
     for i in I for j in J
 }
 
 u_ik = {
-    (i, k): U_ROD if C_ik_rod[i, k] <= C_ik_aereo[i, k] else U_AEREO
+    (i, k): (W_rod_mun.get(i, 0) * U_ROD)
+    if C_ik_rod[i, k] <= C_ik_aereo[i, k]
+    else (W_aereo_mun.get(i, 0) * U_AEREO)
     for i in I for k in K
 }
 
 u_kj = {
-    (k, j): U_ROD if C_kj_rod[k, j] <= C_kj_aereo[k, j] else U_AEREO
+    (k, j): (W_rod_estado.get(k, 0) * U_ROD)
+    if C_kj_rod[k, j] <= C_kj_aereo[k, j]
+    else (W_aereo_estado.get(k, 0) * U_AEREO)
     for k in K for j in J
 }
+
+# q = u sempre se considerarmos transporte rodoviario
+q = {(j, p): W_rod_mun.get(j, 0) * U_ROD for j in J for p in P[j]}
 
 # Mantem a mesma interface das restricoes ja implementadas.
 u = {}

@@ -134,18 +134,49 @@ Assim, o custo total de transporte $C_{ij}$ é definido como o menor tempo efeti
 
 Essa abordagem não introduz novas variáveis de decisão e, dessa forma, mantém a eficiência computacional do modelo, ao mesmo tempo em que aumenta sua aderência à realidade operacional do sistema de distribuição de vacinas.
 
-Além das diferenças de tempo entre os modais de transporte, é necessário considerar que a \textbf{capacidade de transporte} também pode variar de acordo com o modal utilizado.
+Além das diferenças de tempo entre os modais de transporte, é necessário considerar que a \textbf{capacidade de transporte} também pode variar de acordo o número de veículos disponíveis para cada modal.
+
+Na prática, diferentes municípios possuem diferentes quantidades de veículos disponíveis para operacão. Dessa forma, municípios mais estruturados tendem a possuir maior capacidade de distribuição de vacinas.
 
 Sejam:
+
 \[
-u_{ij}^{\text{rod}}, \quad u_{ij}^{\text{areo}} \in \mathbb{R}_{\geq 0}
+W_{i}^{\text{rod}}, \quad W_{i}^{\text{areo}} \in \mathbb{Z}_{>0}
 \]
 
 onde:
 \begin{itemize}
-    \item $u_{ij}^{\text{rod}}$ representa a capacidade máxima agregada de transporte entre os municípios $i$ e $j$ utilizando o modal rodoviário;
-    \item $u_{ij}^{\text{areo}}$ representa a capacidade máxima agregada de transporte entre os municípios $i$ e $j$ utilizando o modal aéreo.
+    \item $W_{i}^{\text{rod}}$ representa a quantidade de caminhões disponíveis no município $i$;
+    \item $W_{i}^{\text{areo}}$ representa a quantidade de aviões disponíveis no município $i$.
 \end{itemize}
+
+Além disso, sejam:
+
+\[
+U^{\text{rod}}, \quad U^{\text{areo}} \in \mathbb{R}_{>0}
+\]
+
+onde:
+\begin{itemize}
+    \item $U^{\text{rod}}$ representa a capacidade média de carga de um veículo domodal rodoviário;
+    \item $U^{\text{areo}}$ representa a capacidade média de carga de um veículo do modal aéreo.
+\end{itemize}
+
+Neste trabalho, a capacidade não representa apenas a capacidade física de um único veículo individual, mas sim uma \textbf{capacidade operacional agregada} disponível ao longo do horizonte de planejamento considerado pelo modelo.
+
+Dessa forma, a capacidade efetiva de transporte por modal é definida como:
+
+\[
+u_{ij}^{\text{rod}} = W_i^{\text{rod}} \cdot U^{\text{rod}}
+\]
+
+\[
+u_{ij}^{\text{areo}} = W_i^{\text{areo}} \cdot U^{\text{areo}}
+\]
+
+\[
+u_{ij}^{\text{rod}}, \quad u_{ij}^{\text{areo}} \in \mathbb{R}_{\geq 0}
+\]
 
 Neste trabalho, a capacidade $u_{ab}$ não descreve o limite de um único veículo isolado, mas sim a \textbf{capacidade agregada de fluxo logístico} viabilizada pelo modal ao longo do horizonte de planejamento da campanha de distribuição. Essa abstração engloba a capacidade de um veículo multiplicada pelo tamanho da frota alocada para a rota e pelo número de viagens (ciclos) realizados no período.
 
@@ -437,11 +468,12 @@ A capacidade efetiva da segunda etapa é definida por:
 \begin{equation}
 u_{kj} =
 \begin{cases}
-u_{kj}^{\text{rod}}, & \text{se } C_{kj}^{\text{rod}} \le C_{kj}^{\text{areo}} \\
-u_{kj}^{\text{areo}}, & \text{caso contrário}
+u_{kj}^{\text{rod}} = W_k^{rod} \cdot U^{rod}, & \text{se } C_{kj}^{\text{rod}} \le C_{kj}^{\text{areo}} \\
+u_{kj}^{\text{areo}} = W_k^{aereo} \cdot U^{aereo}, & \text{caso contrário}
 \end{cases}
 \end{equation}
 
+onde $W_k^{rod}$ e $W_k^{aereo}$ representam a quantidade de veículos disponíveis no centro estadual $k$ para cada modal.
 
 Quanto ao tempo de distribuição de vacinas, o tempo total de entrega de uma dose corresponderia, conceitualmente, à soma dos tempos das duas etapas do transporte: do município de origem ao centro estadual e do centro estadual ao município de destino.
 
@@ -661,12 +693,13 @@ No contexto intramunicipal, considera-se que o transporte é realizado exclusiva
 Seja:
 
 \[
-q_{jp} \in \mathbb{R}_{\geq 0}
+q_{jp} = W_{j} * U^{rod} \in \mathbb{R}_{\geq 0}
 \]
 
 onde:
 \begin{itemize}
     \item $q_{jp}$ representa a capacidade máxima de transporte entre o centro de distribuição do município $j$ e o posto de destino $p$.
+    \item $W_{j}$ representa o número de veículos disponíveis para transporte no município $j$.
 \end{itemize}
 
 Seguindo um raciocínio análogo ao do modelo intermunicipal sem intermediação estadual, o \textbf{tempo de distribuição} das vacinas é dado por:
