@@ -250,6 +250,18 @@ A modelagem de $e_{iv}$ foi realizada em duas etapas. Inicialmente, para cada ti
 
 \section{Definição dos Valores de Parâmetros}
 
+\subsection{Escolha da Valor da Penalização De Não Atendimento da Demanda}
+
+O valor de $M$ deve ser suficientemente maior que qualquer custo de transporte presente na função objetivo, de modo que o modelo priorize o atendimento da demanda sempre que exista uma solução viável.
+
+Neste trabalho, adotou-se:
+
+\[
+M = 100.000
+\]
+
+Como os coeficientes de custo utilizados neste trabalho representam tempos de deslocamento e, nos experimentos realizados, os maiores tempos observados não ultrapassaram 10 horas, a escolha de $M = 100.000$ garante que a falta de vacinas seja penalizada de forma significativamente superior a qualquer custo logístico do sistema.
+
 \subsection{Processamento Logístico e Penalização do Modal Aéreo}
 
 Para os tempos de processamento logístico para cada modal adotam-se os valores:

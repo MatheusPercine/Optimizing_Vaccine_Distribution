@@ -208,12 +208,32 @@ onde:
     \item $T$ é o tempo de distribuição das vacinas.
 \end{itemize}
 
+
+Em cenários reais de distribuição logística, pode não existir oferta suficiente para atender integralmente toda a demanda da rede. Além disso, restrições operacionais, de capacidade ou de validade das vacinas podem inviabilizar determinadas entregas. 
+
+Para representar esse comportamento de forma mais realista, introduz-se uma variável de folga associada à demanda não atendida. Seja:
+
+\[
+f_{jv} \ge 0
+\]
+
+onde:
+\begin{itemize}
+    \item $f_{jv}$ representa a quantidade faltante da vacina do tipo $v$ no município de destino $j$.
+\end{itemize}
+
+A variável $f_{jv}$ permite flexibilizar a restrição de demanda, evitando que o modelo se torne inviável quando não houver capacidade suficiente para atender integralmente todos os municípios.
+
+Entretanto, permitir faltas sem qualquer penalização faria com que o modelo pudesse minimizar o tempo de transporte simplesmente não enviando nenhuma vacina. Para evitar esse comportamento, introduz-se uma constante de penalização $M$, cujo valor deve ser suficientemente elevado em relação aos custos de transporte.
+
 \subsection{Função Objetivo}
+
 
 Assim, a \textbf{função objetivo} ficou definida da seguinte forma:
 
 \begin{equation}
     \min z = \sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv}
+    + \sum_{v} \sum_{j} M \cdot f_{jv}
     \label{eq:intermunicipal_sem_penalidade}
 \end{equation}
 
@@ -232,6 +252,7 @@ Assim, a função objetivo modificada fica definida da seguinte forma:
 
 \begin{equation}
     \min z = \sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv} \cdot \rho_{iv}
+    + \sum_{v} \sum_{j} M \cdot f_{jv}
     \label{eq:intermunicipal_com_penalidade}
 \end{equation}
 
@@ -259,14 +280,16 @@ Seria um erro se a restrição fosse definida desta forma:
 pois, nesse caso, todas as vacinas ofertadas seriam obrigadas a serem transportadas e, num cenário real, do conjunto de vacinas ofertadas pode sobrar vacina pode ou não haver destino viável.
 
 \textbf{A segunda restrição} é a \textbf{restrição de demanda} da vacina $v$ por cada município $j$. 
-O número de vacinas transportadas deve ser exatamente a quantidade demandada para que não haja falta ou desperdício. Assim, temos:
+O número de vacinas recebidas, somado à variável de falta, deve ser igual à demanda total do município. Assim, temos:
 
 \begin{equation*}
-    \sum_{i} x_{ijv} = d_{jv}, \quad \forall j \in J, \; v \in V
+    \sum_{i} x_{ijv} + f_{jv} = d_{jv}, \quad \forall j \in J,\; v \in V
 \end{equation*}
+
 onde:
 \begin{itemize}
     \item $d_{jv}$ representa a quantidade de vacinas do tipo $v$ demandadas no município $j$;
+    \item $f_{jv}$ representa a quantidade não atendida da demanda;
     \item $J$ representa os municípios $j$ mapeados.
 \end{itemize}
 
@@ -308,7 +331,7 @@ sujeito a:
 \end{equation*}
 
 \begin{equation*}
-    \sum_{i} x_{ijv} = d_{jv}, \quad \forall j \in J, \; v \in V
+    \sum_{i} x_{ijv} + f_{jv} = d_{jv}, \quad \forall j \in J,\; v \in V
 \end{equation*}
 
 \begin{equation*}
@@ -508,20 +531,25 @@ Ainda assim, esse limite superior fornece uma aproximação útil do tempo total
 Dessa forma, a \textbf{função objetivo} fica definida:
 
 \begin{equation}
-    \min z = \sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv} \quad + \quad \sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
-    \label{eq:intermunicipal_estendido}
+    \min z = 
+    \sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv} \quad + \quad 
+    \sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv} \quad + \quad 
+    \sum_{v} \sum_{j} M \cdot f_{jv}
+    \label{eq:intermunicipal_estendido_sem_penalidade}
 \end{equation}
+
+onde a primeira parcela representa o custo da primeira etapa do fluxo, a segunda parcela representa o custo da segunda etapa e a terceira parcela penaliza o não atendimento da demanda.
 
 ou, com a penalidade:
 
 \begin{equation}
-    \min z = \sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv} \cdot \rho_{iv} \quad + \quad \sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
-    \label{eq:intermunicipal_estendido}
+    \min z = 
+    \sum_{v} \sum_{i} \sum_{k} C_{ik} \cdot x_{ikv} \cdot \rho_{iv} \quad + \quad \sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv} \quad + \quad
+    \sum_{v} \sum_{j} M \cdot f_{jv}
+    \label{eq:intermunicipal_estendido_com_penalidade}
 \end{equation}
 
-onde a primeira parcela representa o custo da primeira etapa do fluxo e a segunda parcela representa o custo da segunda etapa.
-
-A penalidade é aplicada na origem, pois o risco de expiração está associado ao tempo restante no município de origem.
+A penalidade de expiração é aplicada na origem, pois o risco de expiração está associado ao tempo restante no município de origem.
 
 \subsection{Restrições}
 
@@ -543,11 +571,11 @@ A \textbf{restrição de oferta} garante que a quantidade total de vacinas envia
 \sum_{k} x_{ikv} \le o_{ik}, \quad \forall i \in I,\; v \in V
 \end{equation*}
 
-A \textbf{restrição de demanda} assegura que toda a demanda por vacinas em cada município de destino seja completamente atendida.
+A \textbf{restrição de demanda} assegura que a demanda de cada município seja atendida total ou parcialmente, sendo a parcela não atendida representada pela variável de falta.
 
-\begin{equation*}
-\sum_{k} y_{kjv} = d_{jv}, \quad \forall j \in J, \; v \in V
-\end{equation*}
+\begin{equation}
+\sum_{k} y_{kjv} + f_{jv} = d_{jv}, \quad \forall j \in J,\; v \in V
+\end{equation}
 
 A \textbf{restrição de conservação de fluxo} garante que, para cada centro intermediário, a quantidade total de vacinas recebidas seja igual à quantidade total redistribuída, não havendo acúmulo ou perda de vacinas no centro.
 
@@ -605,9 +633,9 @@ y_{kjv} = 0, \quad \forall (k, j) \in K \times J \mid \text{estado}(k) \neq \tex
 \sum_{k} x_{ikv} \le o_{ik}, \quad \forall i \in I,\; v \in V
 \end{equation*}
 
-\begin{equation*}
-\sum_{k} y_{kjv} = d_{jv}, \quad \forall j \in J, \; v \in V
-\end{equation*}
+\begin{equation}
+\sum_{k} y_{kjv} + f_{jv} = d_{jv}, \quad \forall j \in J,\; v \in V
+\end{equation}
 
 \begin{equation*}
 \sum_{i} x_{ikv} = \sum_{j} y_{kjv}, \quad \forall k \in K,\; v \in V
@@ -708,16 +736,21 @@ Seguindo um raciocínio análogo ao do modelo intermunicipal sem intermediação
 T = \max \left( \quad C_{jp} \quad \mid \quad z_{jpv} > 0 \quad \right)
 \]
 
+De forma análoga aos modelos intermunicipais, introduz-se a variável de falta $f_{pv}$, que representa a quantidade não atendida da vacina do tipo $v$ no posto $p$.
+
 \subsection{Função Objetivo}
 
 A \textbf{função objetivo} é definida como:
 
 \begin{equation}
-\min z = \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\min z = \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} + 
+\sum_{v} \sum_{j} \sum_{p \in P_j} M \cdot f_{pv}
 \label{intramunicipal_sem_penalidade}
 \end{equation}
 
-O objetivo é minimizar o tempo total de distribuição das vacinas dentro do município.
+Diferentemente dos modelos intermunicipais anteriores, neste caso a função objetivo possui um somatório triplo associado à penalização de falta, pois a variável $f_{pv}$ está definida no nível dos postos de vacinação pertencentes a cada município $j$.
+
+O objetivo é minimizar o tempo total de distribuição das vacinas dentro do município e, ao mesmo tempo, minimizar a demanda não atendida por meio da penalização $M$.
 
 Para incorporar o risco de expiração das vacinas, introduz-se um fator de penalização associado ao tempo restante de validade no município. Seja:
 
@@ -732,7 +765,7 @@ onde:
 
 Dessa forma, a função objetivo passa a ser:
 \begin{equation}
-\min z = \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv}
+\min z = \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv} + \sum_{v} \sum_{j} \sum_{p \in P_j} M \cdot f_{pv}
 \label{intramunicipal_com_penalidade}
 \end{equation}
 
@@ -751,16 +784,20 @@ onde:
     \item $s_{jv}$ representa a quantidade disponível da vacina $t$ no ponto de origem $j$.
 \end{itemize}
 
-A \textbf{restrição de demanda} estabelece que cada ponto de destino deve receber exatamente sua demanda:
+A \textbf{restrição de demanda} estabelece que sua demanda total é igual a o número de vacinas enviadas mais um valor referente à demanda não suprida:
 
-\begin{equation*}
-\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
-\end{equation*}
+\begin{equation}
+z_{jpv} + f_{pv} = r_{pv},
+\quad \forall j \in J,\; p \in P_j,\; v \in V
+\end{equation}
 
 onde:
 \begin{itemize}
     \item $r_{pv}$ representa a demanda da vacina $t$ no ponto de destino $p$.
 \end{itemize}
+
+Diferentemente dos modelos intermunicipais, não há necessidade de somatório sobre os fluxos recebidos, pois cada posto $p$ recebe vacinas exclusivamente do município $j$ ao qual pertence.
+
 
 A \textbf{restrição de capacidade agregada} considera que a capacidade de transporte entre os pontos é limitada:
 
@@ -793,9 +830,10 @@ sujeito a:
 \begin{equation*}
 \sum_{b} z_{jpv} \le s_{jv}, \quad \forall j \in J, \; v \in V
 \end{equation*}
-\begin{equation*}
-\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
-\end{equation*}
+\begin{equation}
+z_{jpv} + f_{pv} = r_{pv},
+\quad \forall j \in J,\; p \in P_j,\; v \in V
+\end{equation}
 \begin{equation*}
 \sum_{v} z_{jpv} \le q_{jp}, \quad \forall j \in J, p \in P_j
 \end{equation*}
@@ -889,10 +927,12 @@ A \textbf{função objetivo} unificada é dada por:
 \sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv}
 \;+\;
 \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
+\;+\;
+\sum_{v} \sum_{j} \sum_{p \in P_j} M \cdot f_{pv}
 \label{unificado_sem_penalidade}
 \end{equation}
 
-A primeira parcela representa o custo do transporte intermunicipal, enquanto a segunda representa o custo da distribuição intramunicipal.
+A primeira parcela representa o custo do transporte intermunicipal, enquanto a segunda representa o custo da distribuição intramunicipal. A terceira parcela penaliza a demanda não atendida nos postos de vacinação.
 
 Para incorporar o risco de expiração, pode-se adicionar os fatores de penalidade e a função objetivo passa a ser:
 
@@ -901,6 +941,8 @@ Para incorporar o risco de expiração, pode-se adicionar os fatores de penalida
 \sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv} \cdot \rho_{iv}
 \;+\;
 \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv}
+\;+\;
+\sum_{v} \sum_{j} \sum_{p \in P_j} M \cdot f_{pv}
 \label{unificado_com_penalidade}
 \end{equation}
 
@@ -929,7 +971,7 @@ A manutenção simultânea da restrição de demanda no nível intermunicipal e 
 As \textbf{Restrições Intramunicipais} a serem reaproveitadas são:
 
 \begin{equation*}
-\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+z_{jpv} + f_{pv} = r_{pv}, \quad \forall j \in J,\; p \in P_j,\; v \in V
 \end{equation*}
 
 \begin{equation*}
@@ -995,7 +1037,7 @@ sujeito a:
 \end{equation*}
 
 \begin{equation*}
-\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+z_{jpv} + f_{pv} = r_{pv}, \quad \forall j \in J,\; p \in P_j,\; v \in V
 \end{equation*}
 
 \begin{equation*}
@@ -1098,7 +1140,9 @@ Além disso, assume-se que $C_{kj} > 0$, uma vez que sempre existe um custo temp
 \sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
 +
 \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
-\label{unificado_estendido}
++
+\sum_{v} \sum_{j} \sum_{p \in P_j} M \cdot f_{pv}
+\label{unificado_estendido_sem_penalidade}
 \end{equation}
 
 ou, com as penalidades:
@@ -1110,7 +1154,9 @@ ou, com as penalidades:
 \sum_{v} \sum_{k} \sum_{j} C_{kj} \cdot y_{kjv}
 +
 \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv} \cdot \rho_{jv}
-\label{unificado_estendido}
++
+\sum_{v} \sum_{j} \sum_{p \in P_j} M \cdot f_{pv}
+\label{unificado_estendido_com_penalidade}
 \end{equation}
 
 \subsection{Restrições}
@@ -1134,7 +1180,7 @@ y_{kjv} = 0, \quad \forall (k, j) \in K \times J \mid \text{estado}(k) \neq \tex
 \end{equation*}
 
 \begin{equation*}
-\sum_{j} z_{jpv} = r_{pv}, \quad \forall p \in P_j, \; v \in V
+z_{jpv} + f_{pv} = r_{pv}, \quad \forall j \in J,\; p \in P_j,\; v \in V
 \end{equation*}
 
 \begin{equation*}

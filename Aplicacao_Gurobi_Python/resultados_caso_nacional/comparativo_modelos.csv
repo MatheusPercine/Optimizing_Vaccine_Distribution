@@ -1,4 +1,4 @@
-Modelo,Usa_Penalidade,Custo_Medio_Horas_Por_Dose,Valor_Funcao_Objetivo,Total_Doses_Movimentadas,Percentual_Rodoviario,Percentual_Aereo,Tempo_Maximo,Vacina_Maior_Tempo,Rota_Gargalo_ij,Tempo_Rota_Gargalo_ij,Doses_Rota_Gargalo_ij,Rota_Gargalo_ik,Tempo_Rota_Gargalo_ik,Doses_Rota_Gargalo_ik,Rota_Gargalo_kj,Tempo_Rota_Gargalo_kj,Doses_Rota_Gargalo_kj,Rota_Gargalo_jp,Tempo_Rota_Gargalo_jp,Doses_Rota_Gargalo_jp
+Modelo,Usa_Penalidade,Custo_Medio_Horas_Por_Dose,Valor_Funcao_Objetivo,Total_Doses_Movimentadas,Total_Doses_Faltantes,Percentual_Rodoviario,Percentual_Aereo,Tempo_Maximo,Vacina_Maior_Tempo,Rota_Gargalo_ij,Tempo_Rota_Gargalo_ij,Doses_Rota_Gargalo_ij,Rota_Gargalo_ik,Tempo_Rota_Gargalo_ik,Doses_Rota_Gargalo_ik,Rota_Gargalo_kj,Tempo_Rota_Gargalo_kj,Doses_Rota_Gargalo_kj,Rota_Gargalo_jp,Tempo_Rota_Gargalo_jp,Doses_Rota_Gargalo_jp
 1,False,2.758,11896756.587,4313792,0.000,100.000,4.463,HepatiteB,Palmas -> Manaus,4.463,2720,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
 1,True,2.764,6853.002,4313792,0.000,100.000,4.368,HepatiteB,Cuiaba -> Manaus,4.368,4807,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
 2,False,1.199,10346021.223,8627584,35.547,64.453,7.648,TripliceViral,N/A,N/A,N/A,Brasilia -> AM,5.359,1769,AM -> Manaus,2.289,28796,N/A,N/A,N/A
@@ -32,3 +32,25 @@ Modelo,Usa_Penalidade,Custo_Medio_Horas_Por_Dose,Valor_Funcao_Objetivo,Total_Dos
 3,False,0.651,2806709.665,4313792,100.000,0.000,0.891,BCG,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,3671
 3,True,0.651,1615.830,4313792,100.000,0.000,0.891,BCG,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,3671
 5,False,0.884,4519143.280,5114848,69.983,30.017,8.760,TripliceViral,N/A,N/A,N/A,Brasilia -> RR,5.985,1652,RR -> BoaVista,2.195,1652,BoaVista -> RR_CMI,0.580,3034
+5,False,0.884,4519143.280,5114848,69.983,30.017,8.760,TripliceViral,N/A,N/A,N/A,Brasilia -> RR,5.985,1652,RR -> BoaVista,2.195,1652,BoaVista -> RR_CMI,0.580,3034
+3,False,0.000,0.000,0,0.000,0.000,0.000,,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,0.000,0
+3,False,0.000,0.000,0,0.000,0.000,0.000,,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,0.000,0
+3,False,0.642,40055314208.842,3913264,100.000,0.000,0.891,BCG,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,1326
+3,False,0.642,40055314208.842,3913264,100.000,0.000,0.891,BCG,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,1326
+3,False,0.642,40055314208.842,3913264,400528.0,100.000,0.000,0.891,BCG,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,1326
+3,True,0.642,40052801456.548,3913264,400528.0,100.000,0.000,0.891,BCG,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,1326
+3,False,0.642,40055314208.842,3913264,400528.0,100.000,0.000,0.891,BCG,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,1326
+3,False,0.642,40055314208.842,3913264,400528.0,100.000,0.000,0.891,BCG,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,1326
+3,False,0.642,40055314208.842,3913264,400528.0,100.000,0.000,0.891,BCG,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,1326
+1,False,2.758,11896756.587,4313792,0.0,0.000,100.000,4.463,HepatiteB,Palmas -> Manaus,4.463,2720,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+1,True,0.000,0.000,0,4313792.0,0.000,0.000,0.000,,,0.000,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+1,False,2.758,11896756.587,4313792,0.0,0.000,100.000,4.463,HepatiteB,Palmas -> Manaus,4.463,2720,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+1,True,0.000,0.000,0,4313792.0,0.000,0.000,0.000,,,0.000,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+1,True,2.764,6853.002,4313792,0.0,0.000,100.000,4.368,HepatiteB,Cuiaba -> Manaus,4.368,4807,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+1,True,2.764,6853.002,4313792,0.0,0.000,100.000,4.368,HepatiteB,Cuiaba -> Manaus,4.368,4807,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+2,True,1.200,4834646.185,8627584,0.0,36.255,63.745,7.648,TripliceViral,N/A,N/A,N/A,Brasilia -> AM,5.359,1769,AM -> Manaus,2.289,28796,N/A,N/A,N/A
+2,False,1.199,10346021.223,8627584,0.0,35.547,64.453,7.648,TripliceViral,N/A,N/A,N/A,Brasilia -> AM,5.359,1769,AM -> Manaus,2.289,28796,N/A,N/A,N/A
+4,False,0.848,3997461.590,4714320,0.0,74.556,25.444,6.646,TripliceViral,Brasilia -> BoaVista,6.066,1185,N/A,N/A,N/A,N/A,N/A,N/A,BoaVista -> RR_CMI,0.580,3034
+4,True,0.850,2255.626,4714320,0.0,75.752,24.248,6.646,TripliceViral,Brasilia -> BoaVista,6.066,1652,N/A,N/A,N/A,N/A,N/A,N/A,BoaVista -> RR_CMI,0.580,3034
+5,True,0.885,505231.538,5114848,0,71.062,28.938,8.760,TripliceViral,N/A,N/A,N/A,Brasilia -> RR,5.985,1652,RR -> BoaVista,2.195,1652,BoaVista -> RR_CMI,0.580,3034
+5,False,0.884,4519143.280,5114848,0,69.983,30.017,8.760,TripliceViral,N/A,N/A,N/A,Brasilia -> RR,5.985,1652,RR -> BoaVista,2.195,1652,BoaVista -> RR_CMI,0.580,3034

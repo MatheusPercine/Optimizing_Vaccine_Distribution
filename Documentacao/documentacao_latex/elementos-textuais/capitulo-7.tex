@@ -14,15 +14,22 @@ No pior caso, o algoritmo pode ser forçado a explorar praticamente todas as com
 
 onde $n$ representa o tamanho da instância. No contexto da Programação Linear Inteira, esse tamanho está em função do limite do espaço de busca explorado pelos algoritmos de otimização (como o \textit{Branch-and-Bound}) e esse limite é ditado pelo número total de variáveis de decisão do sistema.
 
-O Modelo 5 foi idealizado sob uma ótima mais realista dos demais modelos e por isso é válido analisar a complexidade computacional gerada por essa abordagem.
+O Modelo 5 (sem penalidade) foi idealizado sob uma ótica mais realista que os demais modelos e, por isso, é válido analisar a complexidade computacional gerada por essa abordagem.
 
-O Modelo 5 exigiu a operação com três variáveis de decisão tridimensionais ($x_{ikv}$, $y_{kjv}$ e $z_{jpv}$). Como consequência, a quantidade de vezes que as variáveis aparecem na função objetivo e o tamanho da matriz de restrições crescem de forma multiplicativa em relação ao tamanho dos conjuntos de municípios de origem ($|I|$), municípios de destino ($|J|$), centros estaduais ($|K|$), postos de vacinação ($|P(j)|$) e tipos de vacina ($|V|$).
+O Modelo 5 exige a operação com três variáveis de decisão tridimensionais ($x_{ikv}$, $y_{kjv}$ e $z_{jpv}$) e uma variável bidimensional de falta ($f_{pv}$). Como consequência, a quantidade de vezes que as variáveis aparecem na função objetivo e o tamanho da matriz de restrições crescem de forma multiplicativa em relação ao tamanho dos conjuntos de municípios de origem ($|I|$), municípios de destino ($|J|$), centros estaduais ($|K|$), postos de vacinação ($|P(j)|$) e tipos de vacina ($|V|$).
 
 Isso torna este modelo impossível de ser resolvido manualmente e altamente exigente do ponto de vista computacional. Mensurando a complexidade gerada por essa modelagem, tem-se:
 
 \textbf{Quantidade de vezes que as variáveis de decisão aparecem na função objetivo:}
 \[
-(|I| \cdot |K| \cdot |V|) + (|K| \cdot |J| \cdot |V|) + (|P| \cdot |V|) \text{ vezes}
+(|I| \cdot |K| \cdot |V|)
++
+(|K| \cdot |J| \cdot |V|)
++
+(|P| \cdot |V|)
++
+(|P| \cdot |V|)
+\text{ vezes}
 \]
 
 \textbf{Tamanho da matriz de restrições (Soma de todas as regras do sistema):}
@@ -42,7 +49,17 @@ Aplicando essas dimensões práticas à estrutura das equações, foram definido
 
 \textbf{Quantidade de vezes que as variáveis de decisão aparecem na função objetivo:}
 \[
-(27 \cdot 27 \cdot 7) + (27 \cdot 27 \cdot 7) + (54 \cdot 7) = 5.103 + 5.103 + 378 = 10.584 \text{ vezes}
+(27 \cdot 27 \cdot 7) 
++ 
+(27 \cdot 27 \cdot 7) 
++ 
+(54 \cdot 7) 
++
+(54 \cdot 7)
+\]
+
+\[
+= 5103 + 5103 + 378 + 378 = 10.962 \text{ vezes}
 \]
 
 \textbf{Quantidade de linhas na matriz de restrições:}
@@ -62,18 +79,19 @@ Aplicando essas dimensões práticas à estrutura das equações, foram definido
 
 \textbf{Tamanho da Instância:}
 
-O tamanho da instância é a soma total das variáveis de decisão inteiras geradas pelos dados de entrada, ou seja, 10.584.
+O tamanho da instância é a soma total das variáveis de decisão inteiras geradas pelos dados de entrada, ou seja, 10.962.
 
 Logo, no pior caso, o tempo de execução pode ser:
 
 \[
-\text{tempo} \sim O(2^{10584}) \quad \text{(ou pior)}
+\text{tempo} \sim O(2^{10962}) \quad \text{(ou pior)}
 \]
 
 \textbf{Tamanho total da matriz do problema (Variáveis $\times$ Restrições):}
 \[
-10.584 \times 13.041 = 138.025.944 \text{ células}
+10.962 \times 13.041 = 142.954.842 \text{ células}
 \]
+
 
 Esse número torna colossal o nível de complexidade gerado por essa modelagem, o que afeta diretamente o planejamento logístico:
 \begin{itemize}

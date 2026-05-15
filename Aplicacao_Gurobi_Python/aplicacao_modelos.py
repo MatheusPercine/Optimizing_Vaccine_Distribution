@@ -695,6 +695,28 @@ z = m.addVars(
     lb=0
 )  # inteira e não negativa
 
+# variáveis de falta
+
+# f_jv: quantidade de vacinas v que faltou no município j
+f_jv = m.addVars(
+    [(j, v) for j in J for v in V],
+    vtype=GRB.INTEGER,
+    name="f_jv",
+    lb=0
+)
+
+
+# f_pv: quantidade de vacinas v que faltou no posto p do município j
+f_pv = m.addVars(
+    [(p, v) for j in J for p in P[j] for v in V],
+    vtype=GRB.INTEGER,
+    name="f_pv",
+    lb=0
+)
+
+# Penalidade de Falta, o valor deve ser muito maior que qualquer tempo de transporte do modelo
+M = 100000 
+
 
 # =========================
 # MODELOS
@@ -707,14 +729,18 @@ def modelo_intermunicipal_sem_intermediacao_estadual(penalidade, rho_iv):
         # função objetivo
         m.setObjective(
             quicksum(C_ij[i, j] * x_ijv[i, j, v] * rho_iv[i, v]
-                     for i in I for j in J if i != j for v in V),
+                     for i in I for j in J if i != j for v in V)
+            + quicksum(M * f_jv[j, v] 
+                       for j in J for v in V),
             GRB.MINIMIZE
         )
     else:
         # função objetivo
         m.setObjective(
             quicksum(C_ij[i, j] * x_ijv[i, j, v]
-                     for i in I for j in J if i != j for v in V),
+                     for i in I for j in J if i != j for v in V)
+            + quicksum(M * f_jv[j, v]
+               for j in J for v in V),
             GRB.MINIMIZE
         )
 
@@ -730,7 +756,8 @@ def modelo_intermunicipal_sem_intermediacao_estadual(penalidade, rho_iv):
     for j in J:
         for v in V:
             m.addConstr(
-                quicksum(x_ijv[i, j, v] for i in I if i != j) == d[j, v]
+                quicksum(x_ijv[i, j, v] for i in I if i != j)
+                + f_jv[j, v] == d[j, v]
             )
 
     # capacidade
@@ -770,11 +797,14 @@ def modelo_intermunicipal_sem_intermediacao_estadual(penalidade, rho_iv):
                                 doses = int(x_ijv[i, j, v].X)
                                 vacina = v
 
+        doses_faltantes = sum(f_jv[j, v].X for j in J for v in V)
+
         return {
             "T": T,
             "rota": rota,
             "doses": doses,
-            "vacina": vacina
+            "vacina": vacina,
+            "doses_faltantes": doses_faltantes
         }
 
     return None
@@ -787,17 +817,23 @@ def modelo_intermunicipal_com_intermediacao_estadual(penalidade, rho_iv):
     if penalidade == True:
         # função objetivo
         m.setObjective(
-            quicksum(C_ik[i, k] * x_ikv[i, k, v] * rho_iv[i, v] for k in K for i in I for v in V) +
+            quicksum(C_ik[i, k] * x_ikv[i, k, v] * rho_iv[i, v] 
+                     for k in K for i in I for v in V) +
             quicksum(C_kj[k, j] * y_kjv[k, j, v]
-                     for j in J for k in K for v in V),
+                     for j in J for k in K for v in V) +
+            quicksum(M * f_jv[j, v]
+                for j in J for v in V),
             GRB.MINIMIZE
         )
     else:
         # funçao objetivo
         m.setObjective(
-            quicksum(C_ik[i, k] * x_ikv[i, k, v] for k in K for i in I for v in V) +
+            quicksum(C_ik[i, k] * x_ikv[i, k, v] 
+                     for k in K for i in I for v in V) +
             quicksum(C_kj[k, j] * y_kjv[k, j, v]
-                     for j in J for k in K for v in V),
+                     for j in J for k in K for v in V) +
+            quicksum(M * f_jv[j, v]
+                for j in J for v in V),
             GRB.MINIMIZE
         )
 
@@ -824,7 +860,7 @@ def modelo_intermunicipal_com_intermediacao_estadual(penalidade, rho_iv):
     for j in J:
         for v in V:
             m.addConstr(
-                quicksum(y_kjv[k, j, v] for k in K) == d[j, v]
+                quicksum(y_kjv[k, j, v] for k in K) + f_jv[j, v] == d[j, v]
             )
 
     # conservacao do fluxo
@@ -895,11 +931,14 @@ def modelo_intermunicipal_com_intermediacao_estadual(penalidade, rho_iv):
 
                             vacina = v
 
+        doses_faltantes = sum(f_jv[j, v].X for j in J for v in V)
+
         return {
             "L": L,
             "L1": L1, "rota_l1": rota_l1, "doses_l1": doses_l1,
             "L2": L2, "rota_l2": rota_l2, "doses_l2": doses_l2,
-            "vacina": vacina
+            "vacina": vacina,
+            "doses_faltantes": doses_faltantes
         }
 
     return None
@@ -913,15 +952,17 @@ def modelo_intramunicipal(penalidade, rho_jv):
         # função objetivo
         m.setObjective(
             quicksum(C_jp[j, p] * z[j, p, v] * rho_jv[j, v]
-                     for j in J for p in P[j] for v in V),
+                     for j in J for p in P[j] for v in V)
+            + quicksum(M * f_pv[p, v] for j in J for p in P[j] for v in V),
             GRB.MINIMIZE
         )
     else:
         # função objetivo
         m.setObjective(
             quicksum(C_jp[j, p] * z[j, p, v]
-                     for j in J for p in P[j] for v in V),
-            GRB. MINIMIZE
+                     for j in J for p in P[j] for v in V)
+            + quicksum(M * f_pv[p, v] for j in J for p in P[j] for v in V),
+            GRB.MINIMIZE
         )
 
     # restrições
@@ -938,7 +979,7 @@ def modelo_intramunicipal(penalidade, rho_jv):
         for p in P[j]:
             for v in V:
                 m.addConstr(
-                    z[j, p, v] == r[p, v]
+                    z[j, p, v] + f_pv[p, v] == r[p, v]
                 )
 
     # capacidade
@@ -975,12 +1016,15 @@ def modelo_intramunicipal(penalidade, rho_jv):
                             rota = f"{j} -> {p}"
                             doses = int(z[j, p, v].X)
                             vacina = v
+        
+        doses_faltantes = sum(f_pv[p, v].X for j in J for p in P[j] for v in V)
 
         return {
             "T": T,
             "rota": rota,
             "doses": doses,
-            "vacina": vacina
+            "vacina": vacina,
+            "doses_faltantes": doses_faltantes # Retorna o total de vacinas que faltaram
         }
 
     return None
@@ -995,7 +1039,10 @@ def modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, rho_jv):
             quicksum(C_ij[i, j] * x_ijv[i, j, v] * rho_iv[i, v]
                      for i in I for j in J if i != j for v in V) +
             quicksum(C_jp[j, p] * z[j, p, v] * rho_jv[j, v]
-                     for j in J for p in P[j] for v in V),
+                     for j in J for p in P[j] for v in V) +
+            quicksum(M * f_pv[p, v]
+                     for j in J for p in P[j] for v in V
+            ),
             GRB.MINIMIZE
         )
     else:
@@ -1003,7 +1050,10 @@ def modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, rho_jv):
             quicksum(C_ij[i, j] * x_ijv[i, j, v]
                      for i in I for j in J if i != j for v in V) +
             quicksum(C_jp[j, p] * z[j, p, v]
-                     for j in J for p in P[j] for v in V),
+                     for j in J for p in P[j] for v in V) +
+            quicksum(M * f_pv[p, v]
+                     for j in J for p in P[j] for v in V
+            )         ,
             GRB.MINIMIZE
         )
 
@@ -1048,7 +1098,7 @@ def modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, rho_jv):
         for p in P[j]:
             for v in V:
                 m.addConstr(
-                    z[j, p, v] == r[p, v]
+                    z[j, p, v] + f_pv[p, v] == r[p, v]
                 )
 
     # capacidade
@@ -1148,35 +1198,44 @@ def modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, rho_jv):
 
                                 vacina = v
 
+        doses_faltantes = sum(f_pv[p, v].X for j in J for p in P[j] for v in V)
+
         return {
             "L": L,
             "L1": L1, "rota_l1": rota_l1, "doses_l1": doses_l1,
             "L2": L2, "rota_l2": rota_l2, "doses_l2": doses_l2,
-            "vacina": vacina
+            "vacina": vacina,
+            "doses_faltantes": doses_faltantes
         }
 
     return None
 
 # modelo unificado com_intermediacao_estadual
-
-
 def modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, rho_jv):
 
     # funcao objetivo
     if penalidade == True:
         m.setObjective(
-            quicksum(C_ik[i, k] * x_ikv[i, k, v] * rho_iv[i, v] for k in K for i in I for v in V) +
-            quicksum(C_kj[k, j] * y_kjv[k, j, v] for j in J for k in K for v in V) +
+            quicksum(C_ik[i, k] * x_ikv[i, k, v] * rho_iv[i, v] 
+                     for k in K for i in I for v in V) +
+            quicksum(C_kj[k, j] * y_kjv[k, j, v] 
+                     for j in J for k in K for v in V) +
             quicksum(C_jp[j, p] * z[j, p, v] * rho_jv[j, v]
+                     for j in J for p in P[j] for v in V) +
+            quicksum(M * f_pv[p, v]
                      for j in J for p in P[j] for v in V),
             GRB.MINIMIZE
         )
 
     else:
         m.setObjective(
-            quicksum(C_ik[i, k] * x_ikv[i, k, v] for k in K for i in I for v in V) +
-            quicksum(C_kj[k, j] * y_kjv[k, j, v] for j in J for k in K for v in V) +
-            quicksum(C_jp[j, p] * z[j, p, v]
+            quicksum(C_ik[i, k] * x_ikv[i, k, v] 
+                     for k in K for i in I for v in V) +
+            quicksum(C_kj[k, j] * y_kjv[k, j, v] 
+                     for j in J for k in K for v in V) +
+            quicksum(C_jp[j, p] * z[j, p, v] 
+                     for j in J for p in P[j] for v in V) +
+            quicksum(M * f_pv[p, v] 
                      for j in J for p in P[j] for v in V),
             GRB.MINIMIZE
         )
@@ -1241,7 +1300,7 @@ def modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, rho_jv):
         for p in P[j]:
             for v in V:
                 m.addConstr(
-                    z[j, p, v] == r[p, v]
+                    z[j, p, v] + f_pv[p, v] == r[p, v]
                 )
 
     # capacidade
@@ -1349,12 +1408,16 @@ def modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, rho_jv):
 
                                 vacina = v
 
+         # total de doses faltantes
+        doses_faltantes = sum(int(f_pv[p, v].X) for j in J for p in P[j] for v in V)
+
         return {
             "L": L,
             "L1": L1, "rota_l1": rota_l1, "doses_l1": doses_l1,
             "L2": L2, "rota_l2": rota_l2, "doses_l2": doses_l2,
             "L3": L3, "rota_l3": rota_l3, "doses_l3": doses_l3,
-            "vacina": vacina
+            "vacina": vacina,
+            "doses_faltantes": doses_faltantes
         }
 
     return None
@@ -1459,6 +1522,7 @@ def executar_modelomodelo_intermunicipal_sem_intermediacao_estadual(penalidade, 
             "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
             "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
             "Total_Doses_Movimentadas": total_doses,
+            "Total_Doses_Faltantes": resultado['doses_faltantes'],
             "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
             "Percentual_Aereo": f"{percenteual_aereo:.3f}",
             "Tempo_Maximo": f"{resultado['T']:.3f}",
@@ -1479,6 +1543,7 @@ def executar_modelomodelo_intermunicipal_sem_intermediacao_estadual(penalidade, 
 
         # Dados impressos no termimal
         print(f"\nTotal de doses movimentadas: {total_doses}")
+        print(f"\nTotal de doses que não atenderam a demanda: {resultado['doses_faltantes']}")
         print(f"\nTempo Total de Distribuicao: {resultado['T']:.3f} horas")
         print(f"\nVacina do maior tempo: {resultado['vacina']}")
         print(
@@ -1601,6 +1666,7 @@ def executar_modelomodelo_intermunicipal_com_intermediacao_estadual(penalidade, 
             "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
             "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
             "Total_Doses_Movimentadas": total_doses,
+            "Total_Doses_Faltantes": resultado['doses_faltantes'],
             "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
             "Percentual_Aereo": f"{percenteual_aereo:.3f}",
             "Tempo_Maximo": f"{resultado['L']:.3f}",
@@ -1621,6 +1687,7 @@ def executar_modelomodelo_intermunicipal_com_intermediacao_estadual(penalidade, 
 
         # Dados impressos no termimal
         print(f"\nTotal de doses movimentadas: {total_doses}")
+        print(f"\nTotal de doses que não atenderam a demanda: {resultado['doses_faltantes']}")
         print(f"\nLimite Superior: {resultado['L']:.3f} horas")
         print(f"\nVacina do Limite Superior: {resultado['vacina']}")
         print(
@@ -1710,6 +1777,7 @@ def executar_modelo_intramunicipal(penalidade, rho_jv):
             "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
             "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
             "Total_Doses_Movimentadas": total_doses,
+            "Total_Doses_Faltantes": resultado['doses_faltantes'],
             "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
             "Percentual_Aereo": f"{percenteual_aereo:.3f}",
             "Tempo_Maximo": f"{resultado['T']:.3f}",
@@ -1730,6 +1798,7 @@ def executar_modelo_intramunicipal(penalidade, rho_jv):
 
         # Dados impressos no termimal
         print(f"\nTotal de doses movimentadas: {total_doses}")
+        print(f"\nTotal de doses que não atenderam a demanda: {resultado['doses_faltantes']}")
         print(f"\nTempo Total de Distribuicao: {resultado['T']:.3f} horas")
         print(f"\nVacina do maior tempo: {resultado['vacina']}")
         print(
@@ -1749,7 +1818,6 @@ def executar_modelo_intramunicipal(penalidade, rho_jv):
 
 
 def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_jv):
-
     # No unificado, considera-se que a disponibilidade intramunicipal
     # vem da etapa intermunicipal do proprio plano integrado.
     # s = {(j, v): 0 for j in J for v in V}
@@ -1869,6 +1937,7 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
             "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
             "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
             "Total_Doses_Movimentadas": total_doses,
+            "Total_Doses_Faltantes": resultado['doses_faltantes'],
             "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
             "Percentual_Aereo": f"{percenteual_aereo:.3f}",
             "Tempo_Maximo": f"{resultado['L']:.3f}",
@@ -1889,6 +1958,7 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
         # Dados Impressos no terminal
         print(f"\nTotal de doses movimentadas: {total_doses}")
+        print(f"\nTotal de doses que não atenderam a demanda: {resultado['doses_faltantes']}")
         print(f"\nLimite Superior: {resultado['L']:.3f} horas")
         print(f"\nVacina do Limite Superior: {resultado['vacina']}")
         print(
@@ -2062,6 +2132,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
             "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
             "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
             "Total_Doses_Movimentadas": total_doses,
+            "Total_Doses_Faltantes": resultado['doses_faltantes'],
             "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
             "Percentual_Aereo": f"{percenteual_aereo:.3f}",
             "Tempo_Maximo": f"{resultado['L']:.3f}",
@@ -2082,6 +2153,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
         # Dados Impressos no Terminal
         print(f"\nTotal de doses movimentadas: {total_doses}")
+        print(f"\nTotal de doses que não atenderam a demanda: {resultado['doses_faltantes']}")
         print(f"\nLimite Superior: {resultado['L']:.3f} horas")
         print(f"\nVacina do Limite Superior: {resultado['vacina']}")
         print(
