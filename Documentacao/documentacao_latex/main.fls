@@ -439,6 +439,9 @@ INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
+INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmbx12.tfm
+INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmbx8.tfm
+INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmbx6.tfm
 INPUT .\elementos-textuais\capitulo-6.tex
 INPUT .\elementos-textuais\capitulo-6.tex
 INPUT elementos-textuais\capitulo-6.tex
@@ -629,6 +632,8 @@ OUTPUT main.toc
 INPUT main.aux
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx12.pfb
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx12.pfb
+INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx8.pfb
+INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx8.pfb
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbxi10.pfb
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbxi10.pfb
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmex10.pfb

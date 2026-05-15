@@ -154,20 +154,18 @@ Essa abordagem apresenta diversas vantagens relevantes para o contexto do trabal
     \item \textbf{Ausência de custos financeiros}: não requer o uso de serviços pagos ou APIs externas;
 \end{itemize}
 
-% O principal desafio dessa abordagem está na definição adequada do fator de tortuosidade $\beta$. Para lidar com essa questão, propõe-se uma calibração empírica do parâmetro, a partir da comparação entre os tempos estimados pelo modelo e valores reais obtidos para um conjunto reduzido de pares de localidades. Esses valores de referência podem ser obtidos manualmente por ferramentas como o Google Maps, considerando o modal rodoviário. A partir dessa calibração, busca-se determinar um valor de $\beta$ que produza estimativas coerentes com a realidade.
-
 Dessa forma, a abordagem baseada em distância geodésica com correção por fator de tortuosidade é adotada neste trabalho como a alternativa mais adequada para a obtenção dos dados de custo de transporte.
 
 
 
-\subsection{Obtenção dos Dados de Municípios}
+\subsection{Obtenção dos Dados de Coordenadas e População dos Municípios}
 
 Para a obtenção da longitude e latitude dos municípios utilizou-se dados oficiais do IBGE \cite{IBGE:2022}. Estes dados servirão para os cálculos de dados Custo, em horas, entre duas localidades. 
 
 Já para os dados da população de cada capital a fonte vem diretamente da Wikipédia \cite{Wiki:CapitaisPopulacao} e servirão para calcular os dados de demanda de cada posto.
 
 
-\subsection{Obtenção dos Dados dos Centros Estaduais}
+\subsection{Obtenção dos Dados de Coordenadas dos Centros Estaduais}
 
 Embora, na prática, um estado possa possuir múltiplas unidades administrativas e logísticas associadas à distribuição de vacinas, a inclusão de múltiplos centros estaduais por estado não agrega valor analítico ao modelo proposto, pois isso implicaria:
 
@@ -252,6 +250,18 @@ A modelagem de $e_{iv}$ foi realizada em duas etapas. Inicialmente, para cada ti
 
 \section{Definição dos Valores de Parâmetros}
 
+\subsection{Escolha da Valor da Penalização De Não Atendimento da Demanda}
+
+O valor de $M$ deve ser suficientemente maior que qualquer custo de transporte presente na função objetivo, de modo que o modelo priorize o atendimento da demanda sempre que exista uma solução viável.
+
+Neste trabalho, adotou-se:
+
+\[
+M = 100.000
+\]
+
+Como os coeficientes de custo utilizados neste trabalho representam tempos de deslocamento e, nos experimentos realizados, os maiores tempos observados não ultrapassaram 10 horas, a escolha de $M = 100.000$ garante que a falta de vacinas seja penalizada de forma significativamente superior a qualquer custo logístico do sistema.
+
 \subsection{Processamento Logístico e Penalização do Modal Aéreo}
 
 Para os tempos de processamento logístico para cada modal adotam-se os valores:
@@ -270,22 +280,45 @@ Para a penalização do modal aéreo adota-se:
 
 Este valor foi escolhido de forma a manter o transporte aéreo como uma alternativa viável apenas em situações nas quais a redução de tempo de deslocamento seja suficientemente relevante para compensar seu maior custo operacional. Valores muito próximos de 1 tornariam os modais praticamente equivalentes, enquanto valores excessivamente elevados eliminariam artificialmente a viabilidade do modal aéreo, distorcendo a dinâmica logística do problema.
 
+\subsection{Capacidade dos Veículos de Cada Modal}
 
-\subsection{Capacidade de Transporte}
+Adotam-se os valores:
+\[U^{rod} = 300\,000 \text{ doses} \quad \text {e} \quad U^{aereo} = 800\,000 \text{ doses}\]
 
-Sejam $u_{ab}^{rod}$ e $u_{ab}^{aereo}$ as capacidades máximas de transporte entre duas localidades $a$ e $b$ para os modais rodoviário e aéreo, respectivamente.
+A adoção do valor para o modal rodoviário fundamenta-se em dados reais da operação logística do SUS. Sabe-se que um caminhão refrigerado padrão utilizado em campanhas nacionais comporta aproximadamente 300 mil doses \cite{g1:2021}.
 
-No modelo, adotam-se valores constantes para essas capacidades, independentes da origem e destino:
+De forma análoga, a capacidade do modal aéreo é balizada na informação de que um voo comercial adaptado transporta cerca de 800 mil doses \cite{tvbrasil:2021}.
 
-\[
-u_{ab}^{rod} = 1\,200\,000 \quad \text{e} \quad u_{ab}^{aereo} = 1\,600\,000
-\]
+\subsection{Número de Veículos dos Municípios e Estados}
 
-A adoção do valor para o modal rodoviário fundamenta-se em dados reais da operação logística do SUS. Sabe-se que um caminhão refrigerado padrão utilizado em campanhas nacionais comporta aproximadamente 300 mil doses \cite{g1:2021}. Considerando a alocação de uma frota de quatro caminhões ou a realização de múltiplos despachos por uma frota menor durante o horizonte da campanha, o limite agregado de 1,2 milhão de doses reflete de maneira realista o teto operacional de transferência em massa por rodovias.
+Optou-se pela utilização de uma abordagem heurística baseada em faixas populacionais para estimar a capacidade operacional agregada dos municípios. A principal hipótese adotada é que municípios com maior população tendem a possuir maior infraestrutura logística, maior disponibilidade de veículos e maior capacidade operacional de distribuição de vacinas.
 
-De forma análoga, a capacidade do modal aéreo é balizada na informação de que um voo comercial adaptado transporta cerca de 800 mil doses \cite{tvbrasil:2021}. Assumindo a disponibilidade de até dois voos fretados para rotas críticas de longa distância ou alta demanda, a capacidade agregada é estabelecida em 1,6 milhão de doses.
+Seja $W_a^{rod}$ e $W_a^{aereo}$ o número de veículos disponíveis para transporte no modal rodoviário e aéreo, respectivamente, para cada origem $a$, podendo ser um município ou estado. Para cada estado, considerou-se que sua infraestrutura logística seria a mesma de cada capital, já que a infraestrutura estadual está localizada principalmente nas capitais.
 
-A escolha de valores constantes simplifica a formulação ao evitar a introdução de variáveis e restrições excessivas sobre alocação diária de frota, mantendo a tratabilidade computacional do modelo estático ao mesmo tempo em que absorve a realidade de dimensionamento elástico (frota e viagens) do sistema público de saúde.
+A utilização dessa abordagem permite incorporar heterogeneidade logística entre os municípios sem exigir levantamento empírico individualizado da frota de cada localidade, o que fugiria do escopo e da viabilidade operacional deste trabalho.
+
+Assim, foram definidas as seguintes faixas populacionais para atribuição dos parâmetros logísticos:
+
+\begin{table}[H]
+\centering
+\caption{Estimativa heurística da capacidade operacional por faixa populacional}
+\label{tab:frota_populacional}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Faixa populacional} & $\mathbf{W_a^{rod}}$ & $\mathbf{W_a^{aereo}}$ \\
+\hline
+$> 5$ milhões & 10 & 4 \\
+\hline
+$2$ a $5$ milhões & 8 & 3 \\
+\hline
+$1$ a $2$ milhões & 6 & 2 \\
+\hline
+$500$ mil a $1$ milhão & 4 & 1 \\
+\hline
+$< 500$ mil & 2 & 1 \\
+\hline
+\end{tabular}
+\end{table}
 
 
 \subsection{Velocidade Média dos Modais}
