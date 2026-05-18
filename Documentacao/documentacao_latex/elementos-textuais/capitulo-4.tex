@@ -294,14 +294,6 @@ onde:
     \item $J$ representa os municípios $j$ mapeados.
 \end{itemize}
 
-E, nesse caso, estamos forçando o atendimento total da demanda.
-
-Seria um erro se a restrição fosse definida desta forma:
-\begin{equation*}
-    \sum_{i} x_{ijv} \le d_{jv}, \quad \forall j \in J, \; v \in V
-\end{equation*}
-pois isso implicaria que se pode não atender a demanda e o modelo pode simplesmente não entregar nada (minimiza custo = 0).
-
 \textbf{A terceira restrição} é a \textbf{restrição de capacidade agregada} de entrega de vacinas da origem $i$ ao destino $j$. 
 O número de vacinas transportadas não pode exceder a capacidade máxima agregada. Assim, temos:
 
