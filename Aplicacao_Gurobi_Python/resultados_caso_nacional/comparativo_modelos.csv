@@ -68,3 +68,4 @@ Modelo,Usa_Penalidade,Custo_Medio_Horas_Por_Dose,Valor_Funcao_Objetivo,Total_Dos
 1,False,2.751,5153272.199,1873366,0.0,0.000,100.000,4.463,Pfizer,Palmas -> Manaus,4.463,3924,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
 1,True,2.843,37433.228,1873366,0.0,0.000,100.000,5.527,CoronaVac,Teresina -> BoaVista,5.527,383,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
 1,False,2.751,5153272.199,1873366,0.0,0.000,100.000,4.463,Pfizer,Palmas -> Manaus,4.463,3924,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+5,False,1.870,4056105.323,2169246,0,69.971,30.029,11.703,CoronaVac,N/A,N/A,N/A,CampoGrande -> AC,6.492,652,AC -> RioBranco,3.535,652,RioBranco -> AC_Rozangela_Pimentel,1.677,2334

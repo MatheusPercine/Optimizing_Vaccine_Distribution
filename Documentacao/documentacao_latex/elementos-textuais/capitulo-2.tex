@@ -179,6 +179,59 @@ Dessa forma, o modelo proposto se enquadra como um Problema de Programação Lin
 
 Esta seção apresenta uma revisão de pesquisas recentes que abordam a otimização da distribuição de imunizantes sob diferentes perspectivas matemáticas e logísticas. Mais do que um levantamento bibliográfico, esta etapa cumpre a função crítica de situar o presente trabalho em relação ao que já foi explorado, evidenciando o que foi realizado com sucesso, o que foi negligenciado e os pontos de convergência e divergência com este TCC.
 
+\subsection{Minimização de Distâncias Para Distribuição de Vacinas com Roteirização de Veículos}
+
+Utilizando conhecimentos de Engenharia de Produção, uma perspectiva focada na eficiência econômica de curto prazo e na reorganização de fluxos operacionais de transporte é apresentada por Lima et al (2019) \cite{LimaEtAl:2019}. Os autores conduzem um estudo de caso focado na distribuição física de imunizantes no âmbito de uma Superintendência Regional de Saúde (SRS) localizada em Varginha, Minas Gerais, responsável pelo abastecimento de 50 municípios jurisdicionados. O trabalho descreve um diagnóstico operacional ineficiente no qual o tráfego ponto a ponto gerava custos logísticos exorbitantes com combustível, manutenção de frotas, desgaste de veículos e de fretes.
+
+
+No estudo ele aplica o que ele chama de roteirização, descrito como atividades que procuram melhorar trajetos para um veículo realizar dentro de uma malha, com o intuito de reduzir tempo e/ou distância. No estudo, ele se propõe a otimizar o percurso focando em minimização de custo financeiro das rotas, por meio da minimização da distancia percorrida. Para realização dos calculo utilizaram como referencia a tabela do frete disponibilizada pela ANTT (Agência Nacional de Transportes Terrestres).
+
+Para isso, utilizou-se o método da varredura (\textit{Sweep Algorithm}) para realizar o agrupamento geográfico inicial das cidades em setores.
+
+Nesse algoritmo, a partir de um centro de distribuição (CD), é traçado um eixo horizontal que vai girando no sentido anti-horário e varrendo o espaço ao redor e identificando os pontos de demanda até que se atinja o limite de uma restrição. Quando uma restrição é atingida, os pontos são agrupados e o processo continua até que todos os pontos de demanda sejam varridos e agrupados. \cite{tumenas:2020}.
+
+\begin{figure}[ht]
+    \centering
+    \caption{Esquema de Método de Varredura}
+    \includegraphics[width=10.0cm,height=4.0cm]{figuras/metodo_varredura.png} 
+    \legend{Fonte: Felipe Tumenas \cite{tumenas:2020}}
+    \label{fig:metodo_varredura}
+\end{figure}
+
+Sequencialmente, dentro de cada agrupamento formado, são aplicados os conceitos do método das economias para formação do sequenciamento das rotas. O resultado obtido apontou uma redução expressiva de aproximadamente $86\%$ tanto nas distâncias rodoviárias quanto nos custos de movimentação.
+
+O método das economias baseia-se em uma heurística gananciosa (\textit{greedy heuristic}) cujo princípio é calcular a diferença de distância ao unificar rotas isoladas. Considere um depósito central denotado por $D$ e dois municípios destinos, $A$ e $B$. No cenário original ineficiente, realizam-se duas viagens independentes de ida e volta, gerando uma distância inicial dada por:
+\begin{equation}
+    \text{Distância}_{\text{Antiga}} = 2 \cdot d(D,A) + 2 \cdot d(D,B)
+\end{equation}
+Se o sistema reorganizar o fluxo unificando os municípios em um único circuito contínuo ($D \to A \to B \to D$), a nova distância de trânsito passa a ser:
+\begin{equation}
+    \text{Distância}_{\text{Nova}} = d(D,A) + d(A,B) + d(D,B)
+\end{equation}
+A economia (\textit{saving}) gerada pela fusão dessas duas rotas, representada por $S_{AB}$, é calculada pela diferença entre o gasto antigo e o novo arranjo:
+\begin{equation}
+    S_{AB} = \text{Distância}_{\text{Antiga}} - \text{Distância}_{\text{Nova}}
+\end{equation}
+Substituindo e simplificando os termos algébricos, obtém-se a equação matemática fundamental do método:
+\begin{equation}
+    S_{AB} = d(D,A) + d(D,B) - d(A,B)
+\end{equation}
+O algoritmo calcula o valor de $S_{ij}$ para todos os pares de municípios da rede, ordena-os de forma decrescente e vai fundindo as rotas a partir das maiores economias encontradas, respeitando limites operacionais pré-estabelecidos. 
+Para a aplicação do método das economias, certas as restrições fora adotadas: 
+
+\begin{itemize}
+    \item \textbf{Restrição de Tempo:} devido à carga horária do motorista; 
+    \item \textbf{Restrição de Tráfego:} choque mecânico ou impacto durante o transporte; 
+    \item \textbf{Restrição de Janelas de Tempo:} Horários de saída, e intervalo de almoço do motorista e auxiliar devem ser respeitados.
+\end{itemize}
+
+
+Apesar dos resultados expressivos na contenção de gastos públicos locais, o trabalho concentra-se prioritariamente em aspectos puramente econômicos. O modelo não considera explicitamente a urgência na entrega em um pandemia e a data de expiração das doses de vacina.
+
+O  modelo de Lima et al. (2019) é limitado geograficamente a um subconjunto de municípios do Estado de Minas Gerais, sem considerar aplicação a nível nacional com diferentes modais de transportes e etapas intermunicipais, estaduais e intramunicipais de distribuição.
+
+Sob a perspectiva da Ciência da Computação e da Pesquisa Operacional, reside uma fragilidade crucial na escolha do método de resolução aproximado. O método das economias é um algoritmo guloso local que busca melhorias passo a passo sem avaliar o impacto global das decisões. Embora eficiente para gerar soluções rápidas em problemas de roteamento comerciais, ele não garante a otimalidade matemática e não possui convergência para o ótimo global.
+
 \subsection{Otimização de Distribuição via Clínicas Móveis}
 
 Um dos estudos de caso mais recentes e de maior escala na literatura sobre a logística de imunizantes é o de Shukla et al. (2022) \cite{shukla2022optimizing}, que detalha a estratégia da rede CVS Health na distribuição de vacinas contra a COVID-19 para Instituições de Longa Permanência nos Estados Unidos. No trabalho, o desafio central é levar o imunizante de depósitos de varejo até populações vulneráveis por meio de clínicas móveis, em escala nacional.

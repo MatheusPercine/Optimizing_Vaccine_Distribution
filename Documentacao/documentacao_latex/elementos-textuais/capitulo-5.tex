@@ -60,7 +60,6 @@ No contexto deste trabalho, o problema apresenta uma estrutura bem definida de P
 Dessa forma, a utilização de métodos metaheurísticos  não se mostra adequada para o caso de um problema de programação linear inteiro de porte tratável, uma vez que métodos exatos já garantem a solução ótima em tempo viável.
 
 
-
 \section{Estudo de Caso Escolhido}
 
 Como a principal motivação para o desenvolvimento dos modelos é combater uma pandêmia, o cenário de aplicação deve simular uma pandemia em curso e ser suficientemente complexo para permitir a exploração do potencial dos modelos sem inviabilizar a coleta e o tratamento dos dados devido ao volume massivo de dados.
@@ -77,7 +76,6 @@ No que se refere aos tipos de vacinas, foram selecionadas quatro categorias de i
     \item \textbf{CoronaVac (Butantan)}
     \item \textbf{Janssen (Johnson \& Johnson)}
 \end{itemize}
-
 
 
 \section{Métodos de Obtenção dos Dados}
@@ -280,8 +278,6 @@ Dados reais sobre prazos de validade e, principalmente, sobre o tempo restante d
 A modelagem de $e_{iv}$ foi realizada em duas etapas. Inicialmente, para cada tipo de vacina $v \in V$, define-se um parâmetro $\phi_v$ correspondente à sua vida útil típica (em horas), considerando condições adequadas de armazenamento. Em seguida, introduz-se um fator de variabilidade na faixa de $(0,1]$, que representa a fração da validade ainda disponível no momento da distribuição.
 
 
-
-
 \section{Definição dos Valores de Parâmetros}
 
 \subsection{Escolha do Valor da Penalização De Não Atendimento da Demanda}
@@ -298,13 +294,23 @@ Como os coeficientes de custo utilizados neste trabalho representam tempos de de
 
 \subsection{Processamento Logístico e Penalização do Modal Aéreo}
 
-Para os tempos de processamento logístico para cada modal adotam-se os valores:
+
+Segundo o documento do Encontro Nacional de Engenharia de 2019 \cite{LimaEtAl:2019}, antes do transporte, as vacinas tem de ser armazenadas em caixas especiais e o tempo necessário 
+para a estabilização da temperatura destas caixas é em média textbf{60 minutos}, e só após essa estabilização a mesma pode ser liberada para o transporte. 
+
+Além disso, segundo o mesmo documento \cite{LimaEtAl:2019}, após a chega dos caminhões ao destino de entrega, os municípios relataram que em média são gastos textbf{30 minutos}, desde a chegada do caminhão, conferência das vacinas e armazenagem na câmara fria. Dessa forma, para o modal rodoviário, adota-se:
 
 \[
-\delta^{rod} = 0{,}5 \text{ horas}, \quad \delta^{aereo} = 2{,}0 \text{ horas}.
+\delta^{rod} = 1{,}5 \text{ horas}
 \]
 
-Segundo o documento do Encontro Nacional de Engenharia de 2019 \cite{LimaEtAl:2019}, os municípios relataram que em média são gastos 30 minutos, desde a chegada do caminhão, conferência das vacinas e armazenagem na câmara fria. Dessa forma, o valor atribuído ao modal rodoviário reflete um processo logístico mais simples e direto, envolvendo apenas atividades básicas de conferência e descarga. Por outro lado, o modal aéreo exige um conjunto mais complexo de operações aeroportuárias, incluindo procedimentos de segurança, manuseio especializado e possíveis tempos de espera, justificando um tempo de processamento significativamente maior.
+Como modal aéreo exige um conjunto mais complexo de operações aeroportuárias, incluindo procedimentos de segurança, manuseio especializado e possíveis tempos de espera, o tempo de processamento após a chegada dos aviões ao destino de entrega é maior que o dos caminhões.
+
+Dessa forma, para o modal aéreo, adota-se:
+
+\[
+\delta^{aereo} = 3{,}0 \text{ horas}.
+\]
 
 Para a penalização do modal aéreo adota-se:
 
