@@ -37,6 +37,7 @@ W_rod_mun = {
     str(row["municipio"]): int(row["W_rod"])
     for _, row in M_df.iterrows()
 }
+
 W_aereo_mun = {
     str(row["municipio"]): int(row["W_aereo"])
     for _, row in M_df.iterrows()
@@ -66,6 +67,7 @@ W_rod_estado = {
     str(row["estado"]): int(row["W_rod"])
     for _, row in estados_df.iterrows()
 }
+
 W_aereo_estado = {
     str(row["estado"]): int(row["W_aereo"])
     for _, row in estados_df.iterrows()
@@ -93,6 +95,7 @@ P = {
 # Hipotese pedida: capacidade constante por modal, independente da origem/destino.
 constantes_df = pd.read_csv(
     path("caso_nacional", "constantes.csv"), usecols=[0, 1]).dropna()
+
 col_constante = constantes_df.columns[0]
 col_valor = constantes_df.columns[1]
 
@@ -105,41 +108,55 @@ constantes = {
 # GERAÇÃO DA DEMANDA BASEADA EM POPULAÇÃO
 # ========================================================
 
-# Coeficiente para imunidade de rebanho (80%)
-epsilon = float(constantes['epsilon'])
-# Fator de abrangência/amostragem dos postos selecionados
+# Fração populacional restante para imunidade de rebanho (80% - 60% = 20%)
+fracao_restante = 0.20
+
+# Fator de abrangência/amostragem dos postos selecionados (10%)
 gamma = float(constantes['gamma'])
 
 rows_demanda_postos = []
 
+
 for j in J:
-
-    # pega a populacao do municipio j
+    # Pega a populacao do municipio j
     pop_j = M_df.loc[M_df['municipio'] == j, 'populacao'].values[0]
-
-    # demanda total do municipio j
-    D_j = epsilon * pop_j
-
-    # demandos postos p do municipio j cuio dados dos seus postos foram coletados (P[j])
-    d_j = gamma * D_j
-
-    # demanda por posto: d_ip = d_j / | P[j] |
+    
+    # Lista de postos do município j e contagem
     postos_municipio = P.get(j, [])
     num_postos = len(postos_municipio)
-
+    
     if num_postos > 0:
-        d_ip = int(max(1, d_j / num_postos))
-
         for p in postos_municipio:
             for v in V:
-                # Cada vacina v precisa cobrir a demanda total do posto dip
+                # Aplica as regras de esquema vacinal e competição de mercado
+                if v in ['Pfizer', 'AstraZeneca', 'CoronaVac']:
+                    num_doses_individuo = 2
+                    proporcao_competicao = 0.30
+                elif v == 'Janssen':
+                    num_doses_individuo = 1
+                    proporcao_competicao = 0.10
+                else:
+                    # Fallback de segurança caso haja outra vacina na base
+                    num_doses_individuo = 2
+                    proporcao_competicao = 0.00
+                
+                # D_jv = 0.20 * doses * proporcao * Pop_j
+                D_jv = fracao_restante * num_doses_individuo * proporcao_competicao * pop_j
+                
+                # d_jv = gamma * D_jv
+                d_jv = gamma * D_jv
+                
+                # d_jpv = d_jv / |P(j)| (Divisão uniforme entre os postos)
+                d_jpv = int(max(1, d_jv / num_postos))
+                
                 rows_demanda_postos.append({
                     "posto": p,
                     "vacina": v,
-                    "demanda": d_ip
+                    "demanda": d_jpv
                 })
 
 df_demanda_postos = pd.DataFrame(rows_demanda_postos)
+
 df_demanda_postos.to_csv(
     path("caso_nacional", "demanda_postos.csv"), index=False)
 

@@ -2,6 +2,7 @@
 
 Os modelos propostos não contemplam a etapa inicial de distribuição de vacinas a partir do nível federal. Assume-se que os estoques iniciais nos municípios já refletem a alocação realizada pelo Ministério da Saúde e o modelo começa depois disso. Dessa forma, o problema abordado concentra-se na redistribuição eficiente de vacinas entre municípios, considerando desequilíbrios locais de oferta e demanda.
 
+
 \section{Modelo Intermunicipal Sem Intermediação Estadual}
 
 Este modelo representa um cenário hipotético de operação descentralizada, na qual no qual municípios podem redistribuir vacinas diretamente entre si sem a necessidade de passagem por órgãos intermediários, como secretarias estaduais de saúde, conforme representado a seguir:
@@ -263,6 +264,11 @@ Finalmente, algumas restrições precisam ser levadas em consideração para est
 \subsection{Restrições}
 
 \textbf{A primeira restrição} é a \textbf{restrição de oferta} de cada vacina $v$ em cada município $i$. 
+
+A ``oferta do município'' é definida como o estoque remanescente armazenado centralizadamente na Rede de Frio da Secretaria Municipal de Saúde e que, de forma estratégica, ainda não foi despachado para os postos de vacinação locais.  Logo, o modelo assume que essas vacinas já se encontram prontas para redistribuição no instante inicial da execução do sistema.
+
+Caso alguma etapa de recolhimento de oferta existisse e fosse necessária, seria exigida uma formulação matemática distinta cujo tempo de execução total do sistema passaria a ser dado de forma aditiva pela soma dos tempos de recolhimento local e de redistribuição. Dessa forma, um modelo unificado de ``recolhimento + redistribuição'' poderia ser uma expansão futura, mas que foge do escopo deste trabalho, que se concentra exclusivamente na etapa de redistribuição.
+
 O número de vacinas transportadas pode ser menor que número de vacinas ofertadas no local de origem e, no máximo, pode-se transportar uma quantidade igual a quantidade ofertada pela origem. Assim, temos:
 
 \begin{equation*}
@@ -270,14 +276,15 @@ O número de vacinas transportadas pode ser menor que número de vacinas ofertad
 \end{equation*}
 onde:
 \begin{itemize}
-    \item $o_{ik}$ representa a quantidade de vacinas do tipo $v$ ofertadas no município $i$;
+    \item $o_{iv}$ representa a quantidade de vacinas do tipo $v$ ofertadas no município $i$;
 \end{itemize}
 
 Seria um erro se a restrição fosse definida desta forma:
 \begin{equation*}
     \sum_{j} x_{ijv} = o_{iv}, \quad \forall i \in I, \; v \in V
 \end{equation*}
-pois, nesse caso, todas as vacinas ofertadas seriam obrigadas a serem transportadas e, num cenário real, do conjunto de vacinas ofertadas pode sobrar vacina pode ou não haver destino viável.
+
+pois, nesse caso, todas as vacinas ofertadas seriam obrigatoriamente transportadas. Em um cenário real, contudo, o lote excedente pode não ser integralmente demandado, gerando sobras locais legítimas.
 
 \textbf{A segunda restrição} é a \textbf{restrição de demanda} da vacina $v$ por cada município $j$. 
 O número de vacinas recebidas, somado à variável de falta, deve ser igual à demanda total do município. Assim, temos:
@@ -292,14 +299,6 @@ onde:
     \item $f_{jv}$ representa a quantidade não atendida da demanda;
     \item $J$ representa os municípios $j$ mapeados.
 \end{itemize}
-
-E, nesse caso, estamos forçando o atendimento total da demanda.
-
-Seria um erro se a restrição fosse definida desta forma:
-\begin{equation*}
-    \sum_{i} x_{ijv} \le d_{jv}, \quad \forall j \in J, \; v \in V
-\end{equation*}
-pois isso implicaria que se pode não atender a demanda e o modelo pode simplesmente não entregar nada (minimiza custo = 0).
 
 \textbf{A terceira restrição} é a \textbf{restrição de capacidade agregada} de entrega de vacinas da origem $i$ ao destino $j$. 
 O número de vacinas transportadas não pode exceder a capacidade máxima agregada. Assim, temos:

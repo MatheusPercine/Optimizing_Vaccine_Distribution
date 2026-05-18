@@ -54,3 +54,18 @@ Modelo,Usa_Penalidade,Custo_Medio_Horas_Por_Dose,Valor_Funcao_Objetivo,Total_Dos
 4,True,0.850,2255.626,4714320,0.0,75.752,24.248,6.646,TripliceViral,Brasilia -> BoaVista,6.066,1652,N/A,N/A,N/A,N/A,N/A,N/A,BoaVista -> RR_CMI,0.580,3034
 5,True,0.885,505231.538,5114848,0,71.062,28.938,8.760,TripliceViral,N/A,N/A,N/A,Brasilia -> RR,5.985,1652,RR -> BoaVista,2.195,1652,BoaVista -> RR_CMI,0.580,3034
 5,False,0.884,4519143.280,5114848,0,69.983,30.017,8.760,TripliceViral,N/A,N/A,N/A,Brasilia -> RR,5.985,1652,RR -> BoaVista,2.195,1652,BoaVista -> RR_CMI,0.580,3034
+5,False,0.870,1886859.323,2169246,0,69.971,30.029,8.703,CoronaVac,N/A,N/A,N/A,CampoGrande -> AC,5.492,652,AC -> RioBranco,2.535,652,RioBranco -> AC_Rozangela_Pimentel,0.677,2334
+5,False,0.870,1886859.323,2169246,0,69.971,30.029,8.703,CoronaVac,N/A,N/A,N/A,CampoGrande -> AC,5.492,652,AC -> RioBranco,2.535,652,RioBranco -> AC_Rozangela_Pimentel,0.677,2334
+5,False,0.870,1886859.323,2169246,0,69.971,30.029,8.703,CoronaVac,N/A,N/A,N/A,CampoGrande -> AC,5.492,652,AC -> RioBranco,2.535,652,RioBranco -> AC_Rozangela_Pimentel,0.677,2334
+5,True,0.894,206271.246,2169246,0,70.588,29.412,10.230,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.018,241,AC -> RioBranco,2.535,652,RioBranco -> AC_Rozangela_Pimentel,0.677,2334
+5,True,0.894,206271.246,2169246,0,70.588,29.412,10.230,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.018,241,AC -> RioBranco,2.535,652,RioBranco -> AC_Rozangela_Pimentel,0.677,2334
+4,True,0.858,11148.122,2021306,0.0,75.261,24.739,7.947,Pfizer,SaoPaulo -> BoaVista,7.368,913,N/A,N/A,N/A,N/A,N/A,N/A,BoaVista -> RR_CMI,0.580,2912
+4,False,0.832,1682280.849,2021306,0.0,74.227,25.773,6.095,Pfizer,CampoGrande -> Manaus,5.283,2976,N/A,N/A,N/A,N/A,N/A,N/A,Manaus -> AM_Silas_Santos,0.812,13822
+3,False,0.647,14795115789.291,1725426,147940.0,100.000,0.000,0.891,Pfizer,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,2932
+3,True,0.647,14794008844.413,1725426,147940.0,100.000,0.000,0.891,Pfizer,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Florianopolis -> SC_Jurere,0.891,2932
+2,True,1.236,2115534.232,3746732,0.0,34.899,65.101,8.826,Pfizer,N/A,N/A,N/A,SaoPaulo -> AM,6.537,7325,AM -> Manaus,2.289,27644,N/A,N/A,N/A
+2,False,1.193,4468227.099,3746732,0.0,35.495,64.505,6.760,Pfizer,N/A,N/A,N/A,Cuiaba -> AM,4.471,6862,AM -> Manaus,2.289,27644,N/A,N/A,N/A
+1,False,2.751,5153272.199,1873366,0.0,0.000,100.000,4.463,Pfizer,Palmas -> Manaus,4.463,3924,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+1,True,2.843,37433.228,1873366,0.0,0.000,100.000,5.527,CoronaVac,Teresina -> BoaVista,5.527,383,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+1,False,2.751,5153272.199,1873366,0.0,0.000,100.000,4.463,Pfizer,Palmas -> Manaus,4.463,3924,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+5,False,1.870,4056105.323,2169246,0,69.971,30.029,11.703,CoronaVac,N/A,N/A,N/A,CampoGrande -> AC,6.492,652,AC -> RioBranco,3.535,652,RioBranco -> AC_Rozangela_Pimentel,1.677,2334

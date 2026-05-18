@@ -43,53 +43,54 @@ Isso torna este modelo impossível de ser resolvido manualmente e altamente exig
 + \;& (|I| \cdot |K| \cdot |V|) + (|P| \cdot |V|) \quad && \text{(Viabilidade Temporal)}
 \end{align*}
 
-Para o estudo de caso do cenário nacional utilizado neste trabalho, foram mapeados 27 municípios de origem ($|I|=27$), 27 municípios de destino ($|J|=27$), 27 centros estaduais ($|K|=27$), 54 postos de vacinação globais ($|P|=54$, sendo 2 por capital) e 7 tipos de vacina ($|V|=7$).
+Para o estudo de caso do cenário nacional utilizado neste trabalho, foram mapeados 27 municípios de origem ($|I|=27$), 27 municípios de destino ($|J|=27$), 27 centros estaduais ($|K|=27$), 54 postos de vacinação globais ($|P|=54$, sendo 2 por capital) e 4 tipos de vacina ($|V|=4$).
 
 Aplicando essas dimensões práticas à estrutura das equações, foram definidos os seguintes valores exatos para o modelo:
 
 \textbf{Quantidade de vezes que as variáveis de decisão aparecem na função objetivo:}
 \[
-(27 \cdot 27 \cdot 7) 
+(27 \cdot 27 \cdot 4) 
 + 
-(27 \cdot 27 \cdot 7) 
+(27 \cdot 27 \cdot 4) 
 + 
-(54 \cdot 7) 
+(54 \cdot 4) 
 +
-(54 \cdot 7)
+(54 \cdot 4)
 \]
 
 \[
-= 5103 + 5103 + 378 + 378 = 10.962 \text{ vezes}
+= 2916 + 2916 + 216 + 216 = 6.264 \text{ vezes}
 \]
 
 \textbf{Quantidade de linhas na matriz de restrições:}
 \begin{align*}
-& (27 \cdot 7) \quad && \text{(Oferta Intermunicipal)} \\
-+ \;& (27 \cdot 7) \quad && \text{(Conservação do Fluxo no Estado)} \\
-+ \;& (54 \cdot 7) \quad && \text{(Demanda nos Postos de Saúde)} \\
+& (27 \cdot 4) \quad && \text{(Oferta Intermunicipal)} \\
++ \;& (27 \cdot 4) \quad && \text{(Conservação do Fluxo no Estado)} \\
++ \;& (54 \cdot 4) \quad && \text{(Demanda nos Postos de Saúde)} \\
 + \;& (27 \cdot 27) + (27 \cdot 27) + (54) \quad && \text{(Capacidades Físicas de Transporte)} \\
-+ \;& (27 \cdot 27 \cdot 7) \quad && \text{(Consistência Estadual)} \\
-+ \;& (27 \cdot 7) \quad && \text{(Balanço de Fluxo Municipal)} \\
-+ \;& (27 \cdot 27 \cdot 7) + (54 \cdot 7) \quad && \text{(Viabilidade Temporal)}
++ \;& (27 \cdot 27 \cdot 4) \quad && \text{(Consistência Estadual)} \\
++ \;& (27 \cdot 4) \quad && \text{(Balanço de Fluxo Municipal)} \\
++ \;& (27 \cdot 27 \cdot 4) + (54 \cdot 4) \quad && \text{(Viabilidade Temporal)}
 \end{align*}
 
 \[
-= 189 + 189 + 378 + 1512 + 5103 + 189 + 5481 = 13041 \text{ linhas}
+= 108 + 108 + 216 + 1512 + 2916 + 108 + 3132 = 8.100 \text{ linhas}
 \]
+
 
 \textbf{Tamanho da Instância:}
 
-O tamanho da instância é a soma total das variáveis de decisão inteiras geradas pelos dados de entrada, ou seja, 10.962.
+O tamanho da instância é a soma total das variáveis de decisão inteiras geradas pelos dados de entrada, ou seja, 6.264.
 
 Logo, no pior caso, o tempo de execução pode ser:
 
 \[
-\text{tempo} \sim O(2^{10962}) \quad \text{(ou pior)}
+\text{tempo} \sim O(2^{6264}) \quad \text{(ou pior)}
 \]
 
 \textbf{Tamanho total da matriz do problema (Variáveis $\times$ Restrições):}
 \[
-10.962 \times 13.041 = 142.954.842 \text{ células}
+6.264 \times 8.100 = 50.738.400 \text{ células}
 \]
 
 
@@ -104,6 +105,7 @@ Esse número torna colossal o nível de complexidade gerado por essa modelagem, 
 Para garantir a tratabilidade computacional foram adotadas simplificações que distanciam a simulação de um cenário logístico real em sua totalidade. Dessa forma, a modelagem possui uma série de limitações, como:
 
 \begin{itemize}
+    \item \textbf{Abstração de Instâncias Administrativas Intermediárias:} O modelo adota uma estrutura de rede condensada composta por, no máximo, três níveis principais de fluxo de suprimentos ($I \to K \to J \to P$). Contudo, na estrutura organizacional real do Sistema Único de Saúde (SUS), estados de grande extensão territorial, como o de Minas Gerais, podem operar com um nível adicional composto pelas Superintendências Regionais de Saúde (SRS), configurando um fluxo do tipo $I \to K \to \text{SRS} \to J \to P$.
     \item \textbf{Homogeneidade da Malha Rodoviária:} Na vida real, um eixo logístico entre São Paulo e Rio de Janeiro possui uma malha rodoviária infinitamente mais robusta do que a de um trajeto ligando municípios da Região Norte. Essa heterogeneidade da malha rodoviária que varia entre duas localidades não foi contemplada no modelo.
     \item \textbf{Simetria da Fórmula de Haversine:} A utilização da fórmula de Haversine acrescida de um fator de tortuosidade ($\beta$) cria um grafo simétrico, onde o custo de ida é exatamente igual ao custo de volta. Em redes rodoviárias reais, o relevo (como a subida ou descida de uma serra), a existência de vias de mão única, pedágios e rotas alternativas fazem com que o tempo de deslocamento seja assimétrico.
     \item \textbf{Incapacidade de Previsão do Trânsito:} O modelo considera a velocidade média dos modais ($\theta_{rod}$ e $\theta_{aereo}$) como parâmetros constantes. Porém, na realidade urbana, o trânsito é um sistema dinâmico e imprevisível, pois está suscetível a intempéries climáticas, acidentes, bloqueios em rodovias, obras e grandes eventos (como partidas de futebol ou festividades), que podem travar o trânsito nas redondezas de rodovias e aeroportos, impactando drasticamente o tempo de deslocamento $\tau_{ab}$.
@@ -128,7 +130,7 @@ Conclui-se que o verdadeiro desafio da distribuição ótima de vacinas não res
 
 \section{Conclusões Finais}
 
-A pesquisa cumpriu com êxito o seu objetivo central: modelar, implementar e resolver o problema de redistribuição de vacinas no Brasil sob a ótica da Programação Linear Inteira, mitigando o risco de expiração de estoques e otimizando o tempo logístico.
+A pesquisa cumpriu com êxito o seu objetivo central: modelar, implementar e resolver o problema de distribuição e redistribuição de vacinas em um cenário pandêmico no Brasil sob a ótica da Programação Linear Inteira, buscando minimizar o tempo logístico de transporte, ampliar o atendimento da demanda vacinal e contribuir para respostas mais eficientes em contextos de emergência sanitária.
 
 Por meio da modelagem matemática, níveis de cadeia logística e a burocracia foram traduzidos com precisão por meio de variáveis de decisão e restrições, como a restrição da conservação do fluxo e a de consistência estadual.
 
