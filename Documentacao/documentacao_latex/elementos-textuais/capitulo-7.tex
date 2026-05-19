@@ -14,9 +14,9 @@ No pior caso, o algoritmo pode ser forçado a explorar praticamente todas as com
 
 onde $n$ representa o tamanho da instância. No contexto da Programação Linear Inteira, esse tamanho está em função do limite do espaço de busca explorado pelos algoritmos de otimização (como o \textit{Branch-and-Bound}) e esse limite é ditado pelo número total de variáveis de decisão do sistema.
 
-O Modelo 5 (sem penalidade) foi idealizado sob uma ótica mais realista que os demais modelos e, por isso, é válido analisar a complexidade computacional gerada por essa abordagem.
+O Modelo 2 (sem penalidade) foi idealizado sob uma ótica mais realista que os demais modelos e, por isso, é válido analisar a complexidade computacional gerada por essa abordagem.
 
-O Modelo 5 exige a operação com três variáveis de decisão tridimensionais ($x_{ikv}$, $y_{kjv}$ e $z_{jpv}$) e uma variável bidimensional de falta ($f_{pv}$). Como consequência, a quantidade de vezes que as variáveis aparecem na função objetivo e o tamanho da matriz de restrições crescem de forma multiplicativa em relação ao tamanho dos conjuntos de municípios de origem ($|I|$), municípios de destino ($|J|$), centros estaduais ($|K|$), postos de vacinação ($|P(j)|$) e tipos de vacina ($|V|$).
+O Modelo 2 exige a operação com três variáveis de decisão tridimensionais ($x_{ikv}$, $y_{kjv}$ e $z_{jpv}$) e uma variável bidimensional de falta ($f_{pv}$). Como consequência, a quantidade de vezes que as variáveis aparecem na função objetivo e o tamanho da matriz de restrições crescem de forma multiplicativa em relação ao tamanho dos conjuntos de municípios de origem ($|I|$), municípios de destino ($|J|$), centros estaduais ($|K|$), postos de vacinação ($|P(j)|$) e tipos de vacina ($|V|$).
 
 Isso torna este modelo impossível de ser resolvido manualmente e altamente exigente do ponto de vista computacional. Mensurando a complexidade gerada por essa modelagem, tem-se:
 
@@ -110,6 +110,7 @@ Para garantir a tratabilidade computacional foram adotadas simplificações que 
     \item \textbf{Simetria da Fórmula de Haversine:} A utilização da fórmula de Haversine acrescida de um fator de tortuosidade ($\beta$) cria um grafo simétrico, onde o custo de ida é exatamente igual ao custo de volta. Em redes rodoviárias reais, o relevo (como a subida ou descida de uma serra), a existência de vias de mão única, pedágios e rotas alternativas fazem com que o tempo de deslocamento seja assimétrico.
     \item \textbf{Incapacidade de Previsão do Trânsito:} O modelo considera a velocidade média dos modais ($\theta_{rod}$ e $\theta_{aereo}$) como parâmetros constantes. Porém, na realidade urbana, o trânsito é um sistema dinâmico e imprevisível, pois está suscetível a intempéries climáticas, acidentes, bloqueios em rodovias, obras e grandes eventos (como partidas de futebol ou festividades), que podem travar o trânsito nas redondezas de rodovias e aeroportos, impactando drasticamente o tempo de deslocamento $\tau_{ab}$.
     \item \textbf{Agregação das Unidades de Vacina do Tipo V:} Um município real não possui um único prazo de validade para todas as suas vacinas de um tipo $v$, mas sim múltiplas unidades de vacina com datas de expiração distintas. O modelo não rastreia unidades individuais, mas sim um lote agregado de vacinas do tipo $v$ com um prazo de validade médio estimado ($e_{iv}$ ou $e_{jv}$). Essa agregação simplifica a modelagem, mas perde a precisão do rastreamento de unidades individuais.
+    \item \textbf{Simplificação do Tempo do Modal Aéreo:} Na prática, o uso do modal aéreo compreende, nesta ordem, os tempos de transporte rodoviário do município de origem até o aeroporto, o tempo de voo entre aeroportos e o transporte rodoviário do aeroporto de destino até o município final. Porém, na aplicação e na modelagem, o tempo do modal aéreo ($\tau_{ab}^{aereo}$) considera somente o tempo de voo entre municípios.
 \end{itemize}
 
 \section{Limitações da Aplicação dos Modelos}
