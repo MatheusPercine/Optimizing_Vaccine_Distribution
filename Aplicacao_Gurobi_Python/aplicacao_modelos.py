@@ -1209,7 +1209,7 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
                             # Dados para o CSV de Detalhes do Modelo
                             rotas_list.append({
-                                "Modelo": 4, "Usa_Penalidade": penalidade,
+                                "Modelo": 1, "Usa_Penalidade": penalidade,
                                 "ID_Fluxo": f"{i}_{j}_{v}", "Rota": f"{i} -> {j}", "Tipo_Rota": "ij",
                                 "Origem": i, "Lat_O": municipios_coordenadas[i][0], "Lon_O": municipios_coordenadas[i][1],
                                 "Destino": j, "Lat_D": municipios_coordenadas[j][0], "Lon_D": municipios_coordenadas[j][1],
@@ -1241,7 +1241,7 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
                         # Dados para o CSV de Detalhes do Modelo
                         rotas_list.append({
-                            "Modelo": 4, "Usa_Penalidade": penalidade,
+                            "Modelo": 1, "Usa_Penalidade": penalidade,
                             "ID_Fluxo": f"{j}_{p}_{v}", "Rota": f"{j} -> {p}", "Tipo_Rota": "jp",
                             "Origem": j, "Lat_O": municipios_coordenadas[j][0], "Lon_O": municipios_coordenadas[j][1],
                             "Destino": p, "Lat_D": postos_coordenadas[p][0], "Lon_D": postos_coordenadas[p][1],
@@ -1275,7 +1275,7 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
         # 3. Dados do CSV para Registro do Comparativo
         resumo = {
-            "Modelo": 4,
+            "Modelo": 1,
             "Usa_Penalidade": penalidade,
             "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
             "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
@@ -1311,7 +1311,7 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
         print("-"*60)
 
-        # Exportação dos Detalhes do Modelo 4
+        # Exportação dos Detalhes do Modelo 1
         exportar_detalhes(1, penalidade, rotas_list)
         registrar_comparativo(resumo)
         print("Processamento do Modelo 1 concluído com sucesso.")
@@ -1371,7 +1371,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
                         # Dados para o CSV de Detalhes do Modelo
                         rotas_list.append({
-                            "Modelo": 5, "Usa_Penalidade": penalidade,
+                            "Modelo": 2, "Usa_Penalidade": penalidade,
                             "ID_Fluxo": f"{i}_{k}_{v}", "Rota": f"{i} -> {k}", "Tipo_Rota": "ik",
                             "Origem": i, "Lat_O": municipios_coordenadas[i][0], "Lon_O": municipios_coordenadas[i][1],
                             "Destino": k, "Lat_D": estados_coordenadas[k][0], "Lon_D": estados_coordenadas[k][1],
@@ -1404,7 +1404,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
                         # Dados para o CSV de Detalhes do Modelo
                         rotas_list.append({
-                            "Modelo": 5, "Usa_Penalidade": penalidade,
+                            "Modelo": 2, "Usa_Penalidade": penalidade,
                             "ID_Fluxo": f"{k}_{j}_{v}", "Rota": f"{k} -> {j}", "Tipo_Rota": "kj",
                             "Origem": k, "Lat_O": estados_coordenadas[k][0], "Lon_O": estados_coordenadas[k][1],
                             "Destino": j, "Lat_D": municipios_coordenadas[j][0], "Lon_D": municipios_coordenadas[j][1],
@@ -1436,7 +1436,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
                         # Dados para o CSV de Detalhes do Modelo
                         rotas_list.append({
-                            "Modelo": 5, "Usa_Penalidade": penalidade,
+                            "Modelo": 2, "Usa_Penalidade": penalidade,
                             "ID_Fluxo": f"{j}_{p}_{v}", "Rota": f"{j} -> {p}", "Tipo_Rota": "jp",
                             "Origem": j, "Lat_O": municipios_coordenadas[j][0], "Lon_O": municipios_coordenadas[j][1],
                             "Destino": p, "Lat_D": postos_coordenadas[p][0], "Lon_D": postos_coordenadas[p][1],
@@ -1470,7 +1470,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
         # 3. Dados do CSV para Registro do Comparativo
         resumo = {
-            "Modelo": 5,
+            "Modelo": 2,
             "Usa_Penalidade": penalidade,
             "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
             "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
@@ -1508,7 +1508,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
         print("-"*60)
 
-        # Exportação dos Detalhes do Modelo 5
+        # Exportação dos Detalhes do Modelo 2
         exportar_detalhes(2, penalidade, rotas_list)
         registrar_comparativo(resumo)
         print("Processamento do Modelo 2 concluído com sucesso.")

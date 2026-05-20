@@ -1,6 +1,69 @@
 \chapter{Resultados e Análise}
 
-Os dados dos resultados foram exportados no formato csv e para a exibição dos mesmos foi utilizada a ferramenta Power BI que é capaz de gerar diversos gráficos com certa praticidade e tendo arquivos .csv como entrada. Ainda alguns dados também foram gerados pelo terminal do próprio python.
+Os dados dos resultados foram exportados no formato csv, na pasta ``resultados\_caso\_regional'', e para a exibição dos mesmos foi utilizada a ferramenta Power BI que é capaz de gerar diversos gráficos com certa praticidade e tendo arquivos .csv como entrada. Ainda alguns dados também foram gerados pelo terminal do próprio python.
+
+Foi gerado um csv com dados globais de cada modelo, o qual foi utilizado para a geração dos gráficos de comparação entre os modelos. Esse csv contém os seguintes dados dispostos nas seguintes colunas:
+
+\begin{longtable}{|l|p{8.5cm}|}
+\caption{Descrição das Colunas da Tabela de Comparação Entre Modelos} \label{tab:colunas_comparacao} \\
+\hline
+\textbf{Coluna} & \textbf{Descrição} \\ \hline
+\endhead
+
+\hline \endfoot
+
+Modelo & Identificador do modelo matemático executado (1 ou 2). \\ \hline
+Usa\_Penalidade & Indica se o cenário utilizou a penalidade na função objetivo. \\ \hline
+Custo\_Medio\_Horas\_Por\_Dose & Métrica dada pela razão entre a soma dos custos ponderados de transporte (tempo multiplicado pelo volume de cada lote) e o total de doses movimentadas na rede. \\ \hline
+Valor\_Funcao\_Objetivo & Valor numérico final obtido para a função objetivo correspondente após a otimização pelo \textit{solver} Gurobi. \\ \hline
+Total\_Doses\_Movimentadas & Quantidade absoluta de doses de vacinas transportadas ao longo de todos os arcos ativos da rede de suprimentos. \\ \hline
+Total\_Doses\_Faltantes & Somatório das variáveis de folga ($f_{pv}$), representando o déficit absoluto de indivíduos não atendidos em relação às metas dos postos. \\ \hline
+Percentual\_Rodoviario & Percentual de uso do modal rodoviário. \\ \hline
+Percentual\_Aereo & Percentual de uso do modal aéreo. \\ \hline
+Tempo\_Maximo & O tempo logístico máximo registrado para que a última dose viável complete seu circuito físico, definindo o gargalo global ($L$). \\ \hline
+Vacina\_Maior\_Tempo & O tipo de imunizante contra a Covid-19 que esteve associado ao maior tempo de trânsito ou restrição de expiração no gargalo global. \\ \hline
+Rota\_Gargalo\_ij & Identificação do arco crítico direto (Origem $i \to$ Destino $j$) que registrou o maior tempo de trânsito no modal rodoviário. \\ \hline
+Tempo\_Rota\_Gargalo\_ij & Custo (em horas) associado ao arco crítico rodoviário direto $i \to j$. \\ \hline
+Doses\_Rota\_Gargalo\_ij & Volume de vacinas alocado e transportado através do arco crítico rodoviário direto $i \to j$. \\ \hline
+Rota\_Gargalo\_ik & Identificação do arco crítico na primeira etapa do modelo integrado, ligando o município de origem $i$ ao centro estadual $k$ ($L_1$). \\ \hline
+Tempo\_Rota\_Gargalo\_ik & Custo (em horas) associado ao arco crítico $i \to k$. \\ \hline
+Doses\_Rota\_Gargalo\_ik & Volume de vacinas alocado e transportado através do arco crítico da etapa $i \to k$. \\ \hline
+Rota\_Gargalo\_kj & Identificação do arco crítico na segunda etapa do modelo integrado, ligando o centro estadual $k$ ao município de destino $j$ ($L_2$). \\ \hline
+Tempo\_Rota\_Gargalo\_kj & Custo (em horas) associado ao arco crítico $k \to j$. \\ \hline
+Doses\_Rota\_Gargalo\_kj & Volume de vacinas alocado e transportado através do arco crítico da segunda etapa $k \to j$. \\ \hline
+Rota\_Gargalo\_jp & Identificação do arco crítico na etapa intramunicipal final, ligando o município de destino $j$ ao posto de saúde $p$ ($L_3$). \\ \hline
+Tempo\_Rota\_Gargalo\_jp & Custo (em horas) associado ao arco crítico final $j \to p$. \\ \hline
+Doses\_Rota\_Gargalo\_jp & Volume de vacinas alocado e entregue ao posto de saúde crítico $p$ vindo do município $j$. \\ \hline
+\end{longtable}
+
+Também foram gerados csvs específicos para cada modelo, os quais foram utilizados para a geração dos gráficos de resultados individuais dos modelos.
+
+Esse csv contém os seguintes dados dispostos nas seguintes colunas:
+
+\begin{longtable}{|l|p{8.5cm}|}
+\caption{Descrição das Colunas da Tabela de Detalhes da Execução de Um Modelo Específico} \label{tab:colunas_detalhes} \\
+\hline
+\textbf{Coluna} & \textbf{Descrição} \\ \hline
+\endhead
+
+\hline \endfoot
+
+Modelo & Identificador do modelo matemático executado (1 ou 2). \\ \hline
+Usa\_Penalidade & Indica se o cenário utilizou a penalidade na função objetivo. \\ \hline
+ID\_Fluxo & Identificador único sequencial atribuído a cada fluxo de transporte ativo gerado pelo \textit{solver}. \\ \hline
+Rota & Representação textual do arco de transporte no formato "Origem $\to$ Destino". \\ \hline
+Tipo\_Rota & Classificação do arco logístico na estrutura da rede (ex: intermunicipal $i \to k$ ou $k \to j$, ou intramunicipal $j \to p$). \\ \hline
+Origem & Nome da localidade de origem onde as doses foram despachadas. \\ \hline
+Lat\_O & Coordenada geográfica de latitude do ponto de origem. \\ \hline
+Lon\_O & Coordenada geográfica de longitude do ponto de origem. \\ \hline
+Destino & Nome da localidade de destino final do arco de transporte. \\ \hline
+Lat\_D & Coordenada geográfica de latitude do ponto de destino. \\ \hline
+Lon\_D & Coordenada geográfica de longitude do ponto de destino. \\ \hline
+Custo\_Horas & Custo (em horas) associado estritamente àquele arco de transporte. \\ \hline
+Doses & Quantidade absoluta de doses de vacinas transportadas naquele fluxo específico. \\ \hline
+Vacina & O tipo de imunizante contra a Covid-19 transportado na rota. \\ \hline
+Modal & O modal de transporte utilizado para a movimentação da carga (Rodoviário ou Aéreo). \\ \hline
+\end{longtable}
 
 
 \section{Comparação entre Modelos}
@@ -13,9 +76,15 @@ Os dados dos resultados foram exportados no formato csv e para a exibição dos 
     \label{fig:grafico1_powerbi}
 \end{figure}
 
-Os tempos máximos podem significar o Tempo Total de Distribuição ou o Limite Superior, o qual é uma aproximação.
+Os tempos máximos são aproximados pelo valor Limite Superior. 
 
-Podemos verificar que quase não há diferença nos tempos entre um modelo sem penalidade e sua versão com penalidade. Observamos também o significativo impacto no tempo que as intermediações estaduais causam.  Como esperado, o modelo 2 possui o maior tempo para distribuição de vacinas já que incorpora três etapas e seu tempo de distribuição foi maior do que 8 horas.
+Podemos verificar os modelos com penalidades possuem tempos maiores menores do que os modelos sem penalidades. Isso se deve ao fato de que a penalidade na função objetivo tem o efeito de priorizar o atendimento dos postos de saúde, mesmo que isso implique em rotas mais longas ou mais demoradas.
+
+Observa-se também que as execuções do modelo 2 possuem um tempo maior do que as execuções do modelo 1, o que era esperado pelo modelo 2 incorporar mais etapas logísticas do que o modelo 1. Porém, agora conseguimos medir em quanto esse impacto é significativo.
+
+Entre os modelos 1 e 2, ambos sem penalidade, a diferença entre os tempos é de aproximadamente 3 horas, isso significa que o modelo 2 tem um tempo $27\%$ maior.
+
+Entre os modelos 1 e 2, ambos com penalidade, a diferença entre os tempos é de 2,7 horas. Isso significa que o modelo 2 tem um tempo $21\%$ maior.
 
 \begin{figure}[H]
     \centering
@@ -25,7 +94,7 @@ Podemos verificar que quase não há diferença nos tempos entre um modelo sem p
     \label{fig:grafico2_powerbi}
 \end{figure}
 
-Diferentemente do gráfico anterior, este denota uma grande diferença no valor da função objetivo entre um modelo sem penalidade e sua versão com penalidade.
+Este gráfico denota uma grande diferença no valor da função objetivo entre um modelo sem penalidade e sua versão com penalidade, pois o modelo com penalidade é severamente punido, por diversas vezes, a cada hora que uma vacina com validade curta passa em trânsito.
 
 \begin{figure}[H]
     \centering
@@ -35,7 +104,7 @@ Diferentemente do gráfico anterior, este denota uma grande diferença no valor 
     \label{fig:grafico3_powerbi}
 \end{figure}
 
-Para a obtenção dos dados desse gráfico foi gerada uma média ponderada para os dados de custo tendo a quantidade de doses movimentadas como peso. Para os modelos o valor não variou muito.
+Para a obtenção dos dados desse gráfico foi gerada uma média ponderada para os dados de custo tendo a quantidade de doses movimentadas como peso. Para os modelos o valor não variou muito. Isso denota que provavelmente, o solver utilizou um conjunto de rotas parecidos entre os modelos para entregar quantidades parecidas de doses.
 
 \begin{figure}[H]
     \centering
@@ -50,14 +119,14 @@ O total de doses movimentadas foi aumentado conforme mais etapas logísticas tin
 \begin{figure}[H]
     \centering
     \caption{Percentual de Uso dos Modais}
-    \includegraphics[width=15cm,height=9.0cm]{figuras/5-percentual_modais.png} 
+    \includegraphics[width=15cm,height=9.0cm]{figuras/6-percentual_modais.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico5_powerbi}
 \end{figure}
 
 Nos modelos, há predominância do modal rodoviário.
 
-Também nota-se uma pequena diferença nas porcentagens quando comparamos um modelo sem penalidade e sua versão com penalidade.
+Quase não há diferença nas porcentagens quando comparamos um modelo sem penalidade e sua versão com penalidade.
 
 \section{Resultados Individuais dos Modelos}
 
@@ -67,88 +136,92 @@ Além da comparação entre os modelos, também é possível analisar o que acon
 
 \begin{figure}[H]
     \centering
-    \caption{Os 10 Maiores Tempos Por Rota}
-    \includegraphics[width=11cm,height=10.0cm]{figuras/12-maiores_tempos_mod4.png} 
+    \caption{Os 10 Maiores Tempos Por Rota - Modelo 1}
+    \includegraphics[width=11cm,height=10.0cm]{figuras/9-maiores_tempos_mod1.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico10_powerbi}
 \end{figure}
 
-Observa-se que quase não há diferença entre os tempos das rotas de um modelo sem penalidade e sua versão com penalidade. Também nota-se que há muitas rotas em comum entre um gráfico e outro, apesar de os conjuntos de rotas serem diferentes entre si.
+No cenário sem penalidade, os maiores tempos de rota concentram-se em eixos que interligam capitais do Centro-Oeste e Nordeste em direção a Manaus (ex: Campo Grande $\to$ Manaus, Goiânia $\to$ Manaus, São Luís $\to$ Manaus), com tempos estabilizados na faixa de 5 a 6 horas.
 
-Nota-se que não há relação direta entre o total de doses movimentadas e o tempo da rota. O trajeto das linhas também é diferente entre um gráfico e outro, apesar de possuírem certa similaridade.
+No cenário com penalidade, o Gurobi altera completamente a composição do conjunto das 10 rotas mais demoradas. Surgem eixos de longuíssima distância partindo do Sudeste, como por exemplo São Paulo $\to$ Boa Vista, São Paulo $\to$ Manaus e São Paulo $\to$ Belém. Na presença da penalidade, o teto do eixo vertical de custos em horas sobe de 6 horas para 8 horas.
+
+O trajeto irregular da linha laranja (Soma de Doses) em ambos os cenários confirma que não há proporcionalidade direta entre o tempo de voo e a quantidade de vacinas transportada.
 
 \begin{figure}[H]
     \centering
-    \caption{Percentual de Tipos de Rota}
-    \includegraphics[width=12cm,height=6.0cm]{figuras/7-percentual_rotas_mod4.png} 
+    \caption{Percentual de Tipos de Rota - Modelo 1}
+    \includegraphics[width=16cm,height=6.0cm]{figuras/7-percentual_rotas_mod1.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico11_powerbi}
 \end{figure}
 
-Verifica-se predomínio, em, aproximadamente 75\%, das rotas do tipo jp, na qual o município realiza o abastecimento de seus postos. O restante (aproximadamente 25\%) é preenchido pelas rotas do tipo ij, o que corresponde a casos em que um município precisou pegar doses da oferta de outro município.
+Verifica-se predomínio, em, aproximadamente 70\%, das rotas do tipo jp, na qual o município realiza o abastecimento de seus postos. O restante (aproximadamente 25\%) é preenchido pelas rotas do tipo ij, o que corresponde a casos em que um município precisou pegar doses da oferta de outro município.
 
 Vacina do maior tempo de entrega e rotas gargalo por etapa:
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - sem penalidade}
-    \includegraphics[width=8cm,height=1.2cm]{figuras/modelo_4_false.png} 
+    \caption{Informações do Terminal Com Python - Modelo 1 s/ penalidade}
+    \includegraphics[width=8.3cm,height=3.0cm]{figuras/modelo_1_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal7_python}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - com penalidade}
-    \includegraphics[width=8cm,height=1.2cm]{figuras/modelo_4_true.png} 
+    \caption{Informações do Terminal Com Python - Modelo 1 c/ penalidade}
+    \includegraphics[width=8.3cm,height=3.0cm]{figuras/modelo_1_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal8_python}
 \end{figure}
 
-Verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade.O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas.
+Verifica-se que rotas gargalo e seus detalhamentos são completamente diferentes entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas. Todas as demandas foram atendidas.
 
 \subsection{Resultados do Modelo 2}
 
 \begin{figure}[H]
     \centering
-    \caption{Os 10 Maiores Tempos Por Rota}
-    \includegraphics[width=11cm,height=10.0cm]{figuras/13-maiores_tempos_mod5.png} 
+    \caption{Os 10 Maiores Tempos Por Rota - Modelo 2}
+    \includegraphics[width=11cm,height=10.0cm]{figuras/10-maiores_tempos_mod2.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico12_powerbi}
 \end{figure}
 
-Observa-se que quase não há diferença entre os tempos das rotas de um modelo sem penalidade e sua versão com penalidade. Também nota-se que as rotas são exatamente iguais entre um gráfico e estão na mesma ordem.
+No cenário sem penalidade, os arcos mais demorados concentram-se no abastecimento de estados da Região Norte e parte do Nordeste a partir do Centro-Oeste e de capitais nordestinas (ex: Campo Grande $\to$ AC, Campo Grande $\to$ AM, Goiânia $\to$ AM, São Luís $\to$ RR). O tempo físico dessas rotas satura de forma homogênea na faixa de 5 a 6 horas.
 
-Nota-se que não há relação direta entre o total de doses movimentadas e o tempo da rota. O trajeto das linhas é quase o mesmo entre um gráfico e outro.
+No cenário com penalidade, o Gurobi reconfigura o topo da lista. Eixos partindo do Nordeste e do Sudeste assumem a liderança crítica (ex: Teresina $\to$ AC, São Paulo $\to$ AM, Manaus $\to$ CE). O solver aceita deliberadamente ativar rotas mais distantes e severas para garantir que os lotes de vacinas com alto risco de vencimento sejam escoados imediatamente de seus polos em direção aos estados receptores. Além disso, na presença da penalidade, o limite do eixo vertical salta de 6 horas para 8 horas.
+
+Da mesma forma que no modelo anterior, o trajeto irregular da linha laranja (Soma de Doses) em ambos os cenários confirma que não há proporcionalidade direta entre o tempo de voo e a quantidade de vacinas transportada.
 
 \begin{figure}[H]
     \centering
-    \caption{Percentual de Tipos de Rota}
-    \includegraphics[width=16cm,height=6.0cm]{figuras/8-percentual_rotas_mod5.png} 
+    \caption{Percentual de Tipos de Rota - Modelo 2}
+    \includegraphics[width=16cm,height=5.0cm]{figuras/8-percentual_rotas_mod2.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico13_powerbi}
 \end{figure}
 
-Verifica-se predomínio, em pouco mais da metade, do uso das rotas do tipo jp, na qual o município realiza o abastecimento de seus postos. O tipo de ik aparece em segundo lugar com aproximadamente 23\% e esse número denota que, na maioria das vezes não foi necessário usar esse tipo de rota tipicamente acionada quando é necessário usar a oferta de outro município. O restante (aproximadamente 14\%) é preenchido pelas rotas do tipo kj, na qual o Estado realiza o abastecimento de sua capital. 
+Verifica-se predomínio, em pouco mais da metade, do uso das rotas do tipo jp, na qual o município realiza o abastecimento de seus postos. O tipo de ik aparece em segundo lugar com aproximadamente 20\% e esse número denota que, na maioria das vezes não foi necessário usar esse tipo de rota tipicamente acionada quando é necessário usar a oferta de outro município. O restante (aproximadamente 15\%) é preenchido pelas rotas do tipo kj, na qual o Estado realiza o abastecimento de sua capital. 
 
 Vacina do maior tempo de entrega e rotas gargalo por etapa:
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - sem penalidade}
-    \includegraphics[width=9cm,height=1.6cm]{figuras/modelo_5_false.png} 
+    \caption{Informações do Terminal Com Python - Modelo 2 s/ penalidade}
+    \includegraphics[width=9.3cm,height=3.5cm]{figuras/modelo_2_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal9_python}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - com penalidade}
-    \includegraphics[width=9cm,height=1.6cm]{figuras/modelo_5_true.png} 
+    \caption{Informações do Terminal Com Python - Modelo 2 c/ penalidade}
+    \includegraphics[width=9.3cm,height=3.5cm]{figuras/modelo_2_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal10_python}
 \end{figure}
 
-Verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade.O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas.
+Excento pela etapa ik, verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas. Todas as demandas foram atendidas.
 
 \bigskip
