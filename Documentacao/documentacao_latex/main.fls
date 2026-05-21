@@ -382,15 +382,9 @@ INPUT elementos-pretextuais\abstract.tex
 INPUT .\main.lof
 INPUT .\main.lof
 INPUT main.lof
-INPUT .\main.lol
-INPUT .\main.lol
-INPUT main.lol
 INPUT .\main.lot
 INPUT .\main.lot
 INPUT main.lot
-INPUT .\main.loq
-INPUT .\main.loq
-INPUT main.loq
 INPUT .\elementos-pretextuais\abreviaturas.tex
 INPUT .\elementos-pretextuais\abreviaturas.tex
 INPUT elementos-pretextuais\abreviaturas.tex
@@ -398,9 +392,9 @@ INPUT .\elementos-pretextuais\simbolos.tex
 INPUT .\elementos-pretextuais\simbolos.tex
 INPUT elementos-pretextuais\simbolos.tex
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-mathit.enc
+INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-rm.enc
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-mathex.enc
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-mathsy.enc
-INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-rm.enc
 INPUT .\main.toc
 INPUT .\main.toc
 INPUT main.toc
@@ -579,9 +573,7 @@ INPUT .\main.bbl
 INPUT .\main.bbl
 INPUT main.bbl
 OUTPUT main.lof
-OUTPUT main.lol
 OUTPUT main.lot
-OUTPUT main.loq
 OUTPUT main.toc
 INPUT main.aux
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
