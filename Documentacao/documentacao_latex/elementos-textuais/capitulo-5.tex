@@ -161,19 +161,19 @@ Já para os dados da população de cada capital a fonte vem diretamente da Wiki
 
 \subsection{Obtenção dos Dados de Coordenadas dos Centros Estaduais}
 
-Embora, na prática, um estado possa possuir múltiplas unidades administrativas e logísticas associadas à distribuição de vacinas, a inclusão de múltiplos centros estaduais por estado não agrega valor analítico ao modelo proposto, pois isso implicaria:
+% Embora, na prática, um estado possa possuir múltiplas unidades administrativas e logísticas associadas à distribuição de vacinas, a inclusão de múltiplos centros estaduais por estado não agrega valor analítico ao modelo proposto, pois isso implicaria:
 
-\begin{itemize}
-    \item a criação de rotas artificialmente distintas entre centros localizados na mesma região geográfica, muitas vezes na própria capital, sem impacto significativo nos custos de transporte;
-    \item o aumento substancial do número de variáveis e restrições do modelo, elevando sua complexidade computacional;
-    \item a introdução de graus de liberdade que não correspondem a decisões logísticas relevantes no nível de abstração adotado.
-\end{itemize}
+% \begin{itemize}
+%     \item a criação de rotas artificialmente distintas entre centros localizados na mesma região geográfica, muitas vezes na própria capital, sem impacto significativo nos custos de transporte;
+%     \item o aumento substancial do número de variáveis e restrições do modelo, elevando sua complexidade computacional;
+%     \item a introdução de graus de liberdade que não correspondem a decisões logísticas relevantes no nível de abstração adotado.
+% \end{itemize}
 
-Como consequência, a modelagem com múltiplos centros estaduais tenderia a introduzir ruído na solução, permitindo escolhas equivalentes do ponto de vista prático, distintas do ponto de vista matemático e sem contribuição efetiva para a análise.
+% Como consequência, a modelagem com múltiplos centros estaduais tenderia a introduzir ruído na solução, permitindo escolhas equivalentes do ponto de vista prático, distintas do ponto de vista matemático e sem contribuição efetiva para a análise.
 
-Dessa forma, em modelos com intermediação estadual opta-se por representar cada estado por um único centro estadual agregado, o qual deve ser interpretado como uma abstração logística.
+% Dessa forma, em modelos com intermediação estadual opta-se por representar cada estado por um único centro estadual agregado, o qual deve ser interpretado como uma abstração logística.
 
-As coordenadas geográficas dos centros estaduais foram obtidas a partir de uma base de dados pública disponível online \cite{ricardobeat:2010}, contendo pontos representativos para cada unidade federativa brasileira. Embora essa fonte não seja oficial, os valores foram considerados adequados para fins de modelagem, uma vez que os valores de coordenadas representam os centros de capitais, o que é coerente com a realidade, já que a infraestrutura estadual está localizada principalmente nas capitais. Logo, as coordenadas dos centros estaduais são próximas às dos respectivos municípios e, como consequência, os custos de transporte entre centros estaduais e capitais ($C_{kj}$) tendem a ser reduzidos, sendo predominantemente influenciados pelos tempos de processamento logístico.
+As coordenadas geográficas dos centros estaduais foram obtidas a partir de uma base de dados pública e não oficial disponível online \cite{ricardobeat:2010}, que mapeia pontos representativos para cada unidade federativa brasileira. A análise espacial da malha demonstrou que essas coordenadas aproximam-se do centroide geográfico de cada estado, e não necessariamente da localização física de suas capitais administrativas.
 
 
 \subsection{Obtenção dos Dados de Postos de Vacinação}

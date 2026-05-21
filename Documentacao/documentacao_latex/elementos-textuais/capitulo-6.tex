@@ -1,6 +1,7 @@
 \chapter{Resultados e Análise}
 
-Os dados dos resultados foram exportados no formato csv, na pasta ``resultados\_caso\_regional'', e para a exibição dos mesmos foi utilizada a ferramenta Power BI que é capaz de gerar diversos gráficos com certa praticidade e tendo arquivos .csv como entrada. Ainda alguns dados também foram gerados pelo terminal do próprio python.
+Os dados dos resultados foram exportados no formato csv, na pasta ``resultados\_caso\_regional'', e para a exibição dos mesmos foi utilizada a ferramenta Power BI que é capaz de gerar diversos gráficos com certa praticidade e tendo arquivos .csv como entrada. Outros dados também foram impressos pelo terminal do python. 
+Além disso, mapas geográficos interativos foram gerados utilizando a biblioteca \textit{Folium} do Python. Esses mapas foram dispostos em links online por meio do serviço de hospedagem da Netlify.
 
 Foi gerado um csv com dados globais de cada modelo, o qual foi utilizado para a geração dos gráficos de comparação entre os modelos. Esse csv contém os seguintes dados dispostos nas seguintes colunas:
 
@@ -151,7 +152,7 @@ O trajeto irregular da linha laranja (Soma de Doses) em ambos os cenários confi
 \begin{figure}[H]
     \centering
     \caption{Percentual de Tipos de Rota - Modelo 1}
-    \includegraphics[width=16cm,height=6.0cm]{figuras/7-percentual_rotas_mod1.png} 
+    \includegraphics[width=16cm,height=5.5cm]{figuras/7-percentual_rotas_mod1.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico11_powerbi}
 \end{figure}
@@ -177,6 +178,31 @@ Vacina do maior tempo de entrega e rotas gargalo por etapa:
 \end{figure}
 
 Verifica-se que rotas gargalo e seus detalhamentos são completamente diferentes entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas. Todas as demandas foram atendidas.
+
+Para complementar a análise espacial dos resultados, foram gerados mapas geográficos interativos utilizando a biblioteca \textit{Folium} em Python. Esses mapas permitem a visualização vetorial das rotas ativas, a distinção dos modais de transporte e a representação do volume de doses transportadas por meio da espessura das arestas. As versões interativas estão hospedadas online e podem ser acessadas nos links: 
+
+\begin{itemize}
+    \item Cenário sem penalidade: \url{https://mapa-rotas-m1-false.netlify.app}
+    \item Cenário com penalidade: \url{https://mapa-rotas-m1-true.netlify.app}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \caption{Mapa Geográfico de Distribuição - Modelo 1 s/ penalidade}
+    \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m1_false.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:mapa_m1_false}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Mapa Geográfico de Distribuição - Modelo 1 c/ penalidade}
+    \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m1_true.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:mapa_m1_true}
+\end{figure}
+
+A análise visual corrobora estritamente os dados quantitativos obtidos. No mapa sem penalidade (Figura \ref{fig:mapa_m1_false}), observa-se uma rede de distribuição mais descentralizada e dispersa pelo território nacional. Em contrapartida, no mapa com penalidade (Figura \ref{fig:mapa_m1_true}), evidencia-se a reestruturação imposta pela pressão de perecibilidade dos lotes: destaca-se visualmente uma forte concentração de vetores aéreos (linhas tracejadas) de longa distância e grande espessura partindo da região Sudeste em direção direta às regiões Norte e Nordeste. Isso consolida a priorização matemática do \textit{solver} em escoar estoques críticos o mais rápido possível por meio do modal aéreo, independentemente da quilometragem física percorrida.
 
 \subsection{Resultados do Modelo 2}
 
@@ -223,5 +249,30 @@ Vacina do maior tempo de entrega e rotas gargalo por etapa:
 \end{figure}
 
 Excento pela etapa ik, verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas. Todas as demandas foram atendidas.
+
+Também foram gerados mapas geográficos interativos utilizando a biblioteca \textit{Folium} em Python. As versões interativas estão hospedadas online e podem ser acessadas nos links: 
+
+\begin{itemize}
+    \item Cenário sem penalidade: \url{https://mapa-rotas-m2-false.netlify.app}
+    \item Cenário com penalidade: \url{https://mapa-rotas-m2-penalidade.netlify.app}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \caption{Mapa Geográfico de Distribuição - Modelo 2 s/ penalidade}
+    \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m2_false.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:mapa_m2_false}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Mapa Geográfico de Distribuição - Modelo 2 c/ penalidade}
+    \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m2_true.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:mapa_m2_true}
+\end{figure}
+
+A análise das rotas dos mapas segue a do modelo anterior: no mapa com penalidade (Figura \ref{fig:mapa_m2_true}), surgem linhas aéreas expressivamente longas que no no mapa sem penalidade (Figura \ref{fig:mapa_m2_false}), interligando polos distantes do território nacional (como os vetores oriundos do Sudeste e Nordeste rumo à Região Norte). O visual reafirma que a urgência biológica se sobrepõe à lógica da proximidade geográfica, forçando o sistema a ativar rotas de custo elevado para salvaguardar as doses mais críticas da rede antes de sua expiração.
 
 \bigskip
