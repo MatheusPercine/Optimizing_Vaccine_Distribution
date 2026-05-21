@@ -14,15 +14,22 @@ No pior caso, o algoritmo pode ser forçado a explorar praticamente todas as com
 
 onde $n$ representa o tamanho da instância. No contexto da Programação Linear Inteira, esse tamanho está em função do limite do espaço de busca explorado pelos algoritmos de otimização (como o \textit{Branch-and-Bound}) e esse limite é ditado pelo número total de variáveis de decisão do sistema.
 
-O Modelo 5 foi idealizado sob uma ótima mais realista dos demais modelos e por isso é válido analisar a complexidade computacional gerada por essa abordagem.
+O Modelo 2 (sem penalidade) foi idealizado sob uma ótica mais realista que os demais modelos e, por isso, é válido analisar a complexidade computacional gerada por essa abordagem.
 
-O Modelo 5 exigiu a operação com três variáveis de decisão tridimensionais ($x_{ikv}$, $y_{kjv}$ e $z_{jpv}$). Como consequência, a quantidade de vezes que as variáveis aparecem na função objetivo e o tamanho da matriz de restrições crescem de forma multiplicativa em relação ao tamanho dos conjuntos de municípios de origem ($|I|$), municípios de destino ($|J|$), centros estaduais ($|K|$), postos de vacinação ($|P(j)|$) e tipos de vacina ($|V|$).
+O Modelo 2 exige a operação com três variáveis de decisão tridimensionais ($x_{ikv}$, $y_{kjv}$ e $z_{jpv}$) e uma variável bidimensional de falta ($f_{pv}$). Como consequência, a quantidade de vezes que as variáveis aparecem na função objetivo e o tamanho da matriz de restrições crescem de forma multiplicativa em relação ao tamanho dos conjuntos de municípios de origem ($|I|$), municípios de destino ($|J|$), centros estaduais ($|K|$), postos de vacinação ($|P(j)|$) e tipos de vacina ($|V|$).
 
 Isso torna este modelo impossível de ser resolvido manualmente e altamente exigente do ponto de vista computacional. Mensurando a complexidade gerada por essa modelagem, tem-se:
 
 \textbf{Quantidade de vezes que as variáveis de decisão aparecem na função objetivo:}
 \[
-(|I| \cdot |K| \cdot |V|) + (|K| \cdot |J| \cdot |V|) + (|P| \cdot |V|) \text{ vezes}
+(|I| \cdot |K| \cdot |V|)
++
+(|K| \cdot |J| \cdot |V|)
++
+(|P| \cdot |V|)
++
+(|P| \cdot |V|)
+\text{ vezes}
 \]
 
 \textbf{Tamanho da matriz de restrições (Soma de todas as regras do sistema):}
@@ -36,44 +43,56 @@ Isso torna este modelo impossível de ser resolvido manualmente e altamente exig
 + \;& (|I| \cdot |K| \cdot |V|) + (|P| \cdot |V|) \quad && \text{(Viabilidade Temporal)}
 \end{align*}
 
-Para o estudo de caso do cenário nacional utilizado neste trabalho, foram mapeados 27 municípios de origem ($|I|=27$), 27 municípios de destino ($|J|=27$), 27 centros estaduais ($|K|=27$), 54 postos de vacinação globais ($|P|=54$, sendo 2 por capital) e 7 tipos de vacina ($|V|=7$).
+Para o estudo de caso do cenário nacional utilizado neste trabalho, foram mapeados 27 municípios de origem ($|I|=27$), 27 municípios de destino ($|J|=27$), 27 centros estaduais ($|K|=27$), 54 postos de vacinação globais ($|P|=54$, sendo 2 por capital) e 4 tipos de vacina ($|V|=4$).
 
 Aplicando essas dimensões práticas à estrutura das equações, foram definidos os seguintes valores exatos para o modelo:
 
 \textbf{Quantidade de vezes que as variáveis de decisão aparecem na função objetivo:}
 \[
-(27 \cdot 27 \cdot 7) + (27 \cdot 27 \cdot 7) + (54 \cdot 7) = 5.103 + 5.103 + 378 = 10.584 \text{ vezes}
+(27 \cdot 27 \cdot 4) 
++ 
+(27 \cdot 27 \cdot 4) 
++ 
+(54 \cdot 4) 
++
+(54 \cdot 4)
+\]
+
+\[
+= 2916 + 2916 + 216 + 216 = 6.264 \text{ vezes}
 \]
 
 \textbf{Quantidade de linhas na matriz de restrições:}
 \begin{align*}
-& (27 \cdot 7) \quad && \text{(Oferta Intermunicipal)} \\
-+ \;& (27 \cdot 7) \quad && \text{(Conservação do Fluxo no Estado)} \\
-+ \;& (54 \cdot 7) \quad && \text{(Demanda nos Postos de Saúde)} \\
+& (27 \cdot 4) \quad && \text{(Oferta Intermunicipal)} \\
++ \;& (27 \cdot 4) \quad && \text{(Conservação do Fluxo no Estado)} \\
++ \;& (54 \cdot 4) \quad && \text{(Demanda nos Postos de Saúde)} \\
 + \;& (27 \cdot 27) + (27 \cdot 27) + (54) \quad && \text{(Capacidades Físicas de Transporte)} \\
-+ \;& (27 \cdot 27 \cdot 7) \quad && \text{(Consistência Estadual)} \\
-+ \;& (27 \cdot 7) \quad && \text{(Balanço de Fluxo Municipal)} \\
-+ \;& (27 \cdot 27 \cdot 7) + (54 \cdot 7) \quad && \text{(Viabilidade Temporal)}
++ \;& (27 \cdot 27 \cdot 4) \quad && \text{(Consistência Estadual)} \\
++ \;& (27 \cdot 4) \quad && \text{(Balanço de Fluxo Municipal)} \\
++ \;& (27 \cdot 27 \cdot 4) + (54 \cdot 4) \quad && \text{(Viabilidade Temporal)}
 \end{align*}
 
 \[
-= 189 + 189 + 378 + 1512 + 5103 + 189 + 5481 = 13041 \text{ linhas}
+= 108 + 108 + 216 + 1512 + 2916 + 108 + 3132 = 8.100 \text{ linhas}
 \]
+
 
 \textbf{Tamanho da Instância:}
 
-O tamanho da instância é a soma total das variáveis de decisão inteiras geradas pelos dados de entrada, ou seja, 10.584.
+O tamanho da instância é a soma total das variáveis de decisão inteiras geradas pelos dados de entrada, ou seja, 6.264.
 
 Logo, no pior caso, o tempo de execução pode ser:
 
 \[
-\text{tempo} \sim O(2^{10584}) \quad \text{(ou pior)}
+\text{tempo} \sim O(2^{6264}) \quad \text{(ou pior)}
 \]
 
 \textbf{Tamanho total da matriz do problema (Variáveis $\times$ Restrições):}
 \[
-10.584 \times 13.041 = 138.025.944 \text{ células}
+6.264 \times 8.100 = 50.738.400 \text{ células}
 \]
+
 
 Esse número torna colossal o nível de complexidade gerado por essa modelagem, o que afeta diretamente o planejamento logístico:
 \begin{itemize}
@@ -86,12 +105,12 @@ Esse número torna colossal o nível de complexidade gerado por essa modelagem, 
 Para garantir a tratabilidade computacional foram adotadas simplificações que distanciam a simulação de um cenário logístico real em sua totalidade. Dessa forma, a modelagem possui uma série de limitações, como:
 
 \begin{itemize}
-    \item \textbf{Homogeneidade das Capacidades de Transporte:} O modelo assume limites de capacidade agregada constantes ($u_{ab}^{rod} = 1.200.000$ e $u_{ab}^{aereo} = 1.600.000$), pressupondo a disponibilidade de frotas padronizadas (ex: 4 caminhões ou 2 aviões) em qualquer nó da rede. Porém, na prática, a disponibilidade frota pode variar entre municípios diferentes.
+    \item \textbf{Abstração de Instâncias Administrativas Intermediárias:} O modelo adota uma estrutura de rede condensada composta por, no máximo, três níveis principais de fluxo de suprimentos ($I \to K \to J \to P$). Contudo, na estrutura organizacional real do Sistema Único de Saúde (SUS), estados de grande extensão territorial, como o de Minas Gerais, podem operar com um nível adicional composto pelas Superintendências Regionais de Saúde (SRS), configurando um fluxo do tipo $I \to K \to \text{SRS} \to J \to P$.
     \item \textbf{Homogeneidade da Malha Rodoviária:} Na vida real, um eixo logístico entre São Paulo e Rio de Janeiro possui uma malha rodoviária infinitamente mais robusta do que a de um trajeto ligando municípios da Região Norte. Essa heterogeneidade da malha rodoviária que varia entre duas localidades não foi contemplada no modelo.
-    \item \textbf{Presunção de Disponibilidade de Todos os Recursos Logísticos:} O modelo assume que todos recursos logísticos necessários, como veículos ou profissionais de transporte, de operação logística e de saúde estarão disponíveis para a execução do plano de redistribuição. Na prática, pode haver limitação dos recursos, devido a greves, veículos quebrados, profissionais adoecidos que não podem trabalhar, entre outros fatores.
     \item \textbf{Simetria da Fórmula de Haversine:} A utilização da fórmula de Haversine acrescida de um fator de tortuosidade ($\beta$) cria um grafo simétrico, onde o custo de ida é exatamente igual ao custo de volta. Em redes rodoviárias reais, o relevo (como a subida ou descida de uma serra), a existência de vias de mão única, pedágios e rotas alternativas fazem com que o tempo de deslocamento seja assimétrico.
     \item \textbf{Incapacidade de Previsão do Trânsito:} O modelo considera a velocidade média dos modais ($\theta_{rod}$ e $\theta_{aereo}$) como parâmetros constantes. Porém, na realidade urbana, o trânsito é um sistema dinâmico e imprevisível, pois está suscetível a intempéries climáticas, acidentes, bloqueios em rodovias, obras e grandes eventos (como partidas de futebol ou festividades), que podem travar o trânsito nas redondezas de rodovias e aeroportos, impactando drasticamente o tempo de deslocamento $\tau_{ab}$.
     \item \textbf{Agregação das Unidades de Vacina do Tipo V:} Um município real não possui um único prazo de validade para todas as suas vacinas de um tipo $v$, mas sim múltiplas unidades de vacina com datas de expiração distintas. O modelo não rastreia unidades individuais, mas sim um lote agregado de vacinas do tipo $v$ com um prazo de validade médio estimado ($e_{iv}$ ou $e_{jv}$). Essa agregação simplifica a modelagem, mas perde a precisão do rastreamento de unidades individuais.
+    \item \textbf{Simplificação do Tempo do Modal Aéreo:} Na prática, o uso do modal aéreo compreende, nesta ordem, os tempos de transporte rodoviário do município de origem até o aeroporto, o tempo de voo entre aeroportos e o transporte rodoviário do aeroporto de destino até o município final. Porém, na aplicação e na modelagem, o tempo do modal aéreo ($\tau_{ab}^{aereo}$) considera somente o tempo de voo entre municípios.
 \end{itemize}
 
 \section{Limitações da Aplicação dos Modelos}
@@ -112,7 +131,7 @@ Conclui-se que o verdadeiro desafio da distribuição ótima de vacinas não res
 
 \section{Conclusões Finais}
 
-A pesquisa cumpriu com êxito o seu objetivo central: modelar, implementar e resolver o problema de redistribuição de vacinas no Brasil sob a ótica da Programação Linear Inteira, mitigando o risco de expiração de estoques e otimizando o tempo logístico.
+A pesquisa cumpriu com êxito o seu objetivo central: modelar, implementar e resolver o problema de distribuição e redistribuição de vacinas em um cenário pandêmico no Brasil sob a ótica da Programação Linear Inteira, buscando minimizar o tempo logístico de transporte, ampliar o atendimento da demanda vacinal e contribuir para respostas mais eficientes em contextos de emergência sanitária.
 
 Por meio da modelagem matemática, níveis de cadeia logística e a burocracia foram traduzidos com precisão por meio de variáveis de decisão e restrições, como a restrição da conservação do fluxo e a de consistência estadual.
 
@@ -123,4 +142,6 @@ Mesmo diante de um cenário de complexidade colossal, o Gurobi foi capaz de enco
 Embora tenha sido feita simplificações, este trabalho comprova que uma formulação matemática coesa com a realidade e aliada a um algoritmo de ponta, prova ser uma ferramenta de gestão tática de alto nível e aplicável ao mundo real.
 
 Este trabalho reafirma a importância da Pesquisa Operacional como recurso indispensável para a gestão da saúde pública. A transição de um planejamento de rotas empírico e manual para um sistema automatizado e guiado por dados cumpre o propósito maior de garantir a imunização da população de forma eficiente. O trabalho desenvolvido deixa um legado prático, escalável e cientificamente embasado para o enfrentamento de crises de pandemia, mitigação de desperdício de vacinas e preservação de vidas no Brasil.
+
+
 \bigskip

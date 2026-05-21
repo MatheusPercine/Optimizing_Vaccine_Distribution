@@ -2,13 +2,14 @@
 
 Os arquivos da aplicação estão disponíveis no repositório do projeto no GitHub, no link: \url{https://github.com/MatheusPercine/Optimizing_Vaccine_Distribution}
 
-Os experimentos computacionais foram realizados em um computador LENOVO (modelo 83ME) equipado com processador 12th Gen Intel(R) Core(TM) i5-12450HX @ 2.40 GHz, possuindo 8 núcleos físicos e 12 processadores lógicos. O sistema conta com 16 GB de memória RAM (DDR5 com velocidade de 4800 MT/s) e armazenamento em SSD NVMe Samsung. O sistema operacional utilizado foi o Microsoft Windows 11 Home Single Language de 64 bits.
+Os experimentos computacionais foram realizados em um computador LENOVO (modelo 83ME) equipado com processador 12th Gen Intel(R) Core(TM) i5-12450HX @ 2.40 GHz, possuindo 8 núcleos físicos e 12 processadores lógicos. O sistema conta com 16 GB de memória RAM (DDR5 com velocidade de 4800 MT/s), armazenamento em SSD NVMe Samsung de 480 GB de capacidade e placa de video NVIDIA GeForce RTX 3050 com 6 GB de memória. O sistema operacional utilizado foi o Microsoft Windows 11 Home Single Language de 64 bits.
 
 \section{Análise dos Métodos de Resolução De Problemas de Otimização}
 
 Para a aplicação, deve-se escolher um método adequeado de resolução do problema e para isso se faz necessário analisar as possibilidades para selecioná-las ou descartá-las.
 
 \subsection{O Método Simplex}
+
 
 O método Simplex é um dos métodos mais tradicionais para a resolução de problemas de otimização. Os modelos clássicos de Programação Linear (PL) são caracterizados por um conjunto de hipóteses fundamentais que garantem sua validade matemática a aplicidade desse método. Entre essas hipóteses, destacam-se: 
 
@@ -39,6 +40,7 @@ A implementação computacional do modelo foi realizada na \textbf{linguagem de 
 
 Uma das principais vantagens do Gurobi é sua capacidade de lidar com problemas de grande escala de forma eficiente. No problema abordado neste trabalho, o número de variáveis e restrições cresce rapidamente em função da quantidade de origens, destinos e tipos de vacinas. Nesse cenário, a utilização de métodos exatos implementados de forma otimizada é essencial para garantir a obtenção de soluções ótimas em tempo computacional viável.
 
+
 \subsection{Métodos Metaheurísticos}
 
 Além dos métodos exatos, existem abordagens baseadas em metaheurísticas, como:
@@ -58,30 +60,22 @@ No contexto deste trabalho, o problema apresenta uma estrutura bem definida de P
 Dessa forma, a utilização de métodos metaheurísticos  não se mostra adequada para o caso de um problema de programação linear inteiro de porte tratável, uma vez que métodos exatos já garantem a solução ótima em tempo viável.
 
 
-
-
 \section{Estudo de Caso Escolhido}
+
+Como a principal motivação para o desenvolvimento dos modelos é combater uma pandêmia, o cenário de aplicação deve simular uma pandemia em curso e ser suficientemente complexo para permitir a exploração do potencial dos modelos sem inviabilizar a coleta e o tratamento dos dados devido ao volume massivo de dados.
 
 O estudo de caso considerado neste trabalho consiste na modelagem da distribuição de vacinas no território brasileiro, com foco nas \textbf{27 capitais estaduais, incluindo o Distrito Federal}. A escolha das capitais como unidades espaciais do modelo deve-se à sua relevância administrativa e logística, uma vez que concentram infraestrutura de saúde, capacidade de armazenamento e papel estratégico na coordenação da distribuição regional.
 
 \textbf{Para cada capital, foram considerados dois postos de vacinação}, selecionados de forma a representar, ainda que de maneira simplificada, a rede local de atendimento. Reconhece-se que essa representação não contempla a totalidade dos postos existentes em cada município; contudo, essa simplificação foi adotada com o objetivo de manter a tratabilidade computacional do modelo, ao mesmo tempo em que preserva a capacidade de análise dos fluxos logísticos.
 
-No que se refere aos tipos de vacinas, foram selecionadas sete categorias diferentes visando a diversidade logística da aplicação do modelo:
+No que se refere aos tipos de vacinas, foram selecionadas quatro categorias de imunizantes que protagonizaram a campanha nacional de vacinação contra a Covid-19 no Brasil:
 
 \begin{itemize}
-\item BCG;
-\item Hepatite B
-\item Pentavalente
-\item VIP
-\item VOP
-\item Febre Amarela
-\item Tríplice Viral
-
-A escolha do estudo de caso se baseia no critério de que deve ser um tal que sua complexidade seja grande o suficiente para explorar grande parte do potencial dos modelos, mas sem comprometer demais tratabilidade pelo computador ou inviabilizar a coleta humana dos dados por conta da grande quantidade dos mesmos.
-
+    \item \textbf{Pfizer-BioNTech (Comirnaty)}
+    \item \textbf{AstraZeneca/Oxford (Fiocruz)}
+    \item \textbf{CoronaVac (Butantan)}
+    \item \textbf{Janssen (Johnson \& Johnson)}
 \end{itemize}
-
-
 
 
 \section{Métodos de Obtenção dos Dados}
@@ -154,34 +148,32 @@ Essa abordagem apresenta diversas vantagens relevantes para o contexto do trabal
     \item \textbf{Ausência de custos financeiros}: não requer o uso de serviços pagos ou APIs externas;
 \end{itemize}
 
-% O principal desafio dessa abordagem está na definição adequada do fator de tortuosidade $\beta$. Para lidar com essa questão, propõe-se uma calibração empírica do parâmetro, a partir da comparação entre os tempos estimados pelo modelo e valores reais obtidos para um conjunto reduzido de pares de localidades. Esses valores de referência podem ser obtidos manualmente por ferramentas como o Google Maps, considerando o modal rodoviário. A partir dessa calibração, busca-se determinar um valor de $\beta$ que produza estimativas coerentes com a realidade.
-
 Dessa forma, a abordagem baseada em distância geodésica com correção por fator de tortuosidade é adotada neste trabalho como a alternativa mais adequada para a obtenção dos dados de custo de transporte.
 
 
 
-\subsection{Obtenção dos Dados de Municípios}
+\subsection{Obtenção dos Dados de Coordenadas e População dos Municípios}
 
 Para a obtenção da longitude e latitude dos municípios utilizou-se dados oficiais do IBGE \cite{IBGE:2022}. Estes dados servirão para os cálculos de dados Custo, em horas, entre duas localidades. 
 
 Já para os dados da população de cada capital a fonte vem diretamente da Wikipédia \cite{Wiki:CapitaisPopulacao} e servirão para calcular os dados de demanda de cada posto.
 
 
-\subsection{Obtenção dos Dados dos Centros Estaduais}
+\subsection{Obtenção dos Dados de Coordenadas dos Centros Estaduais}
 
-Embora, na prática, um estado possa possuir múltiplas unidades administrativas e logísticas associadas à distribuição de vacinas, a inclusão de múltiplos centros estaduais por estado não agrega valor analítico ao modelo proposto, pois isso implicaria:
+% Embora, na prática, um estado possa possuir múltiplas unidades administrativas e logísticas associadas à distribuição de vacinas, a inclusão de múltiplos centros estaduais por estado não agrega valor analítico ao modelo proposto, pois isso implicaria:
 
-\begin{itemize}
-    \item a criação de rotas artificialmente distintas entre centros localizados na mesma região geográfica, muitas vezes na própria capital, sem impacto significativo nos custos de transporte;
-    \item o aumento substancial do número de variáveis e restrições do modelo, elevando sua complexidade computacional;
-    \item a introdução de graus de liberdade que não correspondem a decisões logísticas relevantes no nível de abstração adotado.
-\end{itemize}
+% \begin{itemize}
+%     \item a criação de rotas artificialmente distintas entre centros localizados na mesma região geográfica, muitas vezes na própria capital, sem impacto significativo nos custos de transporte;
+%     \item o aumento substancial do número de variáveis e restrições do modelo, elevando sua complexidade computacional;
+%     \item a introdução de graus de liberdade que não correspondem a decisões logísticas relevantes no nível de abstração adotado.
+% \end{itemize}
 
-Como consequência, a modelagem com múltiplos centros estaduais tenderia a introduzir ruído na solução, permitindo escolhas equivalentes do ponto de vista prático, distintas do ponto de vista matemático e sem contribuição efetiva para a análise.
+% Como consequência, a modelagem com múltiplos centros estaduais tenderia a introduzir ruído na solução, permitindo escolhas equivalentes do ponto de vista prático, distintas do ponto de vista matemático e sem contribuição efetiva para a análise.
 
-Dessa forma, em modelos com intermediação estadual opta-se por representar cada estado por um único centro estadual agregado, o qual deve ser interpretado como uma abstração logística.
+% Dessa forma, em modelos com intermediação estadual opta-se por representar cada estado por um único centro estadual agregado, o qual deve ser interpretado como uma abstração logística.
 
-As coordenadas geográficas dos centros estaduais foram obtidas a partir de uma base de dados pública disponível online \cite{ricardobeat:2010}, contendo pontos representativos para cada unidade federativa brasileira. Embora essa fonte não seja oficial, os valores foram considerados adequados para fins de modelagem, uma vez que os valores de coordenadas representam os centros de capitais, o que é coerente com a realidade, já que a infraestrutura estadual está localizada principalmente nas capitais. Logo, as coordenadas dos centros estaduais são próximas às dos respectivos municípios e, como consequência, os custos de transporte entre centros estaduais e capitais ($C_{kj}$) tendem a ser reduzidos, sendo predominantemente influenciados pelos tempos de processamento logístico.
+As coordenadas geográficas dos centros estaduais foram obtidas a partir de uma base de dados pública e não oficial disponível online \cite{ricardobeat:2010}, que mapeia pontos representativos para cada unidade federativa brasileira. A análise espacial da malha demonstrou que essas coordenadas aproximam-se do centroide geográfico de cada estado, e não necessariamente da localização física de suas capitais administrativas.
 
 
 \subsection{Obtenção dos Dados de Postos de Vacinação}
@@ -190,26 +182,62 @@ Para representar a etapa intramunicipal da distribuição, foram considerados po
 
 Para cada capital, foram selecionados dois postos reais de saúde, cujas coordenadas geográficas (latitude e longitude) foram obtidas por meio da plataforma Google Maps \cite {GoogleMaps:2026}, o que resultou na consulta de dados de 54 postos de saúde no total.
 
-Para a obtenção dos dados de demanda dos postos por vacinas foi definida por uma estimativa simplificada com base em uma abordagem híbrida, combinando critérios epidemiológicos e simplificações estruturais à modelagem.
+Para a obtenção dos dados de demanda dos postos por vacinas, baseia-se no limiar de cobertura vacinal necessário para atingir a imunidade de rebanho e a população de cada município.
 
-A porcentagem de vacinação para atingir a imunidade de rebanho varia conforme a doença, mas geralmente situa-se entre $70\%$ e $95\%$ da população. Porém, para fins de simplificação, será considerado como objetivo atingir a imunidade de rebanho da população de cada capital e a porcentagem de vacinação a ser atingida será de $82,5\%$ uma  média entre $70\%$ e $95\%$.
+De acordo com a Fundação Oswaldo Cruz \cite{fiocruz:2026}, no caso da covid-19, pelo menos
+\[
+80\%
+\]
+da população precisa estar vacinada para que a imunidade de rebanho seja atingida. Quando isso acontece, a circulação do causador da doença é reduzida a ponto de proteger mesmo quem não está vacinado.
 
-Dados empíricos da Secretaria Estadual de São Paulo \cite {SESSP:2025} indicam que, para determinadas vacinas, como a de febre amarela, no estado de São Paulo, a cobertura populacional pode atingir aproximadamente $70\%$. Com base nessa evidência, e visando manter a consistência e simplicidade do modelo, assume-se neste trabalho que essa taxa de cobertura inicial é válida para todos os tipos de vacina considerados.
-
-Dessa forma, a demanda passa a representar apenas a fração da população ainda não imunizada para se atingir a imunidade de rebanho, ou seja, $12,5\%$ ($82,5\%$ -  $70\%$). Assume-se, para fins de simplificação, que essa cobertura é desejada para todos os tipos de vacina considerados.
-
-Dessa forma, para cada município $j \in J$ e para cada tipo de vacina $v \in V$, define-se uma demanda proporcional à sua população, dada por:
+O cenário modelado neste trabalho busca representar um estágio intermediário do processo de imunização da população, no qual já houve uma primeira distribuição feita pelo Ministério da Saúde, e agora temos municípios com excedente e outros com déficit de vacinas, ou seja, um cenário adequado para aplicação dos modelos de redistribuição entre municípios. Nesse estágio, parte significativa da população já se encontra vacinada, porém ainda é necessário vacinar outra parte, também significativa, para se atingir a imunidade de rebanho. Para representar essa situação, assume-se que
 
 \[
-D_{jv} = \epsilon \cdot \text{Pop}_j
+60\%
 \]
 
-onde $\text{Pop}_j$ representa a população do município e $\epsilon \in (0,1)$ corresponde à fração da população a ser imunizada para se atingir a imunidade de rebanho, ou seja, adota-se $\epsilon = 0{,}125$, representando um nível elevado de cobertura vacinal suficiente para atingir a imunidade de rebanho.
+da população já está vacinada.
+
+Dessa forma, a demanda passa a representar apenas a fração da população ainda não imunizada para se atingir a imunidade de rebanho, ou seja:
+
+\[
+80\% - 60\% = 20\%
+\]
+
+Como diferentes vacinas possuem diferentes esquemas vacinais, define-se o número de doses necessárias por indivíduo para cada vacina $v$:
+
+\[
+\begin{cases}
+2 \text{ doses por indivíduo}, & \text{se a vacina é Pfizer, AstraZeneca ou CoronaVac} \\
+1 \text{ dose por indivíduo}, & \text{se a vacina é Janssen}
+\end{cases}
+\]
+
+
+Além disso, tem de se considerar que as 4 vacinas competem para atender a mesma demanda de indivíduos ainda não vacinados, isto é, $20\%$ da população de cada município. Com isso, as demandas por vacina ficam:
+
+\[
+\begin{cases}
+30\% \text{ da demanda}, & \text{se a vacina é Pfizer, AstraZeneca ou CoronaVac} \\
+10\% \text{ da demanda}, & \text{se a vacina é Janssen}
+\end{cases}
+\]
+
+Assim, a demanda total de doses da vacina $v$ no município $j$ é definida por:
+
+\[
+\begin{cases}
+D_{jv} = 0,20 \cdot 2 \cdot 0,30 \cdot \text{Pop}_j, & \text{se a vacina é Pfizer, AstraZeneca ou CoronaVac} \\
+D_{jv} = 0,20 \cdot 1 \cdot 0,10 \cdot \text{Pop}_j, & \text{se a vacina é Janssen}
+\end{cases}
+\]
+
+onde $\text{Pop}_j$ representa a população do município.
 
 Como o modelo considera apenas um subconjunto reduzido de postos de vacinação por município, não seria adequado atribuir a esses postos a totalidade da demanda municipal. Por isso, assume-se que os postos modelados representam apenas uma fração da capacidade total de atendimento do município. Assim, define-se a demanda efetivamente considerada no modelo como:
 
 \[
-d_{jv} = \gamma \cdot D_{iv}
+d_{jv} = \gamma \cdot D_{jv}
 \]
 
 onde $\gamma \in (0,1)$ representa a fração da rede de vacinação capturada pelo conjunto de postos considerados. Neste trabalho, adota-se $\gamma = 0{,}1$, assumindo, para fins de simplificação, que os postos modelados representam aproximadamente $10\%$ da capacidade total de vacinação do município.
@@ -228,15 +256,17 @@ onde  $d_{jpv}$ representa a demanda da vacina $v$ pelo posto $p$ no município 
 
 A obtenção de dados reais de oferta de vacinas por município apresenta limitações significativas, uma vez que tais informações são de acesso restrito. 
 
-Diante dessa limitação, optou-se pela construção de um conjunto de dados gerados de maneira artificial para os parâmetros de oferta $o_{iv}$, de forma a viabilizar a realização dos experimentos e garantir a capacidade de observar diferentes comportamentos logísticos nos modelos propostos. 
+Diante dessa limitação, optou-se pela construção de um conjunto de dados gerados de maneira artificial para os parâmetros de oferta $o_{iv}$, de forma a viabilizar a realização dos experimentos e garantir a capacidade de observar diferentes comportamentos logísticos nos modelos propostos.
 
-Em particular, foram considerados dois conjuntos distintos de dados de oferta, associados a diferentes configurações do sistema.
+O conjunto de dados de oferta foi construído de forma a garantir que a oferta total da rede seja suficiente para atender a demanda agregada, mas sem impor autossuficiência a nível municipal. Essa escolha é fundamental para permitir a ocorrência de fluxos intermunicipais no modelo, uma vez que, caso todos os municípios fossem autossuficientes, não haveria incentivo para o transporte entre eles e, nos modelos unificados, apenas veríamos a etapa intramunicipal ocorrer.
 
-\begin{itemize}
-    \item \textbf{Cenário Apenas Intramunicipal:} neste caso, assume-se que cada município deve ser capaz de atender sua própria demanda sem recorrer a outros municípios, já que não possui essa possibilidade. Assim, os valores de oferta foram definidos de modo que a oferta de cada município é suficiente para suprir a demanda de seus respectivos postos de vacinação. Essa escolha é necessária para garantir a viabilidade do modelo, uma vez que que a restrição de demanda exige que a demanda seja atendida.
+% Em particular, foram considerados dois conjuntos distintos de dados de oferta, associados a diferentes configurações do sistema.
+
+% \begin{itemize}
+%     \item \textbf{Cenário Apenas Intramunicipal:} neste caso, assume-se que cada município deve ser capaz de atender sua própria demanda sem recorrer a outros municípios, já que não possui essa possibilidade. Assim, os valores de oferta foram definidos de modo que a oferta de cada município é suficiente para suprir a demanda de seus respectivos postos de vacinação. Essa escolha é necessária para garantir a viabilidade do modelo, uma vez que que a restrição de demanda exige que a demanda seja atendida.
     
-    \item \textbf{Cenários com intermunicipalidade:} para os modelos que permitem transporte entre municípios, , foi utilizado um segundo conjunto de dados de oferta, construído de forma a garantir que a oferta total da rede seja suficiente para atender a demanda agregada, mas sem impor autossuficiência a nível municipal. Essa escolha é fundamental para permitir a ocorrência de fluxos intermunicipais no modelo, uma vez que, caso todos os municípios fossem autossuficientes, não haveria incentivo para o transporte entre eles e, nos modelos unificados, apenas veríamos a etapa intramunicipal ocorrer.
-\end{itemize}
+%     \item \textbf{Cenários com intermunicipalidade:} para os modelos que permitem transporte entre municípios, , foi utilizado um segundo conjunto de dados de oferta, construído de forma a garantir que a oferta total da rede seja suficiente para atender a demanda agregada, mas sem impor autossuficiência a nível municipal. Essa escolha é fundamental para permitir a ocorrência de fluxos intermunicipais no modelo, uma vez que, caso todos os municípios fossem autossuficientes, não haveria incentivo para o transporte entre eles e, nos modelos unificados, apenas veríamos a etapa intramunicipal ocorrer.
+% \end{itemize}
 
 
 \subsection{Obtenção dos Dados de Expiração das Vacinas}
@@ -245,22 +275,42 @@ O parâmetro $e_{iv}$ representa o tempo restante, em horas, até a expiração 
 
 Dados reais sobre prazos de validade e, principalmente, sobre o tempo restante de validade dos estoques municipais não são publicamente disponíveis, por envolverem informações operacionais sensíveis da cadeia de suprimentos de saúde. Dessa forma, optou-se por uma abordagem sintética de geração dos dados de expiração (em horas) de cada vacina $v$ para cada municipio $i$.
 
-A modelagem de $e_{iv}$ foi realizada em duas etapas. Inicialmente, para cada tipo de vacina $v \in V$, define-se um parâmetro $\phi_v$ correspondente à sua vida útil típica (em horas), considerando condições adequadas de armazenamento. Em seguida, introduz-se um fator de variabilidade $\delta_{iv} \in (0,1]$, que representa a fração da validade ainda disponível no momento da distribuição.
-
-
+A modelagem de $e_{iv}$ foi realizada em duas etapas. Inicialmente, para cada tipo de vacina $v \in V$, define-se um parâmetro $\phi_v$ correspondente à sua vida útil típica (em horas), considerando condições adequadas de armazenamento. Em seguida, introduz-se um fator de variabilidade na faixa de $(0,1]$, que representa a fração da validade ainda disponível no momento da distribuição.
 
 
 \section{Definição dos Valores de Parâmetros}
 
-\subsection{Processamento Logístico e Penalização do Modal Aéreo}
+\subsection{Escolha do Valor da Penalização De Não Atendimento da Demanda}
 
-Para os tempos de processamento logístico para cada modal adotam-se os valores:
+O valor de $M$ deve ser suficientemente maior que qualquer custo de transporte presente na função objetivo, de modo que o modelo priorize o atendimento da demanda sempre que exista uma solução viável.
+
+Neste trabalho, adotou-se:
 
 \[
-\delta^{rod} = 0{,}5 \text{ horas}, \quad \delta^{aereo} = 2{,}0 \text{ horas}.
+M = 100.000
 \]
 
-O valor atribuído ao modal rodoviário reflete um processo logístico mais simples e direto, envolvendo apenas atividades básicas de conferência e descarga. Por outro lado, o modal aéreo exige um conjunto mais complexo de operações aeroportuárias, incluindo procedimentos de segurança, manuseio especializado e possíveis tempos de espera, justificando um tempo de processamento significativamente maior.
+Como os coeficientes de custo utilizados neste trabalho representam tempos de deslocamento e, nos experimentos realizados, os maiores tempos observados não ultrapassaram 10 horas, a escolha de $M = 100.000$ garante que a falta de vacinas seja penalizada de forma significativamente superior a qualquer custo logístico do sistema.
+
+\subsection{Processamento Logístico e Penalização do Modal Aéreo}
+
+
+Segundo o documento do Encontro Nacional de Engenharia de 2019 \cite{LimaEtAl:2019}, antes do transporte, as vacinas tem de ser armazenadas em caixas especiais e o tempo necessário 
+para a estabilização da temperatura destas caixas é em média textbf{60 minutos}, e só após essa estabilização a mesma pode ser liberada para o transporte. 
+
+Além disso, segundo o mesmo documento \cite{LimaEtAl:2019}, após a chegada dos caminhões ao destino de entrega, os municípios relataram que em média são gastos textbf{30 minutos}, desde a chegada do caminhão, conferência das vacinas e armazenagem na câmara fria. Para o tempo de embarque, será considerado que uma logística parecida com o desembarque é aplicada.  Dessa forma, para o modal rodoviário, adota-se:
+
+\[
+\delta^{rod} = 2{,}0 \text{ horas}
+\]
+
+Uma notícia o \cite{g1campinas:2021} relata um caso da entrega de vacinas da Pfizer e diz o tempo desde a chegada do imunizante no aereoporto até a colocação no caminhão reduzido de 42 para 29 minutos. Como a notícia relata um caso específico de otimização, será considerado o tempo padrão de 42 minutos (0,7 horas) para desembarque e carregamento do caminhão. E mosmo tempo será assumido para o embarque, já que o processo é similar. Além disso, assim como no modal rodoviário, também será considerado o tempo de 60 minutos 
+
+Dessa forma, para o modal aéreo, adota-se:
+
+\[
+\delta^{aereo} = 2{,}4 \text{ horas}.
+\]
 
 Para a penalização do modal aéreo adota-se:
 
@@ -270,22 +320,45 @@ Para a penalização do modal aéreo adota-se:
 
 Este valor foi escolhido de forma a manter o transporte aéreo como uma alternativa viável apenas em situações nas quais a redução de tempo de deslocamento seja suficientemente relevante para compensar seu maior custo operacional. Valores muito próximos de 1 tornariam os modais praticamente equivalentes, enquanto valores excessivamente elevados eliminariam artificialmente a viabilidade do modal aéreo, distorcendo a dinâmica logística do problema.
 
+\subsection{Capacidade dos Veículos de Cada Modal}
 
-\subsection{Capacidade de Transporte}
+Adotam-se os valores:
+\[U^{rod} = 300\,000 \text{ doses} \quad \text {e} \quad U^{aereo} = 800\,000 \text{ doses}\]
 
-Sejam $u_{ab}^{rod}$ e $u_{ab}^{aereo}$ as capacidades máximas de transporte entre duas localidades $a$ e $b$ para os modais rodoviário e aéreo, respectivamente.
+A adoção do valor para o modal rodoviário fundamenta-se em dados reais da operação logística do SUS. Sabe-se que um caminhão refrigerado padrão utilizado em campanhas nacionais comporta aproximadamente 300 mil doses \cite{g1:2021}.
 
-No modelo, adotam-se valores constantes para essas capacidades, independentes da origem e destino:
+De forma análoga, a capacidade do modal aéreo é balizada na informação de que um voo comercial adaptado transporta cerca de 800 mil doses \cite{tvbrasil:2021}.
 
-\[
-u_{ab}^{rod} = 1\,200\,000 \quad \text{e} \quad u_{ab}^{aereo} = 1\,600\,000
-\]
+\subsection{Número de Veículos dos Municípios e Estados}
 
-A adoção do valor para o modal rodoviário fundamenta-se em dados reais da operação logística do SUS. Sabe-se que um caminhão refrigerado padrão utilizado em campanhas nacionais comporta aproximadamente 300 mil doses \cite{g1:2021}. Considerando a alocação de uma frota de quatro caminhões ou a realização de múltiplos despachos por uma frota menor durante o horizonte da campanha, o limite agregado de 1,2 milhão de doses reflete de maneira realista o teto operacional de transferência em massa por rodovias.
+Optou-se pela utilização de uma abordagem heurística baseada em faixas populacionais para estimar a capacidade operacional agregada dos municípios. A principal hipótese adotada é que municípios com maior população tendem a possuir maior infraestrutura logística, maior disponibilidade de veículos e maior capacidade operacional de distribuição de vacinas.
 
-De forma análoga, a capacidade do modal aéreo é balizada na informação de que um voo comercial adaptado transporta cerca de 800 mil doses \cite{tvbrasil:2021}. Assumindo a disponibilidade de até dois voos fretados para rotas críticas de longa distância ou alta demanda, a capacidade agregada é estabelecida em 1,6 milhão de doses.
+Seja $W_a^{rod}$ e $W_a^{aereo}$ o número de veículos disponíveis para transporte no modal rodoviário e aéreo, respectivamente, para cada origem $a$, podendo ser um município ou estado. Para cada estado, considerou-se que sua infraestrutura logística seria a mesma de cada capital, já que a infraestrutura estadual está localizada principalmente nas capitais.
 
-A escolha de valores constantes simplifica a formulação ao evitar a introdução de variáveis e restrições excessivas sobre alocação diária de frota, mantendo a tratabilidade computacional do modelo estático ao mesmo tempo em que absorve a realidade de dimensionamento elástico (frota e viagens) do sistema público de saúde.
+A utilização dessa abordagem permite incorporar heterogeneidade logística entre os municípios sem exigir levantamento empírico individualizado da frota de cada localidade, o que fugiria do escopo e da viabilidade operacional deste trabalho.
+
+Assim, foram definidas as seguintes faixas populacionais para atribuição dos parâmetros logísticos:
+
+\begin{table}[H]
+\centering
+\caption{Estimativa heurística da capacidade operacional por faixa populacional}
+\label{tab:frota_populacional}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Faixa populacional} & $\mathbf{W_a^{rod}}$ & $\mathbf{W_a^{aereo}}$ \\
+\hline
+$> 5$ milhões & 10 & 4 \\
+\hline
+$2$ a $5$ milhões & 8 & 3 \\
+\hline
+$1$ a $2$ milhões & 6 & 2 \\
+\hline
+$500$ mil a $1$ milhão & 4 & 1 \\
+\hline
+$< 500$ mil & 2 & 1 \\
+\hline
+\end{tabular}
+\end{table}
 
 
 \subsection{Velocidade Média dos Modais}

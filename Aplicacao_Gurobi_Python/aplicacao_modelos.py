@@ -33,6 +33,16 @@ penalidade = str(df['penalidade'].iloc[0]).lower() == 'true'
 # conjunto de todos os municipios (origem e destino) (primeira coluna do CSV: apenas nomes)
 M_df = pd.read_csv(path("caso_nacional", "municipios.csv"))
 
+W_rod_mun = {
+    str(row["municipio"]): int(row["W_rod"])
+    for _, row in M_df.iterrows()
+}
+
+W_aereo_mun = {
+    str(row["municipio"]): int(row["W_aereo"])
+    for _, row in M_df.iterrows()
+}
+
 # Criar dicionário: {'Nome_Municipio': 'UF'}
 
 # Mapeamento Municipio -> Estado
@@ -50,8 +60,18 @@ I = M_df.iloc[:, 0].dropna().astype(str).tolist()
 J = M_df.iloc[:, 0].dropna().astype(str).tolist()
 
 # Estados (simplificação de "secretaria estadual de saúde")
-K = pd.read_csv(path("caso_nacional", "estados.csv"),
-                usecols=[0]).iloc[:, 0].dropna().astype(str).tolist()
+estados_df = pd.read_csv(path("caso_nacional", "estados.csv"))
+K = estados_df.iloc[:, 0].dropna().astype(str).tolist()
+
+W_rod_estado = {
+    str(row["estado"]): int(row["W_rod"])
+    for _, row in estados_df.iterrows()
+}
+
+W_aereo_estado = {
+    str(row["estado"]): int(row["W_aereo"])
+    for _, row in estados_df.iterrows()
+}
 
 # tipos de vacina
 V = pd.read_csv(path("caso_nacional", "vacinas.csv"),
@@ -75,6 +95,7 @@ P = {
 # Hipotese pedida: capacidade constante por modal, independente da origem/destino.
 constantes_df = pd.read_csv(
     path("caso_nacional", "constantes.csv"), usecols=[0, 1]).dropna()
+
 col_constante = constantes_df.columns[0]
 col_valor = constantes_df.columns[1]
 
@@ -87,41 +108,55 @@ constantes = {
 # GERAÇÃO DA DEMANDA BASEADA EM POPULAÇÃO
 # ========================================================
 
-# Coeficiente para imunidade de rebanho (80%)
-epsilon = float(constantes['epsilon'])
-# Fator de abrangência/amostragem dos postos selecionados
+# Fração populacional restante para imunidade de rebanho (80% - 60% = 20%)
+fracao_restante = 0.20
+
+# Fator de abrangência/amostragem dos postos selecionados (10%)
 gamma = float(constantes['gamma'])
 
 rows_demanda_postos = []
 
+
 for j in J:
-
-    # pega a populacao do municipio j
+    # Pega a populacao do municipio j
     pop_j = M_df.loc[M_df['municipio'] == j, 'populacao'].values[0]
-
-    # demanda total do municipio j
-    D_j = epsilon * pop_j
-
-    # demandos postos p do municipio j cuio dados dos seus postos foram coletados (P[j])
-    d_j = gamma * D_j
-
-    # demanda por posto: d_ip = d_j / | P[j] |
+    
+    # Lista de postos do município j e contagem
     postos_municipio = P.get(j, [])
     num_postos = len(postos_municipio)
-
+    
     if num_postos > 0:
-        d_ip = int(max(1, d_j / num_postos))
-
         for p in postos_municipio:
             for v in V:
-                # Cada vacina v precisa cobrir a demanda total do posto dip
+                # Aplica as regras de esquema vacinal e competição de mercado
+                if v in ['Pfizer', 'AstraZeneca', 'CoronaVac']:
+                    num_doses_individuo = 2
+                    proporcao_competicao = 0.30
+                elif v == 'Janssen':
+                    num_doses_individuo = 1
+                    proporcao_competicao = 0.10
+                else:
+                    # Fallback de segurança caso haja outra vacina na base
+                    num_doses_individuo = 2
+                    proporcao_competicao = 0.00
+                
+                # D_jv = 0.20 * doses * proporcao * Pop_j
+                D_jv = fracao_restante * num_doses_individuo * proporcao_competicao * pop_j
+                
+                # d_jv = gamma * D_jv
+                d_jv = gamma * D_jv
+                
+                # d_jpv = d_jv / |P(j)| (Divisão uniforme entre os postos)
+                d_jpv = int(max(1, d_jv / num_postos))
+                
                 rows_demanda_postos.append({
                     "posto": p,
                     "vacina": v,
-                    "demanda": d_ip
+                    "demanda": d_jpv
                 })
 
 df_demanda_postos = pd.DataFrame(rows_demanda_postos)
+
 df_demanda_postos.to_csv(
     path("caso_nacional", "demanda_postos.csv"), index=False)
 
@@ -300,9 +335,6 @@ def calcular_s_com_intermediacao_estadual():
 # Exporta tambem o s inicial derivado de o.
 exportar_oferta_s_csv(s)
 
-# q = u sempre se considerarmos transporte rodoviario
-q = {(j, p): 10000 for j in J for p in P[j]}
-
 # Tempo até expiração (horas) - etapa intermunicipal
 expiracao_iv_df = pd.read_csv(
     path("caso_nacional", "expiracao_iv.csv"), usecols=[0, 1, 2]).dropna()
@@ -431,8 +463,6 @@ rho_jv = {
 
 U_ROD = int(constantes["U_ROD"])   # Capacidade por modal (doses)
 U_AEREO = int(constantes["U_AEREO"])  # Capacidade por modal (doses)
-# q = u sempre se considerarmos transporte rodoviario
-q = {(j, p): int(constantes["U_ROD"]) for j in J for p in P[j]}
 
 
 # ===================================
@@ -443,8 +473,6 @@ municipios_coordenadas = {
     row["municipio"]: (float(row["latitude"]), float(row["longitude"]))
     for _, row in M_df.iterrows()
 }
-
-estados_df = pd.read_csv(path("caso_nacional", "estados.csv"))
 
 estados_coordenadas = {
     row["estado"]: (float(row["latitude"]), float(row["longitude"]))
@@ -630,19 +658,28 @@ for j in J:
 
 # Capacidade efetiva alinhada ao modal de menor custo em cada arco.
 u_ij = {
-    (i, j): U_ROD if C_ij_rod[i, j] <= C_ij_aereo[i, j] else U_AEREO
+    (i, j): (W_rod_mun.get(i, 0) * U_ROD)
+    if C_ij_rod[i, j] <= C_ij_aereo[i, j]
+    else (W_aereo_mun.get(i, 0) * U_AEREO)
     for i in I for j in J
 }
 
 u_ik = {
-    (i, k): U_ROD if C_ik_rod[i, k] <= C_ik_aereo[i, k] else U_AEREO
+    (i, k): (W_rod_mun.get(i, 0) * U_ROD)
+    if C_ik_rod[i, k] <= C_ik_aereo[i, k]
+    else (W_aereo_mun.get(i, 0) * U_AEREO)
     for i in I for k in K
 }
 
 u_kj = {
-    (k, j): U_ROD if C_kj_rod[k, j] <= C_kj_aereo[k, j] else U_AEREO
+    (k, j): (W_rod_estado.get(k, 0) * U_ROD)
+    if C_kj_rod[k, j] <= C_kj_aereo[k, j]
+    else (W_aereo_estado.get(k, 0) * U_AEREO)
     for k in K for j in J
 }
+
+# q = u sempre se considerarmos transporte rodoviario
+q = {(j, p): W_rod_mun.get(j, 0) * U_ROD for j in J for p in P[j]}
 
 # Mantem a mesma interface das restricoes ja implementadas.
 u = {}
@@ -675,295 +712,32 @@ z = m.addVars(
     lb=0
 )  # inteira e não negativa
 
+# variáveis de falta
+
+# f_jv: quantidade de vacinas v que faltou no município j
+f_jv = m.addVars(
+    [(j, v) for j in J for v in V],
+    vtype=GRB.INTEGER,
+    name="f_jv",
+    lb=0
+)
+
+
+# f_pv: quantidade de vacinas v que faltou no posto p do município j
+f_pv = m.addVars(
+    [(p, v) for j in J for p in P[j] for v in V],
+    vtype=GRB.INTEGER,
+    name="f_pv",
+    lb=0
+)
+
+# Penalidade de Falta, o valor deve ser muito maior que qualquer tempo de transporte do modelo
+M = 100000 
+
 
 # =========================
 # MODELOS
 # =========================
-
-# modelo intermunicipal sem_intermediacao_estadual
-def modelo_intermunicipal_sem_intermediacao_estadual(penalidade, rho_iv):
-
-    if penalidade == True:
-        # função objetivo
-        m.setObjective(
-            quicksum(C_ij[i, j] * x_ijv[i, j, v] * rho_iv[i, v]
-                     for i in I for j in J if i != j for v in V),
-            GRB.MINIMIZE
-        )
-    else:
-        # função objetivo
-        m.setObjective(
-            quicksum(C_ij[i, j] * x_ijv[i, j, v]
-                     for i in I for j in J if i != j for v in V),
-            GRB.MINIMIZE
-        )
-
-    # restrições
-    # oferta
-    for i in I:
-        for v in V:
-            m.addConstr(
-                quicksum(x_ijv[i, j, v] for j in J if i != j) <= o[i, v]
-            )
-
-    # demanda
-    for j in J:
-        for v in V:
-            m.addConstr(
-                quicksum(x_ijv[i, j, v] for i in I if i != j) == d[j, v]
-            )
-
-    # capacidade
-    for i in I:
-        for j in J:
-            if i != j:
-                m.addConstr(
-                    quicksum(x_ijv[i, j, v] for v in V) <= u[i, j]
-                )
-
-    # viabilidade temporal
-    for (i, j, v) in x_ijv.keys():
-        if C_ij[i, j] > e_iv[i, v]:
-            m.addConstr(
-                x_ijv[i, j, v] == 0
-            )
-
-    m.optimize()
-
-    # tempo de distribuição
-    if m.status == GRB.OPTIMAL:
-
-        T = 0.0
-        rota = None
-        doses = 0
-        vacina = None
-
-        for i in I:
-            for j in J:
-                if i != j:
-                    for v in V:
-                        if x_ijv[i, j, v].X > 0:
-                            tempo_total = C_ij[i, j]
-                            if tempo_total > T:
-                                T = tempo_total
-                                rota = f"{i} -> {j}"
-                                doses = int(x_ijv[i, j, v].X)
-                                vacina = v
-
-        return {
-            "T": T,
-            "rota": rota,
-            "doses": doses,
-            "vacina": vacina
-        }
-
-    return None
-
-# modelo intermunicipal com_intermediacao_estadual
-
-
-def modelo_intermunicipal_com_intermediacao_estadual(penalidade, rho_iv):
-
-    if penalidade == True:
-        # função objetivo
-        m.setObjective(
-            quicksum(C_ik[i, k] * x_ikv[i, k, v] * rho_iv[i, v] for k in K for i in I for v in V) +
-            quicksum(C_kj[k, j] * y_kjv[k, j, v]
-                     for j in J for k in K for v in V),
-            GRB.MINIMIZE
-        )
-    else:
-        # funçao objetivo
-        m.setObjective(
-            quicksum(C_ik[i, k] * x_ikv[i, k, v] for k in K for i in I for v in V) +
-            quicksum(C_kj[k, j] * y_kjv[k, j, v]
-                     for j in J for k in K for v in V),
-            GRB.MINIMIZE
-        )
-
-    # restrições
-
-    # Restriçãode Consistencia Estadual: um estado k só pode enviar para o municipio j se j pertence a k.
-    for k in K:
-        for j in J:
-            # Se o estado do centro k for diferente do estado do município j
-            if estado_de.get(k) != estado_de.get(j):
-                m.addConstr(
-                    quicksum(y_kjv[k, j, v] for v in V) == 0,
-                    name=f"consistencia_estadual_{k}_{j}"
-                )
-
-    # oferta
-    for i in I:
-        for v in V:
-            m.addConstr(
-                quicksum(x_ikv[i, k, v] for k in K) <= o[i, v]
-            )
-
-    # demanda
-    for j in J:
-        for v in V:
-            m.addConstr(
-                quicksum(y_kjv[k, j, v] for k in K) == d[j, v]
-            )
-
-    # conservacao do fluxo
-    # "Tudo o que a rede inteira precisa ($y$) tem que ser igual a tudo o que a rede inteira envia para o estado ($x$)."
-    for k in K:
-        for v in V:
-            m.addConstr(
-                quicksum(x_ikv[i, k, v]
-                         for i in I) == quicksum(y_kjv[k, j, v] for j in J)
-            )
-
-    # primeira restrição de capacidade
-    for i in I:
-        for k in K:
-            m.addConstr(
-                quicksum(x_ikv[i, k, v] for v in V) <= u[i, k]
-            )
-
-    # segunda restrição de capacidade
-    for k in K:
-        for j in J:
-            m.addConstr(
-                quicksum(y_kjv[k, j, v] for v in V) <= u[k, j]
-            )
-
-    # viabilidade temporal
-    for (i, k, v) in x_ikv.keys():
-        if C_ik[i, k] > e_iv[i, v]:
-            m.addConstr(
-                x_ikv[i, k, v] == 0
-            )
-
-    m.optimize()
-
-    # tempo de distribuição
-    if m.status == GRB.OPTIMAL:
-
-        L = 0.0
-        L1 = L2 = 0.0
-        rota_l1 = rota_l2 = None
-        doses_l1 = doses_l2 = 0
-        vacina = None
-
-        for i in I:
-            for k in K:
-                for v in V:
-                    # Cláusula de guarda: se não saiu de i para k, pula
-                    if x_ikv[i, k, v].X <= 0:
-                        continue
-
-                    for j in J:
-                        if y_kjv[k, j, v].X <= 0:
-                            continue
-
-                        tempo_total = (C_ik[i, k] + C_kj[k, j])
-
-                        if tempo_total > L:
-                            L = tempo_total
-
-                            L1 = C_ik[i, k]
-                            L2 = C_kj[k, j]
-
-                            rota_l1 = f"{i} -> {k}"
-                            rota_l2 = f"{k} -> {j}"
-
-                            doses_l1 = int(x_ikv[i, k, v].X)
-                            doses_l2 = int(y_kjv[k, j, v].X)
-
-                            vacina = v
-
-        return {
-            "L": L,
-            "L1": L1, "rota_l1": rota_l1, "doses_l1": doses_l1,
-            "L2": L2, "rota_l2": rota_l2, "doses_l2": doses_l2,
-            "vacina": vacina
-        }
-
-    return None
-
-# modelo intramunicipal
-
-
-def modelo_intramunicipal(penalidade, rho_jv):
-
-    if penalidade == True:
-        # função objetivo
-        m.setObjective(
-            quicksum(C_jp[j, p] * z[j, p, v] * rho_jv[j, v]
-                     for j in J for p in P[j] for v in V),
-            GRB.MINIMIZE
-        )
-    else:
-        # função objetivo
-        m.setObjective(
-            quicksum(C_jp[j, p] * z[j, p, v]
-                     for j in J for p in P[j] for v in V),
-            GRB. MINIMIZE
-        )
-
-    # restrições
-
-    # oferta
-    for j in J:
-        for v in V:
-            m .addConstr(
-                quicksum(z[j, p, v] for p in P[j]) <= s[j, v]
-            )
-
-    # demanda
-    for j in J:
-        for p in P[j]:
-            for v in V:
-                m.addConstr(
-                    z[j, p, v] == r[p, v]
-                )
-
-    # capacidade
-    for j in J:
-        for p in P[j]:
-            m.addConstr(
-                quicksum(z[j, p, v] for v in V) <= q[j, p]
-            )
-
-    # viabilidade temporal
-    for (j, p, v) in z.keys():
-        if C_jp[j, p] > e_jv.get((j, v), float("inf")):
-            m.addConstr(
-                z[j, p, v] == 0
-            )
-
-    m.optimize()
-
-    # tempo de distribuição
-    if m.status == GRB.OPTIMAL:
-
-        T = 0.0
-        rota = None
-        doses = 0
-        vacina = None
-
-        for j in J:
-            for p in P[j]:
-                for v in V:
-                    if z[j, p, v].X > 0:
-                        tempo_total = C_jp[j, p]
-                        if tempo_total > T:
-                            T = tempo_total
-                            rota = f"{j} -> {p}"
-                            doses = int(z[j, p, v].X)
-                            vacina = v
-
-        return {
-            "T": T,
-            "rota": rota,
-            "doses": doses,
-            "vacina": vacina
-        }
-
-    return None
 
 # modelo unificado sem_intermediacao_estadual
 
@@ -975,7 +749,10 @@ def modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, rho_jv):
             quicksum(C_ij[i, j] * x_ijv[i, j, v] * rho_iv[i, v]
                      for i in I for j in J if i != j for v in V) +
             quicksum(C_jp[j, p] * z[j, p, v] * rho_jv[j, v]
-                     for j in J for p in P[j] for v in V),
+                     for j in J for p in P[j] for v in V) +
+            quicksum(M * f_pv[p, v]
+                     for j in J for p in P[j] for v in V
+            ),
             GRB.MINIMIZE
         )
     else:
@@ -983,7 +760,10 @@ def modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, rho_jv):
             quicksum(C_ij[i, j] * x_ijv[i, j, v]
                      for i in I for j in J if i != j for v in V) +
             quicksum(C_jp[j, p] * z[j, p, v]
-                     for j in J for p in P[j] for v in V),
+                     for j in J for p in P[j] for v in V) +
+            quicksum(M * f_pv[p, v]
+                     for j in J for p in P[j] for v in V
+            )         ,
             GRB.MINIMIZE
         )
 
@@ -1028,7 +808,7 @@ def modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, rho_jv):
         for p in P[j]:
             for v in V:
                 m.addConstr(
-                    z[j, p, v] == r[p, v]
+                    z[j, p, v] + f_pv[p, v] == r[p, v]
                 )
 
     # capacidade
@@ -1128,35 +908,44 @@ def modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, rho_jv):
 
                                 vacina = v
 
+        doses_faltantes = sum(f_pv[p, v].X for j in J for p in P[j] for v in V)
+
         return {
             "L": L,
             "L1": L1, "rota_l1": rota_l1, "doses_l1": doses_l1,
             "L2": L2, "rota_l2": rota_l2, "doses_l2": doses_l2,
-            "vacina": vacina
+            "vacina": vacina,
+            "doses_faltantes": doses_faltantes
         }
 
     return None
 
 # modelo unificado com_intermediacao_estadual
-
-
 def modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, rho_jv):
 
     # funcao objetivo
     if penalidade == True:
         m.setObjective(
-            quicksum(C_ik[i, k] * x_ikv[i, k, v] * rho_iv[i, v] for k in K for i in I for v in V) +
-            quicksum(C_kj[k, j] * y_kjv[k, j, v] for j in J for k in K for v in V) +
+            quicksum(C_ik[i, k] * x_ikv[i, k, v] * rho_iv[i, v] 
+                     for k in K for i in I for v in V) +
+            quicksum(C_kj[k, j] * y_kjv[k, j, v] 
+                     for j in J for k in K for v in V) +
             quicksum(C_jp[j, p] * z[j, p, v] * rho_jv[j, v]
+                     for j in J for p in P[j] for v in V) +
+            quicksum(M * f_pv[p, v]
                      for j in J for p in P[j] for v in V),
             GRB.MINIMIZE
         )
 
     else:
         m.setObjective(
-            quicksum(C_ik[i, k] * x_ikv[i, k, v] for k in K for i in I for v in V) +
-            quicksum(C_kj[k, j] * y_kjv[k, j, v] for j in J for k in K for v in V) +
-            quicksum(C_jp[j, p] * z[j, p, v]
+            quicksum(C_ik[i, k] * x_ikv[i, k, v] 
+                     for k in K for i in I for v in V) +
+            quicksum(C_kj[k, j] * y_kjv[k, j, v] 
+                     for j in J for k in K for v in V) +
+            quicksum(C_jp[j, p] * z[j, p, v] 
+                     for j in J for p in P[j] for v in V) +
+            quicksum(M * f_pv[p, v] 
                      for j in J for p in P[j] for v in V),
             GRB.MINIMIZE
         )
@@ -1221,7 +1010,7 @@ def modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, rho_jv):
         for p in P[j]:
             for v in V:
                 m.addConstr(
-                    z[j, p, v] == r[p, v]
+                    z[j, p, v] + f_pv[p, v] == r[p, v]
                 )
 
     # capacidade
@@ -1329,12 +1118,16 @@ def modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, rho_jv):
 
                                 vacina = v
 
+         # total de doses faltantes
+        doses_faltantes = sum(int(f_pv[p, v].X) for j in J for p in P[j] for v in V)
+
         return {
             "L": L,
             "L1": L1, "rota_l1": rota_l1, "doses_l1": doses_l1,
             "L2": L2, "rota_l2": rota_l2, "doses_l2": doses_l2,
             "L3": L3, "rota_l3": rota_l3, "doses_l3": doses_l3,
-            "vacina": vacina
+            "vacina": vacina,
+            "doses_faltantes": doses_faltantes
         }
 
     return None
@@ -1366,370 +1159,8 @@ def registrar_comparativo(resumo):
     print(f"-> Registro adicionado ao comparativo global.")
 
 
-def executar_modelomodelo_intermunicipal_sem_intermediacao_estadual(penalidade, rho_iv):
-
-    resultado = modelo_intermunicipal_sem_intermediacao_estadual(
-        penalidade, rho_iv)
-
-    if m.status == GRB.OPTIMAL:
-
-        rotas_list = []
-        total_doses = 0
-        soma_custo_ponderado = 0.0
-        custo_medio_horas_por_dose = 0.0
-        modal_aereo = 0
-        modal_rodoviario = 0
-        percenteual_aereo = 0.0
-        percentual_rodoviario = 0.0
-
-        print("\n" + "="*60)
-        print(" RELATÓRIO DE DISTRIBUIÇÃO")
-        print("="*60)
-        print()
-
-        for i in I:
-            for j in J:
-                if i != j:
-                    for v in V:
-                        if x_ijv[i, j, v].X > 0:
-
-                            doses = int(x_ijv[i, j, v].X)
-                            custo_final = min(C_ij_rod[i, j], C_ij_aereo[i, j])
-                            modal = "rodoviario" if custo_final == C_ij_rod[i,
-                                                                            j] else "aereo"
-
-                            # Dados para o CSV de Detalhes do Modelo
-                            rotas_list.append({
-                                "Modelo": 1, "Usa_Penalidade": penalidade,
-                                "ID_Fluxo": f"{i}_{j}_{v}", "Rota": f"{i} -> {j}", "Tipo_Rota": "ij",
-                                "Origem": i, "Lat_O": municipios_coordenadas[i][0], "Lon_O": municipios_coordenadas[i][1],
-                                "Destino": j, "Lat_D": municipios_coordenadas[j][0], "Lon_D": municipios_coordenadas[j][1],
-                                "Custo_Horas": f"{custo_final:.3f}",
-                                "Doses": doses,
-                                "Vacina": v,
-                                "Modal": modal,
-                            })
-
-                            # Acumuladores para Comparativo entre Modelos
-                            total_doses += doses
-                            soma_custo_ponderado += (doses * custo_final)
-                            if modal == "rodoviario":
-                                modal_rodoviario += 1
-                            else:
-                                modal_aereo += 1
-
-                            print(
-                                f"De {i} para {j} em {custo_final:.3f} hora(s) | {v}: {doses} doses (Modal: {modal})")
-
-        print("\n" + "-"*60)
-        print(" MÉTRICAS GLOBAIS DE DESEMPENHO")
-        print("-"*60)
-
-        custo_medio_horas_por_dose = soma_custo_ponderado / \
-            total_doses if total_doses > 0 else 0
-        percentual_rodoviario = (modal_rodoviario / (modal_rodoviario + modal_aereo)
-                                 ) * 100 if (modal_rodoviario + modal_aereo) > 0 else 0
-        percenteual_aereo = (modal_aereo / (modal_rodoviario + modal_aereo)) * \
-            100 if (modal_rodoviario + modal_aereo) > 0 else 0
-
-        # 3. Dados do CSV para Registro do Comparativo
-        resumo = {
-            "Modelo": 1,
-            "Usa_Penalidade": penalidade,
-            "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
-            "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
-            "Total_Doses_Movimentadas": total_doses,
-            "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
-            "Percentual_Aereo": f"{percenteual_aereo:.3f}",
-            "Tempo_Maximo": f"{resultado['T']:.3f}",
-            "Vacina_Maior_Tempo": resultado['vacina'],
-            "Rota_Gargalo_ij": resultado['rota'],
-            "Tempo_Rota_Gargalo_ij": f"{resultado['T']:.3f}",
-            "Doses_Rota_Gargalo_ij": resultado['doses'],
-            "Rota_Gargalo_ik": "N/A",
-            "Tempo_Rota_Gargalo_ik": "N/A",
-            "Doses_Rota_Gargalo_ik": "N/A",
-            "Rota_Gargalo_kj": "N/A",
-            "Tempo_Rota_Gargalo_kj": "N/A",
-            "Doses_Rota_Gargalo_kj": "N/A",
-            "Rota_Gargalo_jp": "N/A",
-            "Tempo_Rota_Gargalo_jp": "N/A",
-            "Doses_Rota_Gargalo_jp": "N/A"
-        }
-
-        # Dados impressos no termimal
-        print(f"\nTotal de doses movimentadas: {total_doses}")
-        print(f"\nTempo Total de Distribuicao: {resultado['T']:.3f} horas")
-        print(f"\nVacina do maior tempo: {resultado['vacina']}")
-        print(
-            f"\nGargalo Etapa ij - {resultado['T']:.3f} horas (Rota: {resultado['rota']} ({resultado['doses']} doses))")
-
-        print("-"*60)
-
-        # Exportação dos Detalhes do Modelo 1
-        exportar_detalhes(1, penalidade, rotas_list)
-        registrar_comparativo(resumo)
-        print("Processamento do Modelo 1 concluído com sucesso.")
-
-        print("="*60 + "\n")
-
-    else:
-        print("Modelo inviavel ou sem solçao otima.")
-
-
-def executar_modelomodelo_intermunicipal_com_intermediacao_estadual(penalidade, rho_iv):
-
-    resultado = modelo_intermunicipal_com_intermediacao_estadual(
-        penalidade, rho_iv)
-
-    if m.status == GRB.OPTIMAL:
-
-        rotas_list = []
-        total_doses = 0
-        soma_custo_ponderado = 0.0
-        custo_medio_horas_por_dose = 0.0
-        modal_aereo = 0
-        modal_rodoviario = 0
-        percenteual_aereo = 0.0
-        percentual_rodoviario = 0.0
-
-        print("\n" + "="*60)
-        print(" RELATÓRIO DE DISTRIBUIÇÃO")
-        print("="*60)
-
-        print("\n[ETAPA 1] Município I -> Centro Estadual K")
-        for i in I:
-            for k in K:
-                for v in V:
-                    if x_ikv[i, k, v].X > 0:
-                        doses = int(x_ikv[i, k, v].X)
-                        custo_final = min(C_ik_rod[i, k], C_ik_aereo[i, k])
-                        modal = "rodoviario" if custo_final == C_ik_rod[i,
-                                                                        k] else "aereo"
-
-                        # Dados para o CSV de Detalhes do Modelo
-                        rotas_list.append({
-                            "Modelo": 2, "Usa_Penalidade": penalidade,
-                            "ID_Fluxo": f"{i}_{k}_{v}", "Rota": f"{i} -> {k}", "Tipo_Rota": "ik",
-                            "Origem": i, "Lat_O": municipios_coordenadas[i][0], "Lon_O": municipios_coordenadas[i][1],
-                            "Destino": k, "Lat_D": estados_coordenadas[k][0], "Lon_D": estados_coordenadas[k][1],
-                            "Custo_Horas": f"{custo_final:.3f}",
-                            "Doses": doses,
-                            "Vacina": v,
-                            "Modal": modal,
-                        })
-
-                        # Acumuladores para Comparativo entre Modelos
-                        total_doses += doses
-                        soma_custo_ponderado += (doses * custo_final)
-                        if modal == "rodoviario":
-                            modal_rodoviario += 1
-                        else:
-                            modal_aereo += 1
-
-                        print(
-                            f"De {i} para {k} em {custo_final:.3f} hora(s) | {v}: {doses} doses (Modal: {modal})")
-
-        print("\n[ETAPA 2] Centro Estadual K -> Município J")
-        for k in K:
-            for j in J:
-                for v in V:
-                    if y_kjv[k, j, v].X > 0:
-                        doses = int(y_kjv[k, j, v].X)
-                        custo_final = min(C_kj_rod[k, j], C_kj_aereo[k, j])
-                        modal = "rodoviario" if custo_final == C_kj_rod[k,
-                                                                        j] else "aereo"
-
-                        # Dados para o CSV de Detalhes do Modelo
-                        rotas_list.append({
-                            "Modelo": 2, "Usa_Penalidade": penalidade,
-                            "ID_Fluxo": f"{k}_{j}_{v}", "Rota": f"{k} -> {j}", "Tipo_Rota": "kj",
-                            "Origem": k, "Lat_O": estados_coordenadas[k][0], "Lon_O": estados_coordenadas[k][1],
-                            "Destino": j, "Lat_D": municipios_coordenadas[j][0], "Lon_D": municipios_coordenadas[j][1],
-                            "Custo_Horas": f"{custo_final:.3f}",
-                            "Doses": doses,
-                            "Vacina": v,
-                            "Modal": modal,
-                        })
-
-                        # Acumuladores para Comparativo entre Modelos
-                        total_doses += doses
-                        soma_custo_ponderado += (doses * custo_final)
-                        if modal == "rodoviario":
-                            modal_rodoviario += 1
-                        else:
-                            modal_aereo += 1
-
-                        print(
-                            f"De {k} para {j} em {custo_final:.3f} hora(s) | {v}: {doses} doses (Modal: {modal})")
-
-        print("\n" + "-"*60)
-        print(" MÉTRICAS GLOBAIS DE DESEMPENHO")
-        print("-"*60)
-
-        custo_medio_horas_por_dose = soma_custo_ponderado / \
-            total_doses if total_doses > 0 else 0
-        percentual_rodoviario = (modal_rodoviario / (modal_rodoviario + modal_aereo)
-                                 ) * 100 if (modal_rodoviario + modal_aereo) > 0 else 0
-        percenteual_aereo = (modal_aereo / (modal_rodoviario + modal_aereo)) * \
-            100 if (modal_rodoviario + modal_aereo) > 0 else 0
-
-        # 3. Dados do CSV para Registro do Comparativo
-        resumo = {
-            "Modelo": 2,
-            "Usa_Penalidade": penalidade,
-            "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
-            "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
-            "Total_Doses_Movimentadas": total_doses,
-            "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
-            "Percentual_Aereo": f"{percenteual_aereo:.3f}",
-            "Tempo_Maximo": f"{resultado['L']:.3f}",
-            "Vacina_Maior_Tempo": resultado['vacina'],
-            "Rota_Gargalo_ij": "N/A",
-            "Tempo_Rota_Gargalo_ij": "N/A",
-            "Doses_Rota_Gargalo_ij": "N/A",
-            "Rota_Gargalo_ik": resultado['rota_l1'],
-            "Tempo_Rota_Gargalo_ik": f"{resultado['L1']:.3f}",
-            "Doses_Rota_Gargalo_ik": resultado['doses_l1'],
-            "Rota_Gargalo_kj": resultado['rota_l2'],
-            "Tempo_Rota_Gargalo_kj": f"{resultado['L2']:.3f}",
-            "Doses_Rota_Gargalo_kj": resultado['doses_l2'],
-            "Rota_Gargalo_jp": "N/A",
-            "Tempo_Rota_Gargalo_jp": "N/A",
-            "Doses_Rota_Gargalo_jp": "N/A",
-        }
-
-        # Dados impressos no termimal
-        print(f"\nTotal de doses movimentadas: {total_doses}")
-        print(f"\nLimite Superior: {resultado['L']:.3f} horas")
-        print(f"\nVacina do Limite Superior: {resultado['vacina']}")
-        print(
-            f"\nGargalo Etapa ik - {resultado['L1']:.3f} horas (Rota: {resultado['rota_l1']} ({resultado['doses_l1']} doses))")
-        print(
-            f"Gargalo Etapa kj - {resultado['L2']:.3f} horas (Rota: {resultado['rota_l2']} ({resultado['doses_l2']} doses))")
-
-        print("-"*60)
-
-        # Exportação dos Detalhes do Modelo 2
-        exportar_detalhes(2, penalidade, rotas_list)
-        registrar_comparativo(resumo)
-        print("Processamento do Modelo 2 concluído com sucesso.")
-
-        print("="*60 + "\n")
-
-    else:
-        print("Modelo inviavel ou sem solçao otima.")
-
-
-def executar_modelo_intramunicipal(penalidade, rho_jv):
-
-    resultado = modelo_intramunicipal(penalidade, rho_jv)
-
-    if m.status == GRB.OPTIMAL:
-
-        rotas_list = []
-        total_doses = 0
-        soma_custo_ponderado = 0.0
-        custo_medio_horas_por_dose = 0.0
-        modal_aereo = 0
-        modal_rodoviario = 0
-        percenteual_aereo = 0.0
-        percentual_rodoviario = 0.0
-
-        print("\n" + "="*60)
-        print(" RELATÓRIO DE DISTRIBUIÇÃO")
-        print("="*60)
-        print()
-
-        for j in J:
-            for p in P[j]:
-                for v in V:
-                    if z[j, p, v].X > 0:
-                        doses = int(z[j, p, v].X)
-                        custo_final = C_jp[j, p]
-                        modal = "rodoviario"
-
-                        # Dados para o CSV de Detalhes do Modelo
-                        rotas_list.append({
-                            "Modelo": 3, "Usa_Penalidade": penalidade,
-                            "ID_Fluxo": f"{j}_{p}_{v}", "Rota": f"{j} -> {p}", "Tipo_Rota": "jp",
-                            "Origem": j, "Lat_O": municipios_coordenadas[j][0], "Lon_O": municipios_coordenadas[j][1],
-                            "Destino": p, "Lat_D": postos_coordenadas[p][0], "Lon_D": postos_coordenadas[p][1],
-                            "Custo_Horas": f"{custo_final:.3f}",
-                            "Doses": doses,
-                            "Vacina": v,
-                            "Modal": modal,
-                        })
-
-                        # Acumuladores para Comparativo entre Modelos
-                        total_doses += doses
-                        soma_custo_ponderado += (doses * custo_final)
-                        if modal == "rodoviario":
-                            modal_rodoviario += 1
-                        else:
-                            modal_aereo += 1
-
-                        print(
-                            f"De {j} para {p} em {custo_final:.3f} hora(s) | {v}: {doses} doses (Modal: {modal})")
-
-        print("\n" + "-"*60)
-        print(" MÉTRICAS GLOBAIS DE DESEMPENHO")
-        print("-"*60)
-
-        custo_medio_horas_por_dose = soma_custo_ponderado / \
-            total_doses if total_doses > 0 else 0
-        percentual_rodoviario = (modal_rodoviario / (modal_rodoviario + modal_aereo)
-                                 ) * 100 if (modal_rodoviario + modal_aereo) > 0 else 0
-        percenteual_aereo = (modal_aereo / (modal_rodoviario + modal_aereo)) * \
-            100 if (modal_rodoviario + modal_aereo) > 0 else 0
-
-        # 3. Dados do CSV para Registro do Comparativo
-        resumo = {
-            "Modelo": 3,
-            "Usa_Penalidade": penalidade,
-            "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
-            "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
-            "Total_Doses_Movimentadas": total_doses,
-            "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
-            "Percentual_Aereo": f"{percenteual_aereo:.3f}",
-            "Tempo_Maximo": f"{resultado['T']:.3f}",
-            "Vacina_Maior_Tempo": resultado['vacina'],
-            "Rota_Gargalo_ij": "N/A",
-            "Tempo_Rota_Gargalo_ij": "N/A",
-            "Doses_Rota_Gargalo_ij": "N/A",
-            "Rota_Gargalo_ik": "N/A",
-            "Tempo_Rota_Gargalo_ik": "N/A",
-            "Doses_Rota_Gargalo_ik": "N/A",
-            "Rota_Gargalo_kj": "N/A",
-            "Tempo_Rota_Gargalo_kj": "N/A",
-            "Doses_Rota_Gargalo_kj": "N/A",
-            "Rota_Gargalo_jp": resultado['rota'],
-            "Tempo_Rota_Gargalo_jp": f"{resultado['T']:.3f}",
-            "Doses_Rota_Gargalo_jp": resultado['doses']
-        }
-
-        # Dados impressos no termimal
-        print(f"\nTotal de doses movimentadas: {total_doses}")
-        print(f"\nTempo Total de Distribuicao: {resultado['T']:.3f} horas")
-        print(f"\nVacina do maior tempo: {resultado['vacina']}")
-        print(
-            f"\nGargalo Etapa jp - {resultado['T']:.3f} horas (Rota: {resultado['rota']} ({resultado['doses']} doses))")
-
-        print("-"*60)
-
-        # Exportação dos Detalhes do Modelo 3
-        exportar_detalhes(3, penalidade, rotas_list)
-        registrar_comparativo(resumo)
-        print("Processamento do Modelo 3 concluído com sucesso.")
-
-        print("="*60 + "\n")
-
-    else:
-        print("Modelo inviavel ou sem solçao otima.")
-
 
 def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_jv):
-
     # No unificado, considera-se que a disponibilidade intramunicipal
     # vem da etapa intermunicipal do proprio plano integrado.
     # s = {(j, v): 0 for j in J for v in V}
@@ -1778,7 +1209,7 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
                             # Dados para o CSV de Detalhes do Modelo
                             rotas_list.append({
-                                "Modelo": 4, "Usa_Penalidade": penalidade,
+                                "Modelo": 1, "Usa_Penalidade": penalidade,
                                 "ID_Fluxo": f"{i}_{j}_{v}", "Rota": f"{i} -> {j}", "Tipo_Rota": "ij",
                                 "Origem": i, "Lat_O": municipios_coordenadas[i][0], "Lon_O": municipios_coordenadas[i][1],
                                 "Destino": j, "Lat_D": municipios_coordenadas[j][0], "Lon_D": municipios_coordenadas[j][1],
@@ -1810,7 +1241,7 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
                         # Dados para o CSV de Detalhes do Modelo
                         rotas_list.append({
-                            "Modelo": 4, "Usa_Penalidade": penalidade,
+                            "Modelo": 1, "Usa_Penalidade": penalidade,
                             "ID_Fluxo": f"{j}_{p}_{v}", "Rota": f"{j} -> {p}", "Tipo_Rota": "jp",
                             "Origem": j, "Lat_O": municipios_coordenadas[j][0], "Lon_O": municipios_coordenadas[j][1],
                             "Destino": p, "Lat_D": postos_coordenadas[p][0], "Lon_D": postos_coordenadas[p][1],
@@ -1844,11 +1275,12 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
         # 3. Dados do CSV para Registro do Comparativo
         resumo = {
-            "Modelo": 4,
+            "Modelo": 1,
             "Usa_Penalidade": penalidade,
             "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
             "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
             "Total_Doses_Movimentadas": total_doses,
+            "Total_Doses_Faltantes": resultado['doses_faltantes'],
             "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
             "Percentual_Aereo": f"{percenteual_aereo:.3f}",
             "Tempo_Maximo": f"{resultado['L']:.3f}",
@@ -1869,6 +1301,7 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
         # Dados Impressos no terminal
         print(f"\nTotal de doses movimentadas: {total_doses}")
+        print(f"\nTotal de doses que não atenderam a demanda: {resultado['doses_faltantes']}")
         print(f"\nLimite Superior: {resultado['L']:.3f} horas")
         print(f"\nVacina do Limite Superior: {resultado['vacina']}")
         print(
@@ -1878,10 +1311,10 @@ def executar_modelo_unificado_sem_intermediacao_estadual(penalidade, rho_iv, e_j
 
         print("-"*60)
 
-        # Exportação dos Detalhes do Modelo 4
-        exportar_detalhes(4, penalidade, rotas_list)
+        # Exportação dos Detalhes do Modelo 1
+        exportar_detalhes(1, penalidade, rotas_list)
         registrar_comparativo(resumo)
-        print("Processamento do Modelo 4 concluído com sucesso.")
+        print("Processamento do Modelo 1 concluído com sucesso.")
 
         print("="*60 + "\n")
 
@@ -1938,7 +1371,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
                         # Dados para o CSV de Detalhes do Modelo
                         rotas_list.append({
-                            "Modelo": 5, "Usa_Penalidade": penalidade,
+                            "Modelo": 2, "Usa_Penalidade": penalidade,
                             "ID_Fluxo": f"{i}_{k}_{v}", "Rota": f"{i} -> {k}", "Tipo_Rota": "ik",
                             "Origem": i, "Lat_O": municipios_coordenadas[i][0], "Lon_O": municipios_coordenadas[i][1],
                             "Destino": k, "Lat_D": estados_coordenadas[k][0], "Lon_D": estados_coordenadas[k][1],
@@ -1971,7 +1404,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
                         # Dados para o CSV de Detalhes do Modelo
                         rotas_list.append({
-                            "Modelo": 5, "Usa_Penalidade": penalidade,
+                            "Modelo": 2, "Usa_Penalidade": penalidade,
                             "ID_Fluxo": f"{k}_{j}_{v}", "Rota": f"{k} -> {j}", "Tipo_Rota": "kj",
                             "Origem": k, "Lat_O": estados_coordenadas[k][0], "Lon_O": estados_coordenadas[k][1],
                             "Destino": j, "Lat_D": municipios_coordenadas[j][0], "Lon_D": municipios_coordenadas[j][1],
@@ -2003,7 +1436,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
                         # Dados para o CSV de Detalhes do Modelo
                         rotas_list.append({
-                            "Modelo": 5, "Usa_Penalidade": penalidade,
+                            "Modelo": 2, "Usa_Penalidade": penalidade,
                             "ID_Fluxo": f"{j}_{p}_{v}", "Rota": f"{j} -> {p}", "Tipo_Rota": "jp",
                             "Origem": j, "Lat_O": municipios_coordenadas[j][0], "Lon_O": municipios_coordenadas[j][1],
                             "Destino": p, "Lat_D": postos_coordenadas[p][0], "Lon_D": postos_coordenadas[p][1],
@@ -2037,11 +1470,12 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
         # 3. Dados do CSV para Registro do Comparativo
         resumo = {
-            "Modelo": 5,
+            "Modelo": 2,
             "Usa_Penalidade": penalidade,
             "Custo_Medio_Horas_Por_Dose": f"{custo_medio_horas_por_dose:.3f}",
             "Valor_Funcao_Objetivo": f"{m.ObjVal:.3f}",
             "Total_Doses_Movimentadas": total_doses,
+            "Total_Doses_Faltantes": resultado['doses_faltantes'],
             "Percentual_Rodoviario": f"{percentual_rodoviario:.3f}",
             "Percentual_Aereo": f"{percenteual_aereo:.3f}",
             "Tempo_Maximo": f"{resultado['L']:.3f}",
@@ -2062,6 +1496,7 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
         # Dados Impressos no Terminal
         print(f"\nTotal de doses movimentadas: {total_doses}")
+        print(f"\nTotal de doses que não atenderam a demanda: {resultado['doses_faltantes']}")
         print(f"\nLimite Superior: {resultado['L']:.3f} horas")
         print(f"\nVacina do Limite Superior: {resultado['vacina']}")
         print(
@@ -2073,10 +1508,10 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
         print("-"*60)
 
-        # Exportação dos Detalhes do Modelo 5
-        exportar_detalhes(5, penalidade, rotas_list)
+        # Exportação dos Detalhes do Modelo 2
+        exportar_detalhes(2, penalidade, rotas_list)
         registrar_comparativo(resumo)
-        print("Processamento do Modelo 5 concluído com sucesso.")
+        print("Processamento do Modelo 2 concluído com sucesso.")
 
         print("="*60 + "\n")
 
@@ -2085,22 +1520,12 @@ def executar_modelo_unificado_com_intermediacao_estadual(penalidade, rho_iv, e_j
 
 
 match modelo:
+
     case 1:
-        executar_modelomodelo_intermunicipal_sem_intermediacao_estadual(
-            penalidade, rho_iv)
-
-    case 2:
-        executar_modelomodelo_intermunicipal_com_intermediacao_estadual(
-            penalidade, rho_iv)
-
-    case 3:
-        executar_modelo_intramunicipal(penalidade, rho_jv)
-
-    case 4:
         executar_modelo_unificado_sem_intermediacao_estadual(
             penalidade, rho_iv, e_jv)
 
-    case 5:
+    case 2:
         executar_modelo_unificado_com_intermediacao_estadual(
             penalidade, rho_iv, e_jv)
 
