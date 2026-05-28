@@ -1,7 +1,7 @@
 # Aplicacao Gurobi Python
 
-## Como rodar
-1. No arquivo `caso_nacional/execucao.csv`, escolha um dos modelos possiveis (1, 2, 3, 4, 5) e desative/ative a penalidade com False/True.
+## Como rodar os modelos
+1. No arquivo `caso_nacional/execucao.csv`, escolha um dos modelos possiveis (1, 2) e desative/ative a penalidade com False/True.
 2. Execute o script: `python aplicacao_modelos.py`.
 
 ## Sobre
