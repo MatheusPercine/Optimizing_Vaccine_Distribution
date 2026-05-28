@@ -91,11 +91,15 @@ Diante disso, torna-se necessário analisar os diferentes métodos possíveis pa
 Uma primeira ideia possível de obtenção seria a \textbf{coleta manual de Dados por meio do Google Maps} que mostra o tempo de deslocamento entre um ponto e outro do mapa de acordo com um certo modal escolhido. Apesar de fornecer valores bastante realistas, essa abordagem apresenta limitações severas. Em um cenário com $n$ localidades, seria necessário coletar aproximadamente $n^2$ pares origem-destino. Por exemplo, considerando as 27 capitais estaduais, isso resultaria em cerca de 729 consultas distintas. Tal volume de dados torna o processo impraticável do ponto de vista operacional, além de introduzir elevado risco de erros humanos durante a coleta.
 
 
-Outra possibilidade consiste na \textbf{utilização da API do Google Maps para a obtenção automatizada dos tempos de deslocamento entre localidades}. Essa abordagem apresenta vantagens em termos de automação e realismo dos dados. No entanto, essa alternativa também apresenta uma limitação importante, já que trata-se de um serviço pago, com custos que podem se tornar extremamente significativos à medida que o número de requisições aumenta. Outro ponto crítico diz respeito à dependência de serviços externos, o que compromete a reprodutibilidade do experimento. Dessa forma, apesar de sua precisão e automação, essa possibilidade também não é considerada a abordagem mais adequada para este trabalho.
+Outra possibilidade consiste na \textbf{utilização da API do Google Maps para a obtenção automatizada dos tempos de deslocamento entre localidades}. Essa abordagem apresenta vantagens em termos de automação e realismo dos dados. No entanto, essa alternativa também apresenta uma limitação importante, já que trata-se de um serviço pago, com custos que podem se tornar extremamente significativos à medida que o número de requisições aumenta. Dessa forma, apesar de sua precisão e automação, essa possibilidade também não é considerada a abordagem mais adequada para este trabalho.
+
+% Outro ponto crítico diz respeito à dependência de serviços externos, o que compromete a reprodutibilidade do experimento.
 
 A abordagem adotada neste trabalho baseia-se no \textbf{uso da distância geodésica entre duas localidades}, calculada por meio da \textbf{fórmula de Haversine}. \cite{Wiki:Haversine}
 
-A distância geodésica representa a menor distância entre dois pontos sobre a superfície terrestre, considerando a curvatura da Terra. Seja $(\phi_a, \lambda_a)$ e $(\phi_b, \lambda_b)$ as coordenadas geográficas (latitude e longitude, em radianos) das localidades $a$ e $b$, respectivamente. A distância geodésica $D_{ab}$ é dada por:
+A distância geodésica representa a menor distância entre dois pontos sobre a superfície terrestre, considerando a curvatura da Terra. 
+
+Seja $(\phi_a, \lambda_a)$ e $(\phi_b, \lambda_b)$ as coordenadas geográficas (latitude e longitude, em radianos) das localidades $a$ e $b$, respectivamente. A distância geodésica $\Delta_{ab}$ é dada por:
 
 \begin{equation}
 \Delta_{ab} = 2R \cdot \arcsin\left( \sqrt{
@@ -127,7 +131,9 @@ Para o modal aéreo, a distância geodésica é uma aproximação mais fiel do d
 \tau_{ab}^{aereo} = \frac{\Delta_{ab}}{\theta_{aereo}}
 \]
 
-onde $\theta_{aereo}$ representa uma velocidade média efetiva do sistema logístico aéreo como um todo. Dessa forma, essa grandeza incorpora implicitamente etapas como o deslocamento do município de origem até o aeroporto, operações aeroportuárias (embarque, desembarque e inspeção) e o transporte final até o município de destino, permitindo uma modelagem agregada sem aumento da complexidade do modelo.
+onde $\theta_{aereo}$ representa uma velocidade média efetiva do sistema logístico aéreo como um todo. 
+
+% Dessa forma, essa grandeza incorpora implicitamente etapas como o deslocamento do município de origem até o aeroporto, operações aeroportuárias (embarque, desembarque e inspeção) e o transporte final até o município de destino, permitindo uma modelagem agregada sem aumento da complexidade do modelo.
 
 Essa formulação é aplicada de forma uniforme aos diferentes tipos de deslocamento considerados na rede logística do modelo. Em particular, são definidos:
 
@@ -176,11 +182,11 @@ Já para os dados da população de cada capital a fonte vem diretamente da Wiki
 As coordenadas geográficas dos centros estaduais foram obtidas a partir de uma base de dados pública e não oficial disponível online \cite{ricardobeat:2010}, que mapeia pontos representativos para cada unidade federativa brasileira. A análise espacial da malha demonstrou que essas coordenadas aproximam-se do centroide geográfico de cada estado, e não necessariamente da localização física de suas capitais administrativas.
 
 
-\subsection{Obtenção dos Dados de Postos de Vacinação}
+\subsection{Obtenção dos Dados de Coordenadas e Demanda dos Postos de Vacinação}
 
 Para representar a etapa intramunicipal da distribuição, foram considerados postos de vacinação associados a cada município do estudo.
 
-Para cada capital, foram selecionados dois postos reais de saúde, cujas coordenadas geográficas (latitude e longitude) foram obtidas por meio da plataforma Google Maps \cite {GoogleMaps:2026}, o que resultou na consulta de dados de 54 postos de saúde no total.
+Coordenadas geográficas (latitude e longitude) dos 54 postos de saúde foram obtidas por meio de consultas manuais na plataforma Google Maps \cite {GoogleMaps:2026}.
 
 Para a obtenção dos dados de demanda dos postos por vacinas, baseia-se no limiar de cobertura vacinal necessário para atingir a imunidade de rebanho e a população de cada município.
 
@@ -190,7 +196,9 @@ De acordo com a Fundação Oswaldo Cruz \cite{fiocruz:2026}, no caso da covid-19
 \]
 da população precisa estar vacinada para que a imunidade de rebanho seja atingida. Quando isso acontece, a circulação do causador da doença é reduzida a ponto de proteger mesmo quem não está vacinado.
 
-O cenário modelado neste trabalho busca representar um estágio intermediário do processo de imunização da população, no qual já houve uma primeira distribuição feita pelo Ministério da Saúde, e agora temos municípios com excedente e outros com déficit de vacinas, ou seja, um cenário adequado para aplicação dos modelos de redistribuição entre municípios. Nesse estágio, parte significativa da população já se encontra vacinada, porém ainda é necessário vacinar outra parte, também significativa, para se atingir a imunidade de rebanho. Para representar essa situação, assume-se que
+O cenário modelado neste trabalho busca representar um estágio intermediário do processo de imunização da população, no qual já houve uma primeira distribuição feita pelo Ministério da Saúde, e agora temos municípios com excedente e outros com déficit de vacinas, ou seja, um cenário adequado para aplicação dos modelos de redistribuição entre municípios. Nesse estágio, parte significativa da população já se encontra vacinada, porém ainda é necessário vacinar outra parte, também significativa, para se atingir a imunidade de rebanho. 
+
+Para representar essa situação, assume-se que:
 
 \[
 60\%
@@ -256,7 +264,7 @@ onde  $d_{jpv}$ representa a demanda da vacina $v$ pelo posto $p$ no município 
 
 A obtenção de dados reais de oferta de vacinas por município apresenta limitações significativas, uma vez que tais informações são de acesso restrito. 
 
-Diante dessa limitação, optou-se pela construção de um conjunto de dados gerados de maneira artificial para os parâmetros de oferta $o_{iv}$, de forma a viabilizar a realização dos experimentos e garantir a capacidade de observar diferentes comportamentos logísticos nos modelos propostos.
+Diante dessa limitação, optou-se pela construção de um conjunto de dados gerados de maneira artificial para os parâmetros de oferta $o_{iv}$, utilizando uma variável aleatória de distribuição uniforme de forma a viabilizar a realização dos experimentos e garantir a capacidade de observar diferentes comportamentos logísticos nos modelos propostos.
 
 O conjunto de dados de oferta foi construído de forma a garantir que a oferta total da rede seja suficiente para atender a demanda agregada, mas sem impor autossuficiência a nível municipal. Essa escolha é fundamental para permitir a ocorrência de fluxos intermunicipais no modelo, uma vez que, caso todos os municípios fossem autossuficientes, não haveria incentivo para o transporte entre eles e, nos modelos unificados, apenas veríamos a etapa intramunicipal ocorrer.
 
@@ -275,7 +283,7 @@ O parâmetro $e_{iv}$ representa o tempo restante, em horas, até a expiração 
 
 Dados reais sobre prazos de validade e, principalmente, sobre o tempo restante de validade dos estoques municipais não são publicamente disponíveis, por envolverem informações operacionais sensíveis da cadeia de suprimentos de saúde. Dessa forma, optou-se por uma abordagem sintética de geração dos dados de expiração (em horas) de cada vacina $v$ para cada municipio $i$.
 
-A modelagem de $e_{iv}$ foi realizada em duas etapas. Inicialmente, para cada tipo de vacina $v \in V$, define-se um parâmetro $\phi_v$ correspondente à sua vida útil típica (em horas), considerando condições adequadas de armazenamento. Em seguida, introduz-se um fator de variabilidade na faixa de $(0,1]$, que representa a fração da validade ainda disponível no momento da distribuição.
+A modelagem de $e_{iv}$ foi realizada em duas etapas. Inicialmente, para cada tipo de vacina $v \in V$, define-se um parâmetro $\Omega_v$ correspondente à sua vida útil típica (em horas), considerando condições adequadas de armazenamento. Em seguida, introduz-se um fator de variabilidade na faixa de $(0,1]$, que representa a fração da validade ainda disponível no momento da distribuição.
 
 
 \section{Definição dos Valores de Parâmetros}
@@ -296,26 +304,26 @@ Como os coeficientes de custo utilizados neste trabalho representam tempos de de
 
 
 Segundo o documento do Encontro Nacional de Engenharia de 2019 \cite{LimaEtAl:2019}, antes do transporte, as vacinas tem de ser armazenadas em caixas especiais e o tempo necessário 
-para a estabilização da temperatura destas caixas é em média textbf{60 minutos}, e só após essa estabilização a mesma pode ser liberada para o transporte. 
+para a estabilização da temperatura destas caixas é em média \textbf{60 minutos}, e só após essa estabilização a mesma pode ser liberada para o transporte. 
 
-Além disso, segundo o mesmo documento \cite{LimaEtAl:2019}, após a chegada dos caminhões ao destino de entrega, os municípios relataram que em média são gastos textbf{30 minutos}, desde a chegada do caminhão, conferência das vacinas e armazenagem na câmara fria. Para o tempo de embarque, será considerado que uma logística parecida com o desembarque é aplicada.  Dessa forma, para o modal rodoviário, adota-se:
+Além disso, segundo o mesmo documento \cite{LimaEtAl:2019}, após a chegada dos caminhões ao destino de entrega, os municípios relataram que em média são gastos \textbf{30 minutos}, desde a chegada do caminhão, conferência das vacinas e armazenagem na câmara fria. Para o tempo de embarque, será considerado que uma logística parecida com o desembarque é aplicada.  Dessa forma, para o modal rodoviário, adota-se:
 
 \[
 \delta^{rod} = 2{,}0 \text{ horas}
 \]
 
-Uma notícia o \cite{g1campinas:2021} relata um caso da entrega de vacinas da Pfizer e diz o tempo desde a chegada do imunizante no aereoporto até a colocação no caminhão reduzido de 42 para 29 minutos. Como a notícia relata um caso específico de otimização, será considerado o tempo padrão de 42 minutos (0,7 horas) para desembarque e carregamento do caminhão. E mosmo tempo será assumido para o embarque, já que o processo é similar. Além disso, assim como no modal rodoviário, também será considerado o tempo de 60 minutos 
+Uma notícia o \cite{g1campinas:2021} relata um caso da entrega de vacinas da Pfizer e diz o tempo desde a chegada do imunizante no aereoporto até a colocação no caminhão reduzido de 42 para 29 minutos. Como a notícia relata um caso específico de otimização, será considerado o tempo padrão de 42 minutos (0,7 horas) para desembarque e carregamento do caminhão. E mosmo tempo será assumido para o embarque, já que o processo é similar. Além disso, assim como no modal rodoviário, também será considerado o tempo de 60 minutos de estabilização da temperatura. 
 
 Dessa forma, para o modal aéreo, adota-se:
 
 \[
-\delta^{aereo} = 2{,}4 \text{ horas}.
+\delta^{aereo} = 2{,}4 \text{ horas}
 \]
 
 Para a penalização do modal aéreo adota-se:
 
 \[
-\alpha = 1{,}3.
+\alpha = 1{,}3
 \]
 
 Este valor foi escolhido de forma a manter o transporte aéreo como uma alternativa viável apenas em situações nas quais a redução de tempo de deslocamento seja suficientemente relevante para compensar seu maior custo operacional. Valores muito próximos de 1 tornariam os modais praticamente equivalentes, enquanto valores excessivamente elevados eliminariam artificialmente a viabilidade do modal aéreo, distorcendo a dinâmica logística do problema.
@@ -359,7 +367,6 @@ $< 500$ mil & 2 & 1 \\
 \hline
 \end{tabular}
 \end{table}
-
 
 \subsection{Velocidade Média dos Modais}
 
@@ -431,7 +438,7 @@ Máximo & 1.8714 \\
 
 Observa-se que os valores encontrados apresentam forte convergência com fatores de correção amplamente utilizados na literatura logística para aproximação entre distâncias euclidianas e distâncias rodoviárias reais.
 
-Além disso, embora a média amostral obtida tenha sido aproximadamente $1.35$, optou-se por considerar a mediana como principal referência estatística para validação do parâmetro. Em estatística aplicada a transportes, a mediana é frequentemente preferível à média em cenários sujeitos à presença de valores extremos, pois apresenta menor sensibilidade a outliers.
+Além disso, embora a média amostral obtida tenha sido aproximadamente $1.35$, optou-se por considerar a mediana como principal referência estatística para validação do parâmetro. A mediana é preferível à média em cenários sujeitos à presença de valores extremos, pois apresenta menor sensibilidade a outliers.
 
 No conjunto analisado, o valor máximo igual a $1.8714$ é referente a rota entre Manaus (no Norte) e Teresina (no Nordeste) e denota uma rota extremamente sinuosa capaz de elevar artificialmente a média amostral. A mediana, por sua vez, apresentou valor aproximado de $1.307$, mantendo forte aderência ao valor de referência utilizado na literatura.
 

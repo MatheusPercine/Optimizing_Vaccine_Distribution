@@ -1,4 +1,4 @@
-\chapter{Modelagem do Transporte de Vacinas}
+\chapter{Modelagem do Processo de Redistribuição de Vacinas}
 
 Os modelos propostos não contemplam a etapa inicial de distribuição de vacinas a partir do nível federal. Assume-se que os estoques iniciais nos municípios já refletem a alocação realizada pelo Ministério da Saúde e o modelo começa depois disso. Dessa forma, o problema abordado concentra-se na redistribuição eficiente de vacinas entre municípios, considerando desequilíbrios locais de oferta e demanda.
 
@@ -43,12 +43,11 @@ onde:
 A \textbf{segunda variável de decisão} decide a quantidade de vacinas do tipo $v$ a ser transportada do município $j$ para seu posto de saúde $p$ e é definida a seguir:
 
 \[
-z_{jpv} \in \mathbb{Z}_{\geq 0}
+z_{jpv} \in \mathbb{Z}_{\geq 0} \quad \forall j \in J, p \in P_j, v \in V,
 \]
 
 onde:
 \begin{itemize}
-    \item $j \in J$ representa os municípios;
     \item $p \in P_j$ representa os postos de saúde pertencentes ao município $j$;
 \end{itemize}
 
@@ -59,7 +58,7 @@ Em cenários reais de distribuição logística, pode não existir oferta sufici
 Diante disso, introduz-se a \textbf{terceira variável de decisão} para representar esse comportamento de forma mais realista. Diferentemente das outras variáveis, esta é uma variável de folga (falta) associada à demanda não atendida. Seja:
 
 \[
-f_{pv} \ge 0
+f_{pv} \in \mathbb{Z}_{\geq 0} \quad \forall p \in P_j, v \in V,
 \]
 
 onde:
@@ -96,13 +95,13 @@ onde:
     \item $\tau_{jp}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o centro de distribuição municipal $j$ e o posto de destino $p$. 
 \end{itemize}
 
-No caso do transporte aéreo, o modelo não considera explicitamente apenas o tempo de voo entre os municípios. O tempo $\tau_{ij}^{areo}$ representa o tempo total agregado da operação logística aérea, incluindo:
+% No caso do transporte aéreo, o modelo não considera explicitamente apenas o tempo de voo entre os municípios. O tempo $\tau_{ij}^{areo}$ representa o tempo total agregado da operação logística aérea, incluindo:
 
-\begin{itemize}
-    \item transporte rodoviário do município de origem até o aeroporto;
-    \item tempo de voo entre aeroportos;
-    \item transporte rodoviário do aeroporto de destino até o município final.
-\end{itemize} 
+% \begin{itemize}
+%     \item transporte rodoviário do município de origem até o aeroporto;
+%     \item tempo de voo entre aeroportos;
+%     \item transporte rodoviário do aeroporto de destino até o município final.
+% \end{itemize} 
 
 \subsubsection{Tempos de Processamento Logístico dos Modais de Transporte}
 
@@ -535,7 +534,11 @@ Com isso, o fluxo pode ser representado da seguinte forma:
 \text{Município } i \;\longrightarrow\; \text{Estado } k \;\longrightarrow\; \text{Município } j \;\longrightarrow\; \text{Posto de Saúde } P
 \]
 
-Logo, são 3 etapas possíveis no total.
+ou somente:
+
+\[
+\text{Município } j \;\longrightarrow\; \text{Posto de Saúde } P
+\]
 
 \subsection{Variáveis de Decisão}
 
@@ -549,7 +552,7 @@ Na etapa intermunicipal, são necessárias duas etapas de fluxo para o transport
     \begin{itemize}
     \item $x_{ikv}$ representa a quantidade de vacinas do tipo $v$ transportadas do município $i$ ao centro estadual $k$;
     \item $C_{ik}$ representa o \textbf{custo total} (em horas) para se transportar vacinas do município $i$ ao centro estadual $k$.
-    \end{itemize}.
+    \end{itemize}
     
     \item Estado $k \longrightarrow$ Município $j$ \\
     Para essa etapa, temos:

@@ -17,7 +17,7 @@ vacinas = ["Pfizer", "AstraZeneca", "CoronaVac", "Janssen"]
 # CoronaVac: Conservação estável convencional curta (~20 dias = 480h)
 # AstraZeneca: Conservação convencional média (~30 dias = 720h)
 # Janssen: Conservação estável convencional longa (~45 dias = 1080h)
-phi = {"Pfizer": 120, "CoronaVac": 480, "AstraZeneca": 720, "Janssen": 1080}
+omega = {"Pfizer": 120, "CoronaVac": 480, "AstraZeneca": 720, "Janssen": 1080}
 
 # Semente aleatória para reprodutibilidade dos dados do seu TCC
 np.random.seed(42)
@@ -30,8 +30,8 @@ for mun in municipios:
         # Representa a fração da validade ainda disponível no momento da redistribuição
         fator_variabilidade = np.random.uniform(0.2, 1.0)
 
-        # Tempo de expiração final e_iv = phi_v * fator
-        tempo_expiracao = int(phi[vac] * fator_variabilidade)
+        # Tempo de expiração final e_iv = omega_v * fator
+        tempo_expiracao = int(omega[vac] * fator_variabilidade)
 
         rows_expiracao.append(
             {"municipio": mun, "vacina": vac, "tempo": tempo_expiracao}

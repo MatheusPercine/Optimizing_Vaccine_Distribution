@@ -107,15 +107,7 @@ No modelo clássico do Problema de Transporte, assume-se que a oferta total é i
 
 No entanto, essa hipótese não é adotada neste trabalho.
 
-Na modelagem proposta, permite-se que a quantidade total ofertada seja superior à quantidade demandada, refletindo situações reais em que nem todas as vacinas disponíveis precisam ser redistribuídas, ou seja:
-
-\[
-\sum_{i \in I} a_i \ge \sum_{j \in J} d_j
-\]
-
-Para isso, a restrição de oferta é modelada como uma desigualdade, permitindo que parte do estoque permaneça no município de origem, enquanto a restrição de demanda é mantida como igualdade, garantindo o atendimento integral das necessidades dos municípios de destino.
-
-Essa abordagem torna o modelo mais aderente à realidade operacional do sistema de distribuição de vacinas.
+Na modelagem proposta, permite-se que a quantidade total ofertada seja superior, igual ou inferior à quantidade demandada, refletindo situações reais em que nem todas as vacinas disponíveis precisam ser redistribuídas ou que a oferta é insuficiente, tudo conforme o que será visto posteriormente no capítulo 4.
 
 \subsection{Limitações do Modelo Clássico}
 
@@ -123,19 +115,16 @@ Apesar de sua utilidade, o Problema de Transporte clássico apresenta limitaçõ
 
 Uma das principais limitações é a hipótese de divisibilidade das variáveis. No modelo linear contínuo, as variáveis $x_{ij}$ podem assumir valores fracionários.
 
-No contexto da distribuição de vacinas, essa hipótese não é adequada, pois:
-\begin{itemize}
-    \item as variáveis representam quantidades físicas de doses;
-    \item não é possível transportar frações de doses;
-    \item as decisões logísticas envolvem unidades discretas.
-\end{itemize}
+No contexto da distribuição de vacinas, essa hipótese não é adequada, pois, não é possível transportar frações de doses.
+
 
 Além disso, problemas reais frequentemente incluem:
 \begin{itemize}
     \item múltiplos tipos de produtos;
     \item restrições adicionais de capacidade;
     \item limitações operacionais;
-    \item critérios de prioridade.
+    \item critérios de prioridade;
+    \item tipos diferentes de modais de transporte.
 \end{itemize}
 
 Esses aspectos não são completamente capturados pelo modelo clássico.
@@ -154,8 +143,7 @@ A principal diferença em relação à Programação Linear está na restrição
 
 Essa restrição altera significativamente a natureza do problema:
 \begin{itemize}
-    \item o conjunto de soluções possíveis deixa de ser contínuo;
-    \item a busca pela solução ótima ocorre em um espaço discreto;
+    \item a busca pela solução ótima deixa de ocorrer em espaço contínuo e passa a ocorrer em espaço discreto.
     \item o problema se torna mais complexo do ponto de vista computacional.
 \end{itemize}
 
