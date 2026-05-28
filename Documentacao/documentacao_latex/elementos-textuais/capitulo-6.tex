@@ -37,7 +37,7 @@ Tempo\_Rota\_Gargalo\_jp & Custo (em horas) associado ao arco crítico final $j 
 Doses\_Rota\_Gargalo\_jp & Volume de vacinas alocado e entregue ao posto de saúde crítico $p$ vindo do município $j$. \\ \hline
 \end{longtable}
 
-Também foram gerados csvs específicos para cada modelo, os quais foram utilizados para a geração dos gráficos de resultados individuais dos modelos.
+Também foram gerados csv's específicos para cada modelo, os quais foram utilizados para a geração dos gráficos de resultados individuais dos modelos.
 
 Esse csv contém os seguintes dados dispostos nas seguintes colunas:
 
@@ -77,7 +77,7 @@ Modal & O modal de transporte utilizado para a movimentação da carga (Rodoviá
     \label{fig:grafico1_powerbi}
 \end{figure}
 
-Os tempos máximos são aproximados pelo valor Limite Superior. 
+Os tempos máximos são aproximados pelo valor do Limite Superior. 
 
 Podemos verificar os modelos com penalidades possuem tempos maiores menores do que os modelos sem penalidades. Isso se deve ao fato de que a penalidade na função objetivo tem o efeito de priorizar o atendimento dos postos de saúde, mesmo que isso implique em rotas mais longas ou mais demoradas.
 
@@ -105,7 +105,7 @@ Este gráfico denota uma grande diferença no valor da função objetivo entre u
     \label{fig:grafico3_powerbi}
 \end{figure}
 
-Para a obtenção dos dados desse gráfico foi gerada uma média ponderada para os dados de custo tendo a quantidade de doses movimentadas como peso. Para os modelos o valor não variou muito. Isso denota que provavelmente, o solver utilizou um conjunto de rotas parecidos entre os modelos para entregar quantidades parecidas de doses.
+Para a obtenção deste gráfico, gerou-se uma média ponderada do custo em horas utilizando a quantidade de doses como peso multiplicador. Embora a penalidade ative rotas intermunicipais muito mais longas (de até 8 horas) para escoar lotes críticos, a média global permanece estável. Essa estabilidade matemática ocorre porque a etapa intramunicipal ($j \to p$) concentra a grande maioria das entregas (cerca de 70\% a 75\% da matriz) com grandes quantidades de doses por entrega. Assim, o volume massivo de vacinas transportadas localmente em tempos curtos dilui o peso das viagens extremas de longa distância, ancorando o custo médio final.
 
 \begin{figure}[H]
     \centering
@@ -145,7 +145,7 @@ Além da comparação entre os modelos, também é possível analisar o que acon
 
 No cenário sem penalidade, os maiores tempos de rota concentram-se em eixos que interligam capitais do Centro-Oeste e Nordeste em direção a Manaus (ex: Campo Grande $\to$ Manaus, Goiânia $\to$ Manaus, São Luís $\to$ Manaus), com tempos estabilizados na faixa de 5 a 6 horas.
 
-No cenário com penalidade, o Gurobi altera completamente a composição do conjunto das 10 rotas mais demoradas. Surgem eixos de longuíssima distância partindo do Sudeste, como por exemplo São Paulo $\to$ Boa Vista, São Paulo $\to$ Manaus e São Paulo $\to$ Belém. Na presença da penalidade, o teto do eixo vertical de custos em horas sobe de 6 horas para 8 horas.
+No cenário com penalidade, o Gurobi altera completamente o conjunto. Surgem eixos de longuíssima distância partindo do Sudeste, como por exemplo São Paulo $\to$ Boa Vista, São Paulo $\to$ Manaus e São Paulo $\to$ Belém. Na presença da penalidade, o teto do eixo vertical de custos em horas sobe de 6 horas para 8 horas.
 
 O trajeto irregular da linha laranja (Soma de Doses) em ambos os cenários confirma que não há proporcionalidade direta entre o tempo de voo e a quantidade de vacinas transportada.
 
@@ -223,7 +223,7 @@ Da mesma forma que no modelo anterior, o trajeto irregular da linha laranja (Som
 \begin{figure}[H]
     \centering
     \caption{Percentual de Tipos de Rota - Modelo 2}
-    \includegraphics[width=16cm,height=5.0cm]{figuras/8-percentual_rotas_mod2.png} 
+    \includegraphics[width=16.0cm,height=4.5cm]{figuras/8-percentual_rotas_mod2.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico13_powerbi}
 \end{figure}
@@ -254,7 +254,7 @@ Também foram gerados mapas geográficos interativos utilizando a biblioteca \te
 
 \begin{itemize}
     \item Cenário sem penalidade: \url{https://mapa-rotas-m2-false.netlify.app}
-    \item Cenário com penalidade: \url{https://mapa-rotas-m2-penalidade.netlify.app}
+    \item Cenário com penalidade: \url{https://mapa-rotas-m2-true.netlify.app}
 \end{itemize}
 
 \begin{figure}[H]
@@ -273,6 +273,6 @@ Também foram gerados mapas geográficos interativos utilizando a biblioteca \te
     \label{fig:mapa_m2_true}
 \end{figure}
 
-A análise das rotas dos mapas segue a do modelo anterior: no mapa com penalidade (Figura \ref{fig:mapa_m2_true}), surgem linhas aéreas expressivamente longas que no no mapa sem penalidade (Figura \ref{fig:mapa_m2_false}), interligando polos distantes do território nacional (como os vetores oriundos do Sudeste e Nordeste rumo à Região Norte). O visual reafirma que a urgência biológica se sobrepõe à lógica da proximidade geográfica, forçando o sistema a ativar rotas de custo elevado para salvaguardar as doses mais críticas da rede antes de sua expiração.
+A análise das rotas dos mapas segue a do modelo anterior: no mapa com penalidade (Figura \ref{fig:mapa_m2_true}), surgem linhas aéreas expressivamente mais longas que no mapa sem penalidade (Figura \ref{fig:mapa_m2_false}), interligando polos distantes do território nacional (como os vetores oriundos do Sudeste e Nordeste rumo à Região Norte). O visual reafirma que a urgência biológica se sobrepõe à lógica da proximidade geográfica, forçando o sistema a ativar rotas de custo elevado para salvaguardar as doses mais críticas da rede antes de sua expiração.
 
 \bigskip
