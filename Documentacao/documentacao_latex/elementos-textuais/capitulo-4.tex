@@ -51,7 +51,7 @@ onde:
     \item $p \in P_j$ representa os postos de saúde pertencentes ao município $j$;
 \end{itemize}
 
-Como as variáveis $x_{ijv}$ e $z_{jpv}$ representam a quantidade transportada, seus valores devem ser números inteiros e não-negativos, pois não faria sentido transportar meia dose de vacina, por exemplo. Desta forma, se trata de um \textbf{Problema de Programação Linear Inteira}.
+Como as variáveis $x_{ijv}$ e $z_{jpv}$ representam a quantidade transportada, seus valores devem ser números inteiros e não-negativos, pois não faria sentido transportar meia dose de vacina, por exemplo. Desta forma, se trata de um \textbf{Problema de Otimização Inteira}.
 
 Em cenários reais de distribuição logística, pode não existir oferta suficiente para atender integralmente toda a demanda da rede. Além disso, restrições operacionais, de capacidade ou de validade das vacinas podem inviabilizar determinadas entregas. 
 
@@ -450,12 +450,15 @@ Esta formulação elimina a necessidade de variáveis intermediárias de estoque
 
 Em suma, o PPLI fica definido assim:
 
-\begin{equation*}
+\begin{equation}
 \min z = 
 \sum_{v} \sum_{i} \sum_{j} C_{ij} \cdot x_{ijv}
 \;+\;
 \sum_{v} \sum_{j} \sum_{p \in P_j} C_{jp} \cdot z_{jpv}
-\end{equation*}
+\;+\;
+\sum_{v} \sum_{j} \sum_{p \in P_j} M \cdot f_{pv}
+\label{definicao_ppli_mod1}
+\end{equation}
 
 sujeito a:
 

@@ -12,9 +12,22 @@ Segundo outra matéria \cite{art:BRASILDEFATO}, em 2022, 100 mil doses de AstraZ
 
 Dessa forma, denota-se uma falta de logística para a redistribuição de vacinas, que ficam retidas até expirarem seu tempo de validade.
 
-Nesse contexto, torna-se fundamental o desenvolvimento de ferramentas que auxiliem a tomada de decisão na redistribuição de vacinas entre localidades com diferentes níveis de oferta e demanda, especialmente em cenários de emergência sanitária. E a utilização de modelos matemáticos de otimização se justifica por sua capacidade de fornecer soluções eficientes para esse tipo de problema.
+Para além do impacto estritamente financeiro, o perecimento de imunizantes representa um dano incalculável do ponto de vista da saúde pública, já que atrasa o alcance da imunidade de grupo, prolonga a transmissão da doença, favorece o eventual surgimento de novas variantes e perpetua a sobrecarga sobre a infraestrutura hospitalar. Dessa forma, uma alocação ineficiente dos recursos culmina em perda de vidas.
+
+Paralelamente, do ponto de vista social e político, a percepção pública de que milhares de doses expiram em armazéns corrói a confiança dos cidadãos nas instituições estatais e nos programas de saúde do governo.
+
+Ademais, esse cenário de ineficiência e perdas é profundamente agravado pelas dimensões continentais do Brasil e pela sua infraestrutura de transportes e malha logística heterogêneas. Isso porque as regiões Sul e Sudeste dispõem de uma malha robusta de rodovias e densa conectividade aérea, o que garante tempos de trânsito rápidos e previsíveis, porém as regiões Norte e partes do Nordeste frequentemente lidam com malhas rodoviárias precárias ou dependem de vias fluviais morosas. Essa assimetria implica que distâncias geográficas semelhantes podem resultar em tempos de viagem drasticamente diferentes.
+
+Embora o cenário ideal de planejamento exija a consideração dessas condições viárias, na abordagem metodológica, as distâncias entre os nós logísticos foram calculadas por meio da fórmula de Haversine, utilizando as coordenadas geográficas para obter as distâncias geodésicas. Desse modo, as heterogeneidades físicas e o estado de conservação das rodovias não são diretamente incorporados nas equações de tempo de trânsito. Essa abstração constitui uma simplificação metodológica do modelo atual, configurando-se como uma limitação consciente que abre espaço para que futuros trabalhos integrem APIs de roteirização (como o Google Maps) ao modelo de otimização aqui estabelecido.
+
+Nesse contexto, torna-se fundamental o desenvolvimento de ferramentas que auxiliem a tomada de decisão na redistribuição de vacinas entre localidades com diferentes níveis de oferta e demanda, especialmente em cenários de emergência sanitária. E a utilização de ferramentas matemáticas de otimização se justifica por sua capacidade de fornecer soluções eficientes para esse tipo de problema.
 
 Logo, este trabalho objetivou minimizar o tempo de distribuição de vacinas e mitigar o desperdício das mesmas por meio da modelagem de um Problema de Programação Linear Inteira (PPLI) de forma a satisfazer a demanda de vacinas o máximo possível. Com esse modelo, entidades executivas, como o Ministério da Saúde e Prefeituras, poderiam mitigar os efeitos devastadores de uma pandemia, incluindo mortes, sobrecarga de infraestrutura hospitar e desperdício de vacinas.
+
+A importância de se minimizar o tempo de distribuição de vacinas se dá pelos seus impactos financeiros e sociais.
+Sob a ótica econômica, a redução do tempo de deslocamento por meio de uma roteirização mais eficiente se traduz em menor consumo de combustíveis. Paralelamente, na dimensão social, o transporte ágil assegura a rápida imunização da população.
+
+Ainda cabe ressaltar que o trabalho desenvolvido tem o potencial de ser aplicado e adaptado não somente à vacinas mas a qualquer outro insumo hospitalar de necessidade urgente, como medicamentos.
 
 Quanto à metodologia, inicialmente é desenvolvido um modelo intermunicipal sem intermediação de centros estaduais. Em seguida, é proposto um modelo com intermediação estadual, voltado a representar uma logística mais realista. As duas abordagens permitem avaliar o impacto dessa burocracia de intermédio dos Estados. As formulações consideram restrições de oferta, demanda, capacidade de transporte e viabilidade temporal associada à validade das vacinas. Os modelos são implementados computacionalmente em Python utilizando o solver Gurobi Optimizer, possibilitando a realização de experimentos computacionais e a análise dos resultados de cenários simulados para avaliação da eficiência das soluções obtidas.
 
