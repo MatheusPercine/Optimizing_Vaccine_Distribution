@@ -151,13 +151,27 @@ O trajeto irregular da linha laranja (Soma de Doses) em ambos os cenários confi
 
 \begin{figure}[H]
     \centering
+    \caption{Os 10 Menores Tempos Por Rota - Modelo 1}
+    \includegraphics[width=11cm,height=10.0cm]{figuras/11-menores_tempos_mod1.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico14_powerbi}
+\end{figure}
+
+Diferentemente do que ocorre no gráfico de maiores tempos, a análise das rotas mais rápidas revela que a introdução da penalidade de perecibilidade não altera a configuração logística da base da rede. Em ambos os cenários (com e sem penalidade), o conjunto das 10 rotas mais curtas é rigorosamente idêntico.
+
+Observa-se que todas as rotas listadas são exclusivamente intramunicipais (fluxos do tipo $j \to p$), conectando as capitais aos seus respectivos postos de vacinação locais. O eixo de custo em horas apresenta um comportamento estático, formando uma barreira alinhada em, aproximdamente, 2 horas para todas as colunas. Esse fenômeno é explicado pela formulação matemática: como a distância geográfica dentro do mesmo município é muito curta, o custo total da rota passa a ser dominado pelo tempo fixo de processamento logístico do modal rodoviário ($\delta^{rod} = 2,0$ horas).
+
+Os picos de volumes de doses em grandes centros populacionais (como São Paulo e Rio de Janeiro) indicam que estes locais recebem volumes massivos de doses, pois duas demandas são maiores.
+
+\begin{figure}[H]
+    \centering
     \caption{Percentual de Tipos de Rota - Modelo 1}
     \includegraphics[width=16cm,height=5.5cm]{figuras/7-percentual_rotas_mod1.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico11_powerbi}
 \end{figure}
 
-Verifica-se predomínio, em, aproximadamente 70\%, das rotas do tipo jp, na qual o município realiza o abastecimento de seus postos. O restante (aproximadamente 25\%) é preenchido pelas rotas do tipo ij, o que corresponde a casos em que um município precisou pegar doses da oferta de outro município.
+Verifica-se predomínio, em, aproximadamente 70\%, das rotas do tipo jp ($j \to p$), na qual o município realiza o abastecimento de seus postos. O restante (aproximadamente 25\%) é preenchido pelas rotas do tipo ij ($i \to j$), o que corresponde a casos em que um município precisou pegar doses da oferta de outro município.
 
 Vacina do maior tempo de entrega e rotas gargalo por etapa:
 
@@ -219,6 +233,22 @@ No cenário sem penalidade, os arcos mais demorados concentram-se no abastecimen
 No cenário com penalidade, o Gurobi reconfigura o topo da lista. Eixos partindo do Nordeste e do Sudeste assumem a liderança crítica (ex: Teresina $\to$ AC, São Paulo $\to$ AM, Manaus $\to$ CE). O solver aceita deliberadamente ativar rotas mais distantes e severas para garantir que os lotes de vacinas com alto risco de vencimento sejam escoados imediatamente de seus polos em direção aos estados receptores. Além disso, na presença da penalidade, o limite do eixo vertical salta de 6 horas para 8 horas.
 
 Da mesma forma que no modelo anterior, o trajeto irregular da linha laranja (Soma de Doses) em ambos os cenários confirma que não há proporcionalidade direta entre o tempo de voo e a quantidade de vacinas transportada.
+
+\begin{figure}[H]
+    \centering
+    \caption{Os 10 Menores Tempos Por Rota - Modelo 2}
+    \includegraphics[width=11cm,height=10.0cm]{figuras/12-menores_tempos_mod2.png} 
+    \legend{Fonte: Elaborado pelo autor (2026)}
+    \label{fig:grafico15_powerbi}
+\end{figure}
+
+A estabilidade frente à penalidade se repete, ou seja, o conjunto das 10 rotas mais curtas é idêntico nos dois casos.
+
+No modelo 2, a diferença estrutural em relação ao Modelo 1 está na composição desse ranking. O gráfico mescla rotas intramunicipais ($j \to p$) com fluxos do tipo $k \to j$ cuja presença decorre de os centros de distribuição estaduais estarem localizados próximos às capitais do mesmo estado.
+
+Nota-se que o tempo fixo de 2 horas do processamento logístico padrão ($\delta^{rod}$) é dominante no custo da rota pelo mesmo motivo apontado na análise feita para o mesmo gráfico do modelo 1.
+
+Novamente, a linha de volume de doses registra picos em entregas à postos locais de capitais populosas e vales em repasses estaduais de menor volume.
 
 \begin{figure}[H]
     \centering
