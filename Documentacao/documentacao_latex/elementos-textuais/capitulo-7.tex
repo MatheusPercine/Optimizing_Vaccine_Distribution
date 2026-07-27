@@ -16,7 +16,7 @@ onde $n$ representa o tamanho da instância. No contexto da Programação Linear
 
 O Modelo 2 (sem penalidade) foi idealizado sob uma ótica mais realista que os demais modelos e, por isso, é válido analisar a complexidade computacional gerada por essa abordagem.
 
-O Modelo 2 exige a operação com três variáveis de decisão tridimensionais ($x_{ikv}$, $y_{kjv}$ e $z_{jpv}$) e uma variável bidimensional de falta ($f_{pv}$). Como consequência, a quantidade de vezes que as variáveis aparecem na função objetivo e o tamanho da matriz de restrições crescem de forma multiplicativa em relação ao tamanho dos conjuntos de municípios de origem ($|I|$), municípios de destino ($|J|$), centros estaduais ($|K|$), postos de vacinação ($|P(j)|$) e tipos de vacina ($|V|$).
+O Modelo 2 exige a operação com três tipos de variáveis de decisão tridimensionais ($x_{ikv}$, $y_{kjv}$ e $z_{jpv}$) e uma variável bidimensional de falta ($f_{pv}$). Como consequência, a quantidade de vezes que as variáveis aparecem na função objetivo e o tamanho da matriz de restrições crescem de forma multiplicativa em relação ao tamanho dos conjuntos de municípios de origem ($|I|$), municípios de destino ($|J|$), centros estaduais ($|K|$), postos de vacinação ($|P(j)|$) e tipos de vacina ($|V|$).
 
 Isso torna este modelo impossível de ser resolvido manualmente e altamente exigente do ponto de vista computacional. Mensurando a complexidade gerada por essa modelagem, tem-se:
 
@@ -96,7 +96,7 @@ Logo, no pior caso, o tempo de execução pode ser:
 
 Esse número torna colossal o nível de complexidade gerado por essa modelagem, o que afeta diretamente o planejamento logístico:
 \begin{itemize}
-    \item \textbf{Dependência do Auxílio Computacional:} É fisicamente e humanamente impossível delinear um plano eficiente de redistribuição de vacinas sem o auxílio do poder computacional.
+    \item \textbf{Dependência do Auxílio Computacional:} É fisicamente e humanamente impossível delinear um plano eficiente de redistribuição de vacinas sem o auxílio do poder computacional;
     \item \textbf{Necessidade de Ferramentas de Ponta:} O tamanho da matriz justifica o uso de \textit{solvers} avançados, como o Gurobi Optimizer, que garante a otimalidade global dentro de um tempo hábil.
 \end{itemize}
 
@@ -105,11 +105,11 @@ Esse número torna colossal o nível de complexidade gerado por essa modelagem, 
 Para garantir a tratabilidade computacional foram adotadas simplificações que distanciam a simulação de um cenário logístico real em sua totalidade. Dessa forma, a modelagem possui uma série de limitações, como:
 
 \begin{itemize}
-    \item \textbf{Negligência de Instâncias Administrativas Intermediárias:} O modelo adota uma estrutura de rede condensada composta por, no máximo, três níveis principais de fluxo de suprimentos ($I \to K \to J \to P$). Contudo, na estrutura organizacional real do Sistema Único de Saúde (SUS), estados de grande extensão territorial, como o de Minas Gerais, podem operar com um nível adicional composto pelas Superintendências Regionais de Saúde (SRS), configurando um fluxo do tipo $I \to K \to \text{SRS} \to J \to P$.
-    \item \textbf{Homogeneidade da Malha Rodoviária:} Na vida real, um eixo logístico entre São Paulo e Rio de Janeiro possui uma malha rodoviária infinitamente mais robusta do que a de um trajeto ligando municípios da Região Norte, que pode apresentar trechos rodoviários precários. Essa heterogeneidade da malha rodoviária que varia entre duas localidades não foi contemplada no modelo.
-    \item \textbf{Simetria da Fórmula de Haversine:} A utilização da fórmula de Haversine acrescida de um fator de tortuosidade ($\beta$) cria um grafo simétrico, onde o custo de ida é exatamente igual ao custo de volta. Em redes rodoviárias reais, o relevo (como a subida ou descida de uma serra), a existência de vias de mão única, pedágios e rotas alternativas fazem com que o tempo de deslocamento seja assimétrico.
-    \item \textbf{Incapacidade de Previsão do Trânsito Rodoviário:} O modelo considera a velocidade média do modal rodoviário ($\theta_{rod}$) como um parâmetro constante. Porém, na realidade urbana, o trânsito é um sistema dinâmico e imprevisível, pois está suscetível a intempéries climáticas, acidentes, bloqueios em rodovias, obras e grandes eventos (como partidas de futebol ou festividades), que podem travar o trânsito, impactando drasticamente o tempo de deslocamento $\tau_{ab}^{rod}$.
-    \item \textbf{Agregação das Unidades de Vacina do Tipo V:} Um município real não possui um único prazo de validade para todas as suas vacinas de um tipo $v$, mas sim múltiplas unidades de vacina com datas de expiração distintas. O modelo não rastreia unidades individuais, mas sim um lote agregado de vacinas do tipo $v$ com um prazo de validade médio estimado ($e_{iv}$ ou $e_{jv}$). Essa agregação simplifica a modelagem, mas perde a precisão do rastreamento de unidades individuais.
+    \item \textbf{Negligência de Instâncias Administrativas Intermediárias:} O modelo adota uma estrutura de rede condensada composta por, no máximo, três níveis principais de fluxo de suprimentos ($I \to K \to J \to P$). Contudo, na estrutura organizacional real do Sistema Único de Saúde (SUS), estados de grande extensão territorial, como o de Minas Gerais, podem operar com um nível adicional composto pelas Superintendências Regionais de Saúde (SRS), configurando um fluxo do tipo $I \to K \to \text{SRS} \to J \to P$;
+    \item \textbf{Homogeneidade da Malha Rodoviária:} Na vida real, um eixo logístico entre São Paulo e Rio de Janeiro possui uma malha rodoviária infinitamente mais robusta do que a de um trajeto ligando municípios da Região Norte, que pode apresentar trechos rodoviários precários. Essa heterogeneidade da malha rodoviária que varia entre duas localidades não foi contemplada no modelo;
+    \item \textbf{Simetria da Fórmula de Haversine:} A utilização da fórmula de Haversine acrescida de um fator de tortuosidade ($\beta$) cria um grafo simétrico, onde o custo de ida é exatamente igual ao custo de volta. Em redes rodoviárias reais, o relevo (como a subida ou descida de uma serra), a existência de vias de mão única, pedágios e rotas alternativas fazem com que o tempo de deslocamento seja assimétrico;
+    \item \textbf{Incapacidade de Previsão do Trânsito Rodoviário:} O modelo considera a velocidade média do modal rodoviário ($\theta_{rod}$) como um parâmetro constante. Porém, na realidade urbana, o trânsito é um sistema dinâmico e imprevisível, pois está suscetível a intempéries climáticas, acidentes, bloqueios em rodovias, obras e grandes eventos (como partidas de futebol ou festividades), que podem travar o trânsito, impactando drasticamente o tempo de deslocamento $\tau_{ab}^{rod}$;
+    \item \textbf{Agregação das Unidades de Vacina do Tipo V:} Um município real não possui um único prazo de validade para todas as suas vacinas de um tipo $v$, mas sim múltiplas unidades de vacina com datas de expiração distintas. O modelo não rastreia unidades individuais, mas sim um lote agregado de vacinas do tipo $v$ com um prazo de validade médio estimado ($e_{iv}$ ou $e_{jv}$). Essa agregação simplifica a modelagem, mas perde a precisão do rastreamento de unidades individuais;
     \item \textbf{Simplificação do Tempo do Modal Aéreo:} Na prática, o uso do modal aéreo compreende, nesta ordem, os tempos de transporte rodoviário do município de origem até o aeroporto, o tempo de voo entre aeroportos e o transporte rodoviário do aeroporto de destino até o município final. Porém, na aplicação e na modelagem, o tempo do modal aéreo ($\tau_{ab}^{aereo}$) considera somente o tempo de voo entre municípios.
 \end{itemize}
 
@@ -118,8 +118,8 @@ Para garantir a tratabilidade computacional foram adotadas simplificações que 
 Embora o modelo matemático desenvolvido apresente solidez teórica para a otimização logística, a sua aplicação no cenário real do Sistema Único de Saúde (SUS) esbarra em desafios práticos, como:
 
 \begin{itemize}
-    \item \textbf{Sigilo dos Dados:} Informações sobre estoques e demandas de vacinas e datas de validade dos lotes não são dados públicos e são tratados como dados sensíveis pelas secretarias de saúde.
-    \item \textbf{Atualização dos Dados:} A aplicação do modelo não depende somente da obtenção dos dados sigilosos, mas também que eles estejam 100\% atualizados, o que é um desafio dado o número massivo de lotes de vacinas por todo o país.
+    \item \textbf{Sigilo dos Dados:} Informações sobre estoques e demandas de vacinas e datas de validade dos lotes não são dados públicos e são tratados como dados sensíveis pelas secretarias de saúde;
+    \item \textbf{Atualização dos Dados:} A aplicação do modelo não depende somente da obtenção dos dados sigilosos, mas também que eles estejam 100\% atualizados, o que é um desafio dado o número massivo de lotes de vacinas por todo o país;
     \item \textbf{Volume Massivo de Dados:} O Brasil possui mais de 5.000 municípios e dezenas de milhares de postos de saúde, o que torna a coleta e a organização manuais desses dados uma tarefa humanamente impraticável. Por isso, se faz necessária uma coleta e organização automatizada desses dados.
 \end{itemize}
 
@@ -129,19 +129,22 @@ Ao reduzir a abstração computacional para as 27 capitais brasileiras e limitar
 
 Conclui-se que o verdadeiro desafio da distribuição ótima de vacinas não reside apenas no processamento computacional das rotas ótimas, mas também na engenharia de dados necessária para coletar e organizar dados atualizados e em quantidade massiva.
 
-\section{Conclusões Finais}
+\section{Relevância do Trabalho e Conclusões Finais}
+
+Primeiramente, ressalta-se que toda a estruturação da modelagem matemática, bem como a estratégia de extração e tratamento dos dados, foram concebidas e desenvolvidas integralmente pelo autor. Este trabalho não consiste em uma derivação ou mera modificação de artigos presentes na bibliografia consultada, consolidando-se como uma contribuição autoral.
 
 A pesquisa cumpriu com êxito o seu objetivo central: modelar, implementar e resolver o problema de redistribuição de vacinas em um cenário pandêmico no Brasil sob a ótica da Programação Linear Inteira, buscando minimizar o tempo logístico de transporte, ampliar o atendimento da demanda vacinal e contribuir para respostas mais eficientes em contextos de emergência sanitária.
 
-Por meio da modelagem matemática, níveis de cadeia logística e a burocracia foram traduzidos com precisão por meio de variáveis de decisão e restrições, como a restrição da conservação do fluxo e a de consistência estadual.
+Por meio da modelagem matemática, níveis de cadeia logística e a burocracia foram traduzidos com precisão por meio de variáveis de decisão e restrições, como a restrição da conservação do fluxo e a de consistência estadual. Essa robustez matemática trouxe flexibilidade estrutural do modelo quanto à sua abrangência espacial. A formulação matemática elaborada compreende e adapta-se facilmente a diferentes escalas de operação, podendo ser aplicada em malhas logísticas de nível estritamente municipal, estadual, nacional, ou em redes híbridas que integrem duas ou até três dessas esferas simultaneamente.
+Apesar das limitações listadas, a modelagem desenvolvida provou ser fortemente fidedigna ao problema logístico real.
 
 Os resultados gerados pelo sistema foram extremamente precisos e informativos. O auxilio do Power BI permitiu uma interpretação visual clara dos dados gerados pelo algoritmo em Python. Por meio dos resultados, foi possível identificar rotas gargalo na rede logística, o percentual de uso dos modais, o total de doses movimentadas e o tempo exato ou aproximado usado para realizar toda a distribuição e entender o impacto da existência da intermediação estadual no processo.
 
 Mesmo diante de um cenário de complexidade colossal, o Gurobi foi capaz de encontrar a solução ótima das instâncias de forma quase instantânea. Dessa forma o \textit{solver} revelou-se excepcionalmente poderoso.
 
+A relevância deste estudo também se estende à sua notável adaptabilidade. A lógica de otimização para redistribuição em uma rede previamente conhecida pode ser reaproveitada para o transporte de outros insumos, tanto na área da saúde quanto em setores estratégicos, como o militar. A aplicação do modelo abrange desde a logística ágil de materiais de emergência até a gestão eficiente de materiais de fornecimento contínuo amparados por contratos previamente firmados.
+
 Embora tenha sido feita simplificações, este trabalho comprova que uma formulação matemática coesa com a realidade e aliada a um algoritmo de ponta, prova ser uma ferramenta de gestão tática de alto nível e aplicável ao mundo real.
 
-Este trabalho reafirma a importância da Pesquisa Operacional como recurso indispensável para a gestão da saúde pública. A transição de um planejamento de rotas empírico e manual para um sistema automatizado e guiado por dados cumpre o propósito maior de garantir a imunização da população de forma eficiente. O trabalho desenvolvido deixa um legado prático, escalável e cientificamente embasado para o enfrentamento de crises de pandemia, mitigação de desperdício de vacinas e preservação de vidas no Brasil.
-
-
+Este trabalho reafirma a importância da pesquisa operacional como recurso indispensável para a gestão da saúde pública. A transição de um planejamento de rotas empírico e manual para um sistema automatizado e guiado por dados cumpre o propósito maior de garantir a imunização da população de forma eficiente. O trabalho desenvolvido deixa um legado prático, escalável e cientificamente embasado para o enfrentamento de crises de pandemia, mitigação de desperdício de vacinas e preservação de vidas no mundo.
 \bigskip
