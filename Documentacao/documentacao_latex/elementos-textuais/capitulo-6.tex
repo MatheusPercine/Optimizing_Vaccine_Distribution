@@ -1,9 +1,10 @@
 \chapter{Resultados e Análise}
 
-Os dados dos resultados foram exportados no formato csv, na pasta ``resultados\_caso\_regional'', e para a exibição dos mesmos foi utilizada a ferramenta Power BI que é capaz de gerar diversos gráficos com certa praticidade e tendo arquivos .csv como entrada. Outros dados também foram impressos pelo terminal do python. 
+Os dados dos resultados foram exportados no formato csv, na pasta \texttt{``resultados\_caso\-\_regional''}, e para a exibição dos mesmos foi utilizada a ferramenta Power BI que é capaz de gerar diversos gráficos com certa praticidade e tendo arquivos .csv como entrada. Outros dados também foram impressos pelo terminal do python. 
+
 Além disso, mapas geográficos interativos foram gerados utilizando a biblioteca \textit{Folium} do Python. Esses mapas foram dispostos em links online por meio do serviço de hospedagem da Netlify.
 
-Foi gerado um csv com dados globais de cada modelo, o qual foi utilizado para a geração dos gráficos de comparação entre os modelos. Esse csv contém os seguintes dados dispostos nas seguintes colunas:
+Foi gerado um arquivo do tipo csv com dados globais de cada modelo, o qual foi utilizado para a geração dos gráficos de comparação entre os modelos. Esse csv contém os seguintes dados dispostos nas seguintes colunas:
 
 \begin{longtable}{|l|p{8.5cm}|}
 \caption{Descrição das Colunas da Tabela de Comparação Entre Modelos} \label{tab:colunas_comparacao} \\
@@ -37,7 +38,7 @@ Tempo\_Rota\_Gargalo\_jp & Custo (em horas) associado ao arco crítico final $j 
 Doses\_Rota\_Gargalo\_jp & Volume de vacinas alocado e entregue ao posto de saúde crítico $p$ vindo do município $j$. \\ \hline
 \end{longtable}
 
-Também foram gerados csv's específicos para cada modelo, os quais foram utilizados para a geração dos gráficos de resultados individuais dos modelos.
+Também foram gerados outros arquivos csv's específicos para cada modelo, os quais foram utilizados para a geração dos gráficos de resultados individuais dos modelos.
 
 Esse csv contém os seguintes dados dispostos nas seguintes colunas:
 
@@ -72,7 +73,7 @@ Modal & O modal de transporte utilizado para a movimentação da carga (Rodoviá
 \begin{figure}[H]
     \centering
     \caption{Tempo Máximo Por Modelo}
-    \includegraphics[width=14cm,height=7.0cm]{figuras/1-tempo_max_por_modelo.png} 
+    \includegraphics[width=16.0cm,height=9.0cm]{figuras/1-tempo_max_por_modelo.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico1_powerbi}
 \end{figure}
@@ -85,12 +86,12 @@ Observa-se também que as execuções do modelo 2 possuem um tempo maior do que 
 
 Entre os modelos 1 e 2, ambos sem penalidade, a diferença entre os tempos é de aproximadamente 3 horas, isso significa que o modelo 2 tem um tempo $27\%$ maior.
 
-Entre os modelos 1 e 2, ambos com penalidade, a diferença entre os tempos é de 2,7 horas. Isso significa que o modelo 2 tem um tempo $21\%$ maior.
+Considerando os modelos ambos com penalidade, a diferença entre os tempos é de 2,7 horas. Isso significa que o modelo 2 tem um tempo $21\%$ maior.
 
 \begin{figure}[H]
     \centering
     \caption{Valor da Função Objetivo Por Modelo}
-    \includegraphics[width=14cm,height=7.0cm]{figuras/2-funcao_objetivo_por_modelo.png} 
+    \includegraphics[width=16.0cm,height=9.0cm]{figuras/2-funcao_objetivo_por_modelo.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico2_powerbi}
 \end{figure}
@@ -100,7 +101,7 @@ Este gráfico denota uma grande diferença no valor da função objetivo entre u
 \begin{figure}[H]
     \centering
     \caption{Custo Médio (Em Horas) por Dose Por Modelo}
-    \includegraphics[width=14cm,height=7.0cm]{figuras/3-custo_medio_por_dose_por_modelo.png} 
+    \includegraphics[width=16.0cm,height=9.0cm]{figuras/3-custo_medio_por_dose_por_modelo.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico3_powerbi}
 \end{figure}
@@ -110,7 +111,7 @@ Para a obtenção deste gráfico, gerou-se uma média ponderada do custo em hora
 \begin{figure}[H]
     \centering
     \caption{Total de Doses Movimentadas Por Modelo}
-    \includegraphics[width=14cm,height=7.0cm]{figuras/4-doses_movimentadas_por_modelo.png} 
+    \includegraphics[width=16.0cm,height=9.0cm]{figuras/4-doses_movimentadas_por_modelo.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico4_powerbi}
 \end{figure}
@@ -120,7 +121,7 @@ O total de doses movimentadas foi aumentado conforme mais etapas logísticas tin
 \begin{figure}[H]
     \centering
     \caption{Percentual de Uso dos Modais}
-    \includegraphics[width=15cm,height=9.0cm]{figuras/6-percentual_modais.png} 
+    \includegraphics[width=16.0cm,height=9.0cm]{figuras/6-percentual_modais.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico5_powerbi}
 \end{figure}
@@ -138,7 +139,7 @@ Além da comparação entre os modelos, também é possível analisar o que acon
 \begin{figure}[H]
     \centering
     \caption{Os 10 Maiores Tempos Por Rota - Modelo 1}
-    \includegraphics[width=11cm,height=10.0cm]{figuras/9-maiores_tempos_mod1.png} 
+    \includegraphics[width=16.0cm,height=12.5cm]{figuras/9-maiores_tempos_mod1.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico10_powerbi}
 \end{figure}
@@ -152,7 +153,7 @@ O trajeto irregular da linha laranja (Soma de Doses) em ambos os cenários confi
 \begin{figure}[H]
     \centering
     \caption{Os 10 Menores Tempos Por Rota - Modelo 1}
-    \includegraphics[width=11cm,height=10.0cm]{figuras/11-menores_tempos_mod1.png} 
+    \includegraphics[width=16.0cm,height=12.5cm]{figuras/11-menores_tempos_mod1.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico14_powerbi}
 \end{figure}
@@ -171,22 +172,22 @@ Os picos de volumes de doses em grandes centros populacionais (como São Paulo e
     \label{fig:grafico11_powerbi}
 \end{figure}
 
-Verifica-se predomínio, em, aproximadamente 70\%, das rotas do tipo jp ($j \to p$), na qual o município realiza o abastecimento de seus postos. O restante (aproximadamente 25\%) é preenchido pelas rotas do tipo ij ($i \to j$), o que corresponde a casos em que um município precisou pegar doses da oferta de outro município.
+Verifica-se predomínio, em, aproximadamente 75\%, das rotas do tipo $jp$ ($j \to p$), na qual o município realiza o abastecimento de seus postos. O restante (aproximadamente 25\%) é preenchido pelas rotas do tipo $ij$ ($i \to j$), o que corresponde a casos em que um município precisou pegar doses da oferta de outro município.
 
 Vacina do maior tempo de entrega e rotas gargalo por etapa:
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - Modelo 1 s/ penalidade}
-    \includegraphics[width=8.3cm,height=3.0cm]{figuras/modelo_1_false.png} 
+    \caption{Informações do Terminal Com Python - Modelo 1 sem penalidade}
+    \includegraphics[width=13.5cm,height=5.0cm]{figuras/modelo_1_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal7_python}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - Modelo 1 c/ penalidade}
-    \includegraphics[width=8.3cm,height=3.0cm]{figuras/modelo_1_true.png} 
+    \caption{Informações do Terminal Com Python - Modelo 1 com penalidade}
+    \includegraphics[width=13.5cm,height=5.0cm]{figuras/modelo_1_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal8_python}
 \end{figure}
@@ -196,13 +197,13 @@ Verifica-se que rotas gargalo e seus detalhamentos são completamente diferentes
 Para complementar a análise espacial dos resultados, foram gerados mapas geográficos interativos utilizando a biblioteca \textit{Folium} em Python. Esses mapas permitem a visualização vetorial das rotas ativas, a distinção dos modais de transporte e a representação do volume de doses transportadas por meio da espessura das arestas. As versões interativas estão hospedadas online e podem ser acessadas nos links: 
 
 \begin{itemize}
-    \item Cenário sem penalidade: \url{https://mapa-rotas-m1-false.netlify.app}
-    \item Cenário com penalidade: \url{https://mapa-rotas-m1-true.netlify.app}
+    \item Cenário sem penalidade: \url{https://mapa-rotas-m1-false.netlify.app};
+    \item Cenário com penalidade: \url{https://mapa-rotas-m1-true.netlify.app}.
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \caption{Mapa Geográfico de Distribuição - Modelo 1 s/ penalidade}
+    \caption{Mapa Geográfico de Distribuição - Modelo 1 sem penalidade}
     \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m1_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:mapa_m1_false}
@@ -210,7 +211,7 @@ Para complementar a análise espacial dos resultados, foram gerados mapas geogr�
 
 \begin{figure}[H]
     \centering
-    \caption{Mapa Geográfico de Distribuição - Modelo 1 c/ penalidade}
+    \caption{Mapa Geográfico de Distribuição - Modelo 1 com penalidade}
     \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m1_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:mapa_m1_true}
@@ -223,7 +224,7 @@ A análise visual corrobora estritamente os dados quantitativos obtidos. No mapa
 \begin{figure}[H]
     \centering
     \caption{Os 10 Maiores Tempos Por Rota - Modelo 2}
-    \includegraphics[width=11cm,height=10.0cm]{figuras/10-maiores_tempos_mod2.png} 
+    \includegraphics[width=16.0cm,height=12.5cm]{figuras/10-maiores_tempos_mod2.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico12_powerbi}
 \end{figure}
@@ -237,7 +238,7 @@ Da mesma forma que no modelo anterior, o trajeto irregular da linha laranja (Som
 \begin{figure}[H]
     \centering
     \caption{Os 10 Menores Tempos Por Rota - Modelo 2}
-    \includegraphics[width=11cm,height=10.0cm]{figuras/12-menores_tempos_mod2.png} 
+    \includegraphics[width=16.0cm,height=12.5cm]{figuras/12-menores_tempos_mod2.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico15_powerbi}
 \end{figure}
@@ -253,43 +254,43 @@ Novamente, a linha de volume de doses registra picos em entregas à postos locai
 \begin{figure}[H]
     \centering
     \caption{Percentual de Tipos de Rota - Modelo 2}
-    \includegraphics[width=16.0cm,height=4.5cm]{figuras/8-percentual_rotas_mod2.png} 
+    \includegraphics[width=16.0cm,height=5.0cm]{figuras/8-percentual_rotas_mod2.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico13_powerbi}
 \end{figure}
 
-Verifica-se predomínio, em pouco mais da metade, do uso das rotas do tipo jp, na qual o município realiza o abastecimento de seus postos. O tipo de ik aparece em segundo lugar com aproximadamente 20\% e esse número denota que, na maioria das vezes não foi necessário usar esse tipo de rota tipicamente acionada quando é necessário usar a oferta de outro município. O restante (aproximadamente 15\%) é preenchido pelas rotas do tipo kj, na qual o Estado realiza o abastecimento de sua capital. 
+Verifica-se predomínio, em pouco mais da metade, do uso das rotas do tipo $jp$, na qual o município realiza o abastecimento de seus postos. O tipo $ik$ aparece em segundo lugar com aproximadamente 20\% e esse número denota que, na maioria das vezes não foi necessário usar esse tipo de rota tipicamente acionada quando é necessário usar a oferta de outro município. O restante (aproximadamente 15\%) é preenchido pelas rotas do tipo $kj$, na qual o Estado realiza o abastecimento de sua capital. 
 
 Vacina do maior tempo de entrega e rotas gargalo por etapa:
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - Modelo 2 s/ penalidade}
-    \includegraphics[width=9.3cm,height=3.5cm]{figuras/modelo_2_false.png} 
+    \caption{Informações do Terminal Com Python - Modelo 2 sem penalidade}
+    \includegraphics[width=15.0cm,height=5.3cm]{figuras/modelo_2_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal9_python}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - Modelo 2 c/ penalidade}
-    \includegraphics[width=9.3cm,height=3.5cm]{figuras/modelo_2_true.png} 
+    \caption{Informações do Terminal Com Python - Modelo 2 com penalidade}
+    \includegraphics[width=15.0cm,height=5.3cm]{figuras/modelo_2_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal10_python}
 \end{figure}
 
-Excento pela etapa ik, verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas. Todas as demandas foram atendidas.
+Exceto pela etapa $ik$, verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas. Todas as demandas foram atendidas.
 
 Também foram gerados mapas geográficos interativos utilizando a biblioteca \textit{Folium} em Python. As versões interativas estão hospedadas online e podem ser acessadas nos links: 
 
 \begin{itemize}
-    \item Cenário sem penalidade: \url{https://mapa-rotas-m2-false.netlify.app}
-    \item Cenário com penalidade: \url{https://mapa-rotas-m2-true.netlify.app}
+    \item Cenário sem penalidade: \url{https://mapa-rotas-m2-false.netlify.app};
+    \item Cenário com penalidade: \url{https://mapa-rotas-m2-true.netlify.app}.
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \caption{Mapa Geográfico de Distribuição - Modelo 2 s/ penalidade}
+    \caption{Mapa Geográfico de Distribuição - Modelo 2 sem penalidade}
     \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m2_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:mapa_m2_false}
@@ -297,7 +298,7 @@ Também foram gerados mapas geográficos interativos utilizando a biblioteca \te
 
 \begin{figure}[H]
     \centering
-    \caption{Mapa Geográfico de Distribuição - Modelo 2 c/ penalidade}
+    \caption{Mapa Geográfico de Distribuição - Modelo 2 com penalidade}
     \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m2_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:mapa_m2_true}

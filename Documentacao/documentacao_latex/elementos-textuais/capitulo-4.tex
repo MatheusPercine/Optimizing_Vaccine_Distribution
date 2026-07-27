@@ -4,7 +4,7 @@ Os modelos propostos não contemplam a etapa inicial de distribuição de vacina
 
 \section{Modelo de Redistribuição Sem Intermediação Estadual}
 
-Tambem podendo ser apelidado de ``Modelo 1'', este modelo representa um cenário hipotético de transportes diretos entre municípios e sem o intermédio de órgãos estaduais. A formulação desse cenário permite entender o impacto da intermediação estadual na eficiência do sistema de distribuição de vacinas se compararmos este modelo com o modelo de redistribuição com intermediação estadual, que será apresentado posteriormente.
+Também podendo ser apelidado de ``Modelo 1'', este modelo representa um cenário hipotético de transportes diretos entre municípios e sem o intermédio de órgãos estaduais. A formulação desse cenário permite entender o impacto da intermediação estadual na eficiência do sistema de distribuição de vacinas se compararmos este modelo com o modelo de redistribuição com intermediação estadual, que será apresentado posteriormente.
 
 Caso a oferta de um município já supra a demanda de seus postos e não seja necessário usar a oferta de outros, esse município pode atender diretamente seus postos.
 
@@ -16,7 +16,7 @@ Tudo conforme representado a seguir:
 \text{Município } i \;\longrightarrow\; \text{Município } j \;\longrightarrow\; \text{Posto de Saúde } P
 \]
 
-ou somente:
+ou se o município $j$ já tiver oferta suficiente para atender seus postos:
 
 \[
 \text{Município } j \;\longrightarrow\; \text{Posto de Saúde } P
@@ -33,7 +33,7 @@ onde:
 \begin{itemize}
     \item $I$ representa os municípios $i$ mapeados;
     \item $J$ representa os municípios $j$ mapeados;
-    \item $V$ representa os tipos de vacina mapeados.
+    \item $V$ representa os tipos de vacina mapeados;
     \item $x$ representa a quantidade de vacinas transportadas;
     \item $i \in I$ indica o município de origem $i$, que possui oferta da vacina que será transportada;
     \item $j \in J$ indica o município de destino $j$, que possui demanda pela vacina que será transportada;
@@ -48,7 +48,7 @@ z_{jpv} \in \mathbb{Z}_{\geq 0} \quad \forall j \in J, p \in P_j, v \in V,
 
 onde:
 \begin{itemize}
-    \item $p \in P_j$ representa os postos de saúde pertencentes ao município $j$;
+    \item $p \in P_j$ representa os postos de saúde pertencentes ao município $j$.
 \end{itemize}
 
 Como as variáveis $x_{ijv}$ e $z_{jpv}$ representam a quantidade transportada, seus valores devem ser números inteiros e não-negativos, pois não faria sentido transportar meia dose de vacina, por exemplo. Desta forma, se trata de um \textbf{Problema de Otimização Inteira}.
@@ -85,17 +85,17 @@ Porém, para o transporte de vacinas entre municípios distintos, as principais 
 Sejam:
 
 \[
-\tau_{ij}^{rod}, \quad \tau_{ij}^{areo},  \quad \tau_{jp}^{rod} \in \mathbb{R}_{\geq 0}
+\tau_{ij}^{rod}, \quad \tau_{ij}^{aereo},  \quad \tau_{jp}^{rod} \in \mathbb{R}_{\geq 0}
 \]
 
 onde:
 \begin{itemize}
-    \item $\tau_{ij}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o município de origem $i$ e o município de destino $j$.
-    \item $\tau_{ij}^{areo}$ é o tempo de deslocamento do modal aéreo entre o município de origem $i$ e o município de destino $j$.
+    \item $\tau_{ij}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o município de origem $i$ e o município de destino $j$;
+    \item $\tau_{ij}^{aereo}$ é o tempo de deslocamento do modal aéreo entre o município de origem $i$ e o município de destino $j$;
     \item $\tau_{jp}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o centro de distribuição municipal $j$ e o posto de destino $p$. 
 \end{itemize}
 
-% No caso do transporte aéreo, o modelo não considera explicitamente apenas o tempo de voo entre os municípios. O tempo $\tau_{ij}^{areo}$ representa o tempo total agregado da operação logística aérea, incluindo:
+% No caso do transporte aéreo, o modelo não considera explicitamente apenas o tempo de voo entre os municípios. O tempo $\tau_{ij}^{aereo}$ representa o tempo total agregado da operação logística aérea, incluindo:
 
 % \begin{itemize}
 %     \item transporte rodoviário do município de origem até o aeroporto;
@@ -114,13 +114,13 @@ O tempo de processamento logístico pode variar de acordo com o modal de transpo
 Sejam:
 
 \[
-\delta^{rod}, \quad \delta^{areo} \in \mathbb{R}_{\geq 0}
+\delta^{rod}, \quad \delta^{aereo} \in \mathbb{R}_{\geq 0}
 \]
 
 onde:
 \begin{itemize}
-    \item $\delta^{rod}$ representa o tempo de processamento logístico do modal rodoviário.
-    \item $\delta^{areo}$ representa o tempo de processamento logístico do modal aéreo.
+    \item $\delta^{rod}$ representa o tempo de processamento logístico do modal rodoviário;
+    \item $\delta^{aereo}$ representa o tempo de processamento logístico do modal aéreo.
 \end{itemize}
 
 \subsubsection{Penalização do Modal Aéreo}
@@ -144,7 +144,7 @@ Modelar explicitamente etapas de processamento logístico exigiria a introduçã
 Sejam:
 \begin{itemize}
     \item $C_{ij}^{rod}$, o \textbf{Custo Total do transporte rodoviário};
-    \item $C_{ij}^{areo}$, o \textbf{Custo Total do transporte aéreo}.
+    \item $C_{ij}^{aereo}$, o \textbf{Custo Total do transporte aéreo};
     \item $C_{jp}$, \textbf{Custo Total do transporte} entre os pontos $j$ e $p$.
 \end{itemize}
 
@@ -154,14 +154,14 @@ Dessa forma, o \textbf{Custo Total de transporte por modal} é dado por:
 C_{ij}^{rod} = \tau_{ij}^{rod} + \delta^{rod}
 \]
 \[
-C_{ij}^{areo} = \alpha \cdot \tau_{ij}^{areo} + \delta^{areo}
+C_{ij}^{aereo} = \alpha \cdot \tau_{ij}^{aereo} + \delta^{aereo}
 \]
 
 
 Assim, define-se o \textbf{Custo Total de transporte} como:
 
 \[
-C_{ij} = \min \left( \quad C_{ij}^{rod} \quad , \quad C_{ij}^{areo} \quad \right),  \quad C_{ij} \in \mathbb{R}_{\geq 0}
+C_{ij} = \min \left( \quad C_{ij}^{rod} \quad , \quad C_{ij}^{aereo} \quad \right),  \quad C_{ij} \in \mathbb{R}_{\geq 0}
 \]
 
 e
@@ -186,26 +186,26 @@ Na prática, diferentes municípios possuem diferentes quantidades de veículos 
 Sejam:
 
 \[
-W_{i}^{\text{rod}}, \quad W_{i}^{\text{areo}}, \quad W_{j} \in \mathbb{Z}_{>0}
+W_{i}^{\text{rod}}, \quad W_{i}^{\text{aereo}}, \quad W_{j} \in \mathbb{Z}_{>0}
 \]
 
 onde:
 \begin{itemize}
     \item $W_{i}^{\text{rod}}$ representa a quantidade de caminhões disponíveis no município $i$;
-    \item $W_{i}^{\text{areo}}$ representa a quantidade de aviões disponíveis no município $i$.
+    \item $W_{i}^{\text{aereo}}$ representa a quantidade de aviões disponíveis no município $i$;
     \item $W_{j}$ representa a quantidade de veículos disponíveis no município de destino $j$.
 \end{itemize}
 
 Além disso, sejam:
 
 \[
-U^{\text{rod}}, \quad U^{\text{areo}} \in \mathbb{R}_{>0}
+U^{\text{rod}}, \quad U^{\text{aereo}} \in \mathbb{R}_{>0}
 \]
 
 onde:
 \begin{itemize}
     \item $U^{\text{rod}}$ representa a capacidade média de carga de um veículo do modal rodoviário;
-    \item $U^{\text{areo}}$ representa a capacidade média de carga de um veículo do modal aéreo.
+    \item $U^{\text{aereo}}$ representa a capacidade média de carga de um veículo do modal aéreo.
 \end{itemize}
 
 Neste trabalho, a capacidade não representa apenas a capacidade física de um único veículo individual, mas sim uma \textbf{capacidade operacional agregada} disponível ao longo do horizonte de planejamento considerado pelo modelo. Essa abstração engloba a capacidade de um veículo multiplicada pelo tamanho da frota disponibilizada.
@@ -217,7 +217,7 @@ u_{ij}^{\text{rod}} = W_i^{\text{rod}} \cdot U^{\text{rod}} \in \mathbb{R}_{\geq
 \]
 
 \[
-u_{ij}^{\text{areo}} = W_i^{\text{areo}} \cdot U^{\text{areo}}  \in \mathbb{R}_{\geq 0}
+u_{ij}^{\text{aereo}} = W_i^{\text{aereo}} \cdot U^{\text{aereo}}  \in \mathbb{R}_{\geq 0}
 \]
 
 Dessa forma, a capacidade efetiva de transporte entre os municípios $i$ e $j$ é definida de forma consistente com o custo escolhido, conforme:
@@ -225,8 +225,8 @@ Dessa forma, a capacidade efetiva de transporte entre os municípios $i$ e $j$ �
 \begin{equation}
 u_{ij} =
 \begin{cases}
-u_{ij}^{\text{rod}}, & \text{se } C_{ij}^{\text{rod}} \le C_{ij}^{\text{areo}} \\
-u_{ij}^{\text{areo}}, & \text{caso contrário}
+u_{ij}^{\text{rod}}, & \text{se } C_{ij}^{\text{rod}} \le C_{ij}^{\text{aereo}} \\
+u_{ij}^{\text{aereo}}, & \text{caso contrário}
 \end{cases}
 \end{equation}
 
@@ -260,8 +260,8 @@ Além disso, seja:
 \]
 onde:
 \begin{itemize}
-\item  $e_{jv}$ representa o tempo restante até a expiração da vacina do tipo $v$ disponível no município de destino $j$.
-\item $\rho_{jv}$ é penalidade da vacina do tipo $v$ no município $j$
+\item  $e_{jv}$ representa o tempo restante até a expiração da vacina do tipo $v$ disponível no município de destino $j$;
+\item $\rho_{jv}$ é penalidade da vacina do tipo $v$ no município $j$.
 \end{itemize}
 
 Intuitivamente, $e_{jv}$ pode ser interpretado como o tempo remanescente de expiração das vacinas do tipo $v$ disponíveis no município $j$ após a etapa de redistribuição intermunicipal.
@@ -327,7 +327,7 @@ Para incorporar o risco de expiração das vacinas, introduz-se os fatores de pe
 \label{modelo_sem_intermediacao_com_penalidade}
 \end{equation}
 
-Esta função tem um objetivo ligeiramente diferente: \textbf{minimizar o tempo ponderado pelo risco de expiração}.
+Esta função tem um objetivo ligeiramente diferente: \textbf{minimizar o tempo ponderado pelo risco de expiração}. E a função objetivo prioriza vacinas mais próximas da expiração, tornando o tempo de transporte dessas vacinas mais relevante no processo de otimização.
 
 
 \subsection{Restrições}
@@ -349,7 +349,7 @@ Assim, temos:
 \end{equation*}
 onde:
 \begin{itemize}
-    \item $o_{iv}$ representa a quantidade de vacinas do tipo $v$ ofertadas no município $i$;
+    \item $o_{iv}$ representa a quantidade de vacinas do tipo $v$ ofertadas no município $i$.
 \end{itemize}
 
 A \textbf{restrição de capacidade agregada} de entrega de vacinas da origem $i$ ao destino $j$, segue a lógica de que número de vacinas transportadas não pode exceder a capacidade máxima agregada. Assim, temos:
@@ -375,7 +375,7 @@ A manutenção simultânea da restrição de demanda no nível intermunicipal e 
 
 \subsubsection{Restrições da Etapa Intramunicipal}
 
-A \textbf{restrição de demanda} estabelece que sua demanda total é igual a o número de vacinas enviadas para os postos mais um valor referente à demanda não suprida:
+A \textbf{restrição de demanda} estabelece que sua demanda total é igual ao número de vacinas enviadas para os postos mais um valor referente à demanda não suprida:
 
 \begin{equation}
 z_{jpv} + f_{pv} = r_{pv},
@@ -513,7 +513,7 @@ x_{ijv} > 0,\; z_{jpv} > 0
 
 onde:
 \begin{itemize}
-    \item $L$ representa um limite superior para o tempo total de distribuição das vacinas;
+    \item $L$ representa um limite superior para o tempo total de distribuição das vacinas.
 \end{itemize}
 
 Ressalta-se que essa formulação não garante que os dois trechos considerados pertençam ao mesmo caminho físico percorrido por uma única dose, uma vez que não há rastreamento individual das unidades. Assim, o valor de $L$ deve ser interpretado como um \textbf{limite superior}, isto é, uma estimativa conservadora do pior tempo possível compatível com os fluxos positivos da solução ótima.
@@ -537,7 +537,7 @@ Com isso, o fluxo pode ser representado da seguinte forma:
 \text{Município } i \;\longrightarrow\; \text{Estado } k \;\longrightarrow\; \text{Município } j \;\longrightarrow\; \text{Posto de Saúde } P
 \]
 
-ou somente:
+ou se o município $j$ já tiver oferta suficiente para atender seus postos:
 
 \[
 \text{Município } j \;\longrightarrow\; \text{Posto de Saúde } P
@@ -562,7 +562,7 @@ Na etapa intermunicipal, são necessárias duas etapas de fluxo para o transport
     \[y_{kjv} \quad \text{e} \quad C_{kj}\]
     onde:
      \begin{itemize}
-    \item $y_{kjv}$ representa a quantidade de vacinas do tipo $v$ transportadas do centro estadual $k$ ao município $j$.
+    \item $y_{kjv}$ representa a quantidade de vacinas do tipo $v$ transportadas do centro estadual $k$ ao município $j$;
     \item $C_{kj}$ representa o \textbf{custo total} (em horas) para se transportar vacinas do centro estadual $k$ ao município $j$.
     \end{itemize}.
 \end{enumerate}
@@ -574,12 +574,12 @@ A separação dessas variáveis é necessária, pois os fluxos de entrada e saí
 \begin{itemize}
 \item Fluxo de entrada:
 \[
-x_{1kt} = 10, \quad x_{2kt} = 5 \quad \Rightarrow \quad \sum_{i \in I} x_{ikv} = 15
+x_{1kt} = 10, \quad x_{2kt} = 5 \quad \Rightarrow \quad \sum_{i \in I} x_{ikv} = 15;
 \]
 
 \item Fluxo de saída:
 \[
-y_{k3t} = 8, \quad y_{k4t} = 7 \quad \Rightarrow \quad \sum_{j \in J} y_{kjv} = 15
+y_{k3t} = 8, \quad y_{k4t} = 7 \quad \Rightarrow \quad \sum_{j \in J} y_{kjv} = 15.
 \]
 \end{itemize}
 
@@ -593,7 +593,7 @@ Em suma, as variáveis de decisão são:
     \item $x_{ikv}$;
     \item $y_{kjv}$;
     \item $z_{jpv}$;
-    \item $f_{pv}$.,
+    \item $f_{pv}$.
 \end{itemize}
 
 Da mesma forma que modelo anterior, do ponto de vista operacional, o tempo total de entrega de uma dose de vacina corresponderia à soma dos tempos dessas três etapas. No entanto, de forma análoga ao modelo sem intermediação estadual, a estrutura matemática adotada não permite o rastreamento explícito do fluxo completo de cada unidade ao longo de toda a cadeia logística, pois não existe uma variável que represente simultaneamente o percurso completo de uma vacina desde a origem até o destino final. Como consequência, não é possível garantir que os fluxos modelados em cada etapa correspondam à mesma unidade transportada, inviabilizando a soma direta dos tempos por trajeto completo.
@@ -607,15 +607,15 @@ Dessa forma, opta-se por uma abordagem consistente com a modelagem proposta, na 
 De forma análoga ao modelo intermunicipal sem intermediação estadual, temos:
 
 \[
-\tau_{ik}^{rod}, \quad \tau_{ik}^{areo}, \tau_{kj}^{rod}, \quad \tau_{kj}^{areo} \in \mathbb{R}_{\geq 0}
+\tau_{ik}^{rod}, \quad \tau_{ik}^{aereo}, \tau_{kj}^{rod}, \quad \tau_{kj}^{aereo} \in \mathbb{R}_{\geq 0}
 \]
 
 onde:
 \begin{itemize}
-    \item $\tau_{ik}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o município de origem $i$ e o centro estadual de destino $k$.
-    \item $\tau_{ik}^{areo}$ é o tempo de deslocamento do modal aéreo entre o município de origem $i$ e o centro estadual de destino $k$.
-    \item $\tau_{kj}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o centro estadual de origem $k$ e o município de destino $j$.
-    \item $\tau_{kj}^{areo}$ é o tempo de deslocamento do modal aéreo entre o centro estadual de origem $k$ e o município de destino $j$.
+    \item $\tau_{ik}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o município de origem $i$ e o centro estadual de destino $k$;
+    \item $\tau_{ik}^{aereo}$ é o tempo de deslocamento do modal aéreo entre o município de origem $i$ e o centro estadual de destino $k$;
+    \item $\tau_{kj}^{rod}$ é o tempo de deslocamento do modal rodoviário entre o centro estadual de origem $k$ e o município de destino $j$;
+    \item $\tau_{kj}^{aereo}$ é o tempo de deslocamento do modal aéreo entre o centro estadual de origem $k$ e o município de destino $j$.
 \end{itemize}
 
 \subsubsection{Parâmetros de Custo Total}
@@ -623,9 +623,9 @@ onde:
 Sejam:
 \begin{itemize}
     \item $C_{ik}^{rod}$, o \textbf{Custo Total do transporte rodoviário da primeira etapa};
-    \item $C_{ik}^{areo}$, o \textbf{Custo Total do transporte aéreo  da primeira etapa}.
+    \item $C_{ik}^{aereo}$, o \textbf{Custo Total do transporte aéreo  da primeira etapa};
     \item $C_{kj}^{rod}$, o \textbf{Custo Total do transporte rodoviário da segunda etapa};
-    \item $C_{kj}^{areo}$, o \textbf{Custo Total do transporte aéreo  da segunda etapa}.
+    \item $C_{kj}^{aereo}$, o \textbf{Custo Total do transporte aéreo  da segunda etapa}.
 \end{itemize}
 
 
@@ -635,23 +635,23 @@ Dessa forma, o \textbf{Custo Total de transporte por modal por etapa} é dado po
 C_{ik}^{rod} = \tau_{ik}^{rod} + \delta^{rod}
 \]
 \[
-C_{ik}^{areo} = \alpha \cdot \tau_{ik}^{areo} + \delta^{areo}
+C_{ik}^{aereo} = \alpha \cdot \tau_{ik}^{aereo} + \delta^{aereo}
 \]
 \[
 C_{kj}^{rod} = \tau_{kj}^{rod} + \delta^{rod}
 \]
 \[
-C_{kj}^{areo} = \alpha \cdot \tau_{kj}^{areo} + \delta^{areo}
+C_{kj}^{aereo} = \alpha \cdot \tau_{kj}^{aereo} + \delta^{aereo}
 \]
 
 
 Dessa forma, define-se o \textbf{Custo Total de transporte por Etapa} como:
 
 \[
-C_{ik} = \min \left( \quad C_{ik}^{rod} \quad , \quad C_{ik}^{areo} \quad \right),  \quad C_{ik} \in \mathbb{R}_{\geq 0}
+C_{ik} = \min \left( \quad C_{ik}^{rod} \quad , \quad C_{ik}^{aereo} \quad \right),  \quad C_{ik} \in \mathbb{R}_{\geq 0}
 \]
 \[
-C_{kj} = \min \left( \quad C_{kj}^{rod} \quad , \quad C_{kj}^{areo} \quad \right),  \quad C_{kj} \in \mathbb{R}_{\geq 0}
+C_{kj} = \min \left( \quad C_{kj}^{rod} \quad , \quad C_{kj}^{aereo} \quad \right),  \quad C_{kj} \in \mathbb{R}_{\geq 0}
 \]
 
 \subsubsection{Capacidade Por Município e Modal de Transporte}
@@ -661,13 +661,13 @@ Da mesma forma que no modelo anterior, é necessário considerar que a \textbf{c
 Para a \textbf{primeira etapa} (município $i$ $\rightarrow$ estado $k$), sejam:
 
 \[
-u_{ik}^{\text{rod}}, \quad u_{ik}^{\text{areo}} \in \mathbb{R}_{\geq 0}
+u_{ik}^{\text{rod}}, \quad u_{ik}^{\text{aereo}} \in \mathbb{R}_{\geq 0}
 \]
 
 onde:
 \begin{itemize}
     \item $u_{ik}^{\text{rod}}$ representa a capacidade máxima agregada de transporte entre o município $i$ e o centro estadual $k$ via modal rodoviário;
-    \item $u_{ik}^{\text{areo}}$ representa a capacidade máxima agregada de transporte entre o município $i$ e o centro estadual $k$ via modal aéreo.
+    \item $u_{ik}^{\text{aereo}}$ representa a capacidade máxima agregada de transporte entre o município $i$ e o centro estadual $k$ via modal aéreo.
 \end{itemize}
 
 A capacidade efetiva da primeira etapa é então definida de forma consistente com o custo escolhido:
@@ -675,21 +675,21 @@ A capacidade efetiva da primeira etapa é então definida de forma consistente c
 \begin{equation}
 u_{ik} =
 \begin{cases}
-u_{ik}^{\text{rod}}, & \text{se } C_{ik}^{\text{rod}} \le C_{ik}^{\text{areo}} \\
-u_{ik}^{\text{areo}}, & \text{caso contrário}
+u_{ik}^{\text{rod}}, & \text{se } C_{ik}^{\text{rod}} \le C_{ik}^{\text{aereo}} \\
+u_{ik}^{\text{aereo}}, & \text{caso contrário}
 \end{cases}
 \end{equation}
 
 De forma análoga, para a \textbf{segunda etapa} (estado $k$ $\rightarrow$ município $j$), sejam:
 
 \[
-u_{kj}^{\text{rod}}, \quad u_{kj}^{\text{areo}} \in \mathbb{R}_{\geq 0}
+u_{kj}^{\text{rod}}, \quad u_{kj}^{\text{aereo}} \in \mathbb{R}_{\geq 0}
 \]
 
 onde:
 \begin{itemize}
     \item $u_{kj}^{\text{rod}}$ representa a capacidade máxima de transporte entre o centro estadual $k$ e o município $j$ via modal rodoviário;
-    \item $u_{kj}^{\text{areo}}$ representa a capacidade máxima de transporte entre o centro estadual $k$ e o município $j$ via modal aéreo.
+    \item $u_{kj}^{\text{aereo}}$ representa a capacidade máxima de transporte entre o centro estadual $k$ e o município $j$ via modal aéreo.
 \end{itemize}
 
 A capacidade efetiva da segunda etapa é definida por:
@@ -697,8 +697,8 @@ A capacidade efetiva da segunda etapa é definida por:
 \begin{equation}
 u_{kj} =
 \begin{cases}
-u_{kj}^{\text{rod}} = W_k^{rod} \cdot U^{rod}, & \text{se } C_{kj}^{\text{rod}} \le C_{kj}^{\text{areo}} \\
-u_{kj}^{\text{areo}} = W_k^{aereo} \cdot U^{aereo}, & \text{caso contrário}
+u_{kj}^{\text{rod}} = W_k^{rod} \cdot U^{rod}, & \text{se } C_{kj}^{\text{rod}} \le C_{kj}^{\text{aereo}} \\
+u_{kj}^{\text{aereo}} = W_k^{aereo} \cdot U^{aereo}, & \text{caso contrário}
 \end{cases}
 \end{equation}
 
@@ -860,7 +860,7 @@ Assim, temos:
 
 Não é necessário uma restrição de viabilidade temporal relativa a variável $y_{kjv}$. Caso o tempo de transporte entre o município de origem e o centro estadual exceda o tempo restante até a expiração da vacina, o envio é proibido, pois restrição de conservação de fluxo garante que, na ausência de entrada viável, não haverá saída correspondente, assegurando a consistência do modelo.
 
-As \textbf{restrições de intregalidade e não-negatividade} asseguram que as quantidades de vacinas transportadas não podem ser negativas e devem ser números inteiros.
+As \textbf{restrições de integralidade e não-negatividade} asseguram que as quantidades de vacinas transportadas não podem ser negativas e devem ser números inteiros.
 
 \begin{equation*}
 x_{ikv}, y_{kjv}, z_{jpv} \in \mathbb{Z}_{\geq 0}, \quad \forall i \in I, k \in K, j \in J, p \in P_j, v \in V
@@ -945,7 +945,7 @@ L = \max \left\{ \; C_{ik} \;\middle|\; x_{ikv} > 0 \; \right\} +
 
 onde:
 \begin{itemize}
-    \item $L$ representa uma aproximação para otempo total de distribuição das vacinas;
+    \item $L$ representa uma aproximação para o tempo total de distribuição das vacinas;
     \item $C_{ik}$ é o custo (tempo) do transporte entre o município de origem e o centro estadual;
     \item $C_{kj}$ é o custo (tempo) do transporte entre o centro estadual e o município de destino;
     \item $C_{jp}$ é o custo (tempo) do transporte intramunicipal.
