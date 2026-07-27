@@ -9,12 +9,12 @@ Diante disso, esta seção reúne os conceitos teóricos retirados do livro \cit
 
 \subsection{Programação Linear}
 
-A Programação Linear (PL) é um modelo da teoria de otimização utilizado para representar problemas em que se deseja minimizar ou maximizar uma função objetivo linear sujeita a um conjunto de restrições também lineares.
+A Programação Linear (PL) é um modelo da teoria de otimização utilizado para representar problemas nos quais as variáveis de decisão são contínuas e se deseja minimizar ou maximizar uma função objetivo linear sujeita a um conjunto de restrições também lineares.
 
 De forma geral, um problema de Programação Linear pode ser expresso como:
 
 \[
-\min \; z = c^T x \quad \text{sujeito a} \quad Ax \le b, \; x \in \mathbb{R}_{\geq 0}
+\min \; z = c^T x \quad \text{sujeito a} \quad Ax \ge b, \; x \in \mathbb{R}_{\geq 0}
 \]
 
 onde:
@@ -25,7 +25,7 @@ onde:
     \item $b$ representa os limites das restrições.
 \end{itemize}
 
-A principal característica desse tipo de modelo é a linearidade, que implica que tanto a função objetivo quanto as restrições representam relações proporcionais entre as variáveis.
+% A principal característica desse tipo de modelo é a linearidade, que implica que tanto a função objetivo quanto as restrições representam relações proporcionais entre as variáveis.
 
 No contexto logístico, a Programação Linear é amplamente utilizada para modelar problemas de alocação de recursos, transporte e distribuição, pois permite representar decisões de envio de produtos entre diferentes pontos de uma rede.
 
@@ -43,7 +43,7 @@ A principal diferença em relação à Programação Linear está na restrição
 
 Essa restrição altera significativamente a natureza do problema:
 \begin{itemize}
-    \item a busca pela solução ótima deixa de ocorrer em espaço contínuo e passa a ocorrer em espaço discreto.
+    \item a busca pela solução ótima deixa de ocorrer em espaço contínuo e passa a ocorrer em espaço discreto;
     \item o problema se torna mais complexo do ponto de vista computacional.
 \end{itemize}
 
@@ -174,7 +174,7 @@ Nesse algoritmo, a partir de um centro de distribuição (CD), é traçado um ei
 \begin{figure}[ht]
     \centering
     \caption{Esquema de Método de Varredura}
-    \includegraphics[width=10.0cm,height=4.0cm]{figuras/metodo_varredura.png} 
+    \includegraphics[width=16.0cm,height=7.0cm]{figuras/metodo_varredura.png} 
     \legend{Fonte: Felipe Tumenas \cite{tumenas:2020}}
     \label{fig:metodo_varredura}
 \end{figure}
@@ -231,22 +231,24 @@ ltc\_days(m) = \left\lceil \frac{num\_immu(m)}{K} \right\rceil
 
 onde:
 \begin{itemize}
-    \item $ltc\_days(m)$ é o número de dias necessários para completar a vacinação em uma localidade $m$;
-    \item $num\_immu(m)$ é o número de doses necessárias para atender a demanda da clínica $m$;
+    \item $ltc\_days(m)$ é o número de dias necessários para completar a vacinação em uma clínica $m$;
+    \item $num\_immu(m)$ é o número de imunizadores (profissionais de saúde) necessários para administrar as doses demandadas pela clínica $m$;
     \item $K$ é o número máximo de imunizadores que pode ser enviado para uma clínica por dia.
 \end{itemize}
 
-Com isso, o problema de atribuição é transformado em um problema de fluxo de custo mínimo em um grafo bipartido:
+Com isso, o problema de atribuição é transformado em um problema de fluxo de custo mínimo em um grafo:
 
 \begin{figure}[H]
     \centering
     \caption{Grafo de fluxo transformado para o problema de atribuição de vacinas}
-    \includegraphics[width=11.0cm,height=7.0cm]{figuras/grafico_shukla.png} 
+    \includegraphics[width=14.0cm,height=9.0cm]{figuras/grafico_shukla.png} 
     \legend{Fonte: Shukla et al. (2022) \cite{shukla2022optimizing}}
     \label{fig:grafico_bipartido_shukla}
 \end{figure}
 
-O objetivo é minimizar o peso das arestas, definido pelo produto entre a distância ($dist$) e os dias de serviço ($ltc\_days$):
+Conforme ilustrado na Figura, o modelo introduz nós artificiais de origem (\textit{source}) e destino (\textit{target}) que balanceiam a oferta e a demanda agregada em dias de serviço ($ltc\_days$). A soma das capacidades dos depósitos (\textit{depot}) representam a oferta agregada e a soma das demandas das clínicas (\textit{LTCF})representam a demanda agregada. Para respeitar a capacidade máxima de trabalho, cada depósito é desdobrado em nós auxiliares que representam as suas equipes em campo (frentes SNF e ALF). Por fim, as arestas que ligam essas equipes às clínicas carregam o peso logístico que o modelo busca minimizar, garantindo que as restrições de tempo e capacidade não sejam violadas.
+
+O peso das arestas é definido pelo produto entre a distância ($dist$) e os dias de serviço ($ltc\_days$):
 
 \[
 \text{Minimizar } Z = \sum (dist(a,m) \times ltc\_days(m))
@@ -265,7 +267,7 @@ time_{d}(\text{hours}) = \frac{2 \cdot dist(e)}{20} + \frac{doses(m)}{8} +
 onde:
 \begin{itemize}
     \item $dist(e)$ a distância (em milhas) entre o depósito da farmácia (CVS) e a clínica (LTCF);
-    \item $doses(m)$ é o número de doses iniciais demandadas pela clínica $m$;
+    \item $doses(m)$ é o número de doses iniciais demandadas pela clínica $m$.
 \end{itemize}
 
 \subsubsection{Diferenças em Relação ao Trabalho Proposto e Críticas ao Artigo}
@@ -330,7 +332,7 @@ onde:
 
 O artigo não especifica o método de solução utilizado para resolver o modelo, apenas alega ter feito uso de métodos de PL.
 
-O modelo de Zakharova et al. (2025) responde à pergunta sobre "quem" deve ser vacinado prioritariamente para minimizar a mortalidade, incorporando características do grupo, considerando a taxa de transmissão do vírus e a eficácia da vacina para o grupo. Contudo, o modelo não considera que para que haja uma otimização da distribuição de vacinas e uma diminuição da mortalidade é fundamental que haja uma otimização da distribuição das vacinas a nível logístico, considerando as distâncias geográficas, os tempos de trânsito entre localidades ou o modal de transporte utilizado.
+O modelo de Zakharova et al. (2025) responde à pergunta sobre quem deve ser vacinado prioritariamente para minimizar a mortalidade, incorporando características do grupo, considerando a taxa de transmissão do vírus e a eficácia da vacina para o grupo. Contudo, o modelo não considera que para que haja uma otimização da distribuição de vacinas e uma diminuição da mortalidade é fundamental que haja uma otimização da distribuição das vacinas a nível logístico, considerando as distâncias geográficas, os tempos de trânsito entre localidades ou o modal de transporte utilizado.
 
 Diferentemente dessa abordagem, a modelagem proposta neste TCC se concentra na logística de transporte e minimizar o tempo da distribuição física.
 
@@ -395,7 +397,7 @@ Garante que cliente $i$ seja visitado por exatamente um único veículo.
 
 Onde $|V_s|$ representa a número total de visitas do veículo $s$, limitando as conexões internas para forçar o retorno ao ponto de origem.
 
-Dessa forma, essa restrição garante que se, se um veículo visita 4 localidades ($|V_s| = 4$), ele só pode percorrer no máximo 3 ($4-1=3$)viagens entre essas localidades, forçando o retorno ao depósito para completar a rota.
+Dessa forma, essa restrição garante que se, se um veículo visita 4 localidades ($|V_s| = 4$), ele só pode percorrer no máximo 3 ($4-1=3$) viagens entre essas localidades, forçando o retorno ao depósito para completar a rota.
 
 \textbf{7. Janelas de Tempo (\textit{Hard Time Windows}):}
 Define o intervalo $[a_i, b_i]$ para o início do atendimento $s_i$.

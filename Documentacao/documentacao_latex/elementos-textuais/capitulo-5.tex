@@ -14,17 +14,16 @@ Para a aplicação, deve-se escolher um método adequeado de resolução do prob
 O método Simplex é um dos métodos mais tradicionais para a resolução de problemas de otimização. Os modelos clássicos de Programação Linear (PL) são caracterizados por um conjunto de hipóteses fundamentais que garantem sua validade matemática a aplicidade desse método. Entre essas hipóteses, destacam-se: 
 
 \begin{itemize}
-\item Proporcionalidade: estabelece que a contribuição de cada variável de decisão para a função objetivo e para as restrições deve ser diretamente proporcional ao seu valor. No problema em questão, essa hipótese é satisfeita, pois o custo total de transporte cresce proporcionalmente à quantidade de doses transportardas.
+\item Proporcionalidade: estabelece que a contribuição de cada variável de decisão para a função objetivo e para as restrições deve ser diretamente proporcional ao seu valor. No problema em questão, essa hipótese é satisfeita, pois o custo total de transporte cresce proporcionalmente à quantidade de doses transportadas;
 
-\item Aditividade: afirma que o efeito total na função objetivo e nas restrições é a soma dos efeitos individuais de cada variável. No modelo de distribuição de vacinas, essa condição é atendida, uma vez que o Custo total de transporte é obtido pelos custos de tempo associados a cada rota, sem dependência entre diferentes fluxos.
+\item Aditividade: afirma que o efeito total na função objetivo e nas restrições é a soma dos efeitos individuais de cada variável. No modelo de distribuição de vacinas, essa condição é atendida, uma vez que o Custo total de transporte é obtido pelos custos de tempo associados a cada rota, sem dependência entre diferentes fluxos;
 
-\item Determinismo: pressupõe que todos os parâmetros do modelo são conhecidos com certeza e não variam aleatoriamente. Essa condição é atendida pelo problema, pois os tempos de transporte, valores de ofertas, de demandas e etc são conhecidos previamente e tratados como constantes. 
+\item Determinismo: pressupõe que todos os parâmetros do modelo são conhecidos com certeza e não variam aleatoriamente. Essa condição é atendida pelo problema, pois os tempos de transporte, valores de ofertas, de demandas e etc são conhecidos previamente e tratados como constantes;
 
-\item Divisibilidade (não integralidade): permite que as variáveis de decisão assumam quaisquer valores reais, inclusive fracionários. Essa condição não é atendida pelo problema de distribuição de vacinas, pois as variáveis representam quantidades discretas de doses, já que não faz sentido transportar "meia dose" de vacina. Mesmo que a solução contínua encontrada seja ótima do ponto de vista matemático, ela pode ser inviável na prática por sugerir valores não inteiros para as variáveis.
+\item Divisibilidade (não integralidade): permite que as variáveis de decisão assumam quaisquer valores reais, inclusive fracionários. Essa condição não é atendida pelo problema de distribuição de vacinas, pois as variáveis representam quantidades discretas de doses, já que não faz sentido transportar ``meia dose'' de vacina. Mesmo que a solução contínua encontrada seja ótima do ponto de vista matemático, ela pode ser inviável na prática por sugerir valores não inteiros para as variáveis.
 \end{itemize}
 
-Dessa forma, a formulação do problema de otimização da distribuição de vacinas viola hipóteses de linearidade e não é de Programação Linear pura. Assim, a possibilidade de aplicação do método Simplex é descartada.
-
+Dessa forma, a formulação do problema de otimização da distribuição de vacinas viola hipóteses de uma Programação Linear e se caracteriza como Programação Linear Inteira. Assim, a possibilidade de aplicação do método Simplex é descartada.
 
 \subsection{Gurobi Optimizer}
 
@@ -46,9 +45,9 @@ Uma das principais vantagens do Gurobi é sua capacidade de lidar com problemas 
 Além dos métodos exatos, existem abordagens baseadas em metaheurísticas, como:
 
 \begin{itemize}
-\item Algoritmos Genéticos (GA)
-\item Particle Swarm Optimization (PSO)
-\item Differential Evolution (DE)
+\item Algoritmos Genéticos (GA);
+\item Particle Swarm Optimization (PSO);
+\item Differential Evolution (DE).
 \end{itemize}
 
 Esses métodos são amplamente utilizados na resolução de problemas de otimização complexos, especialmente em cenários não lineares, não convexos ou de grande escala, nos quais métodos exatos se tornam computacionalmente inviáveis.
@@ -62,7 +61,7 @@ Dessa forma, a utilização de métodos metaheurísticos  não se mostra adequad
 
 \section{Estudo de Caso Escolhido}
 
-Como a principal motivação para o desenvolvimento dos modelos é combater uma pandêmia, o cenário de aplicação deve simular uma pandemia em curso e ser suficientemente complexo para permitir a exploração do potencial dos modelos sem inviabilizar a coleta e o tratamento dos dados devido ao volume massivo de dados.
+Como a principal motivação para o desenvolvimento dos modelos é combater uma pandemia, o cenário de aplicação deve simular uma pandemia em curso e ser suficientemente complexo para permitir a exploração do potencial dos modelos sem inviabilizar a coleta e o tratamento dos dados devido ao volume massivo de dados.
 
 O estudo de caso considerado neste trabalho consiste na modelagem da distribuição de vacinas no território brasileiro, com foco nas \textbf{27 capitais estaduais, incluindo o Distrito Federal}. A escolha das capitais como unidades espaciais do modelo deve-se à sua relevância administrativa e logística, uma vez que concentram infraestrutura de saúde, capacidade de armazenamento e papel estratégico na coordenação da distribuição regional.
 
@@ -71,10 +70,10 @@ O estudo de caso considerado neste trabalho consiste na modelagem da distribuiç
 No que se refere aos tipos de vacinas, foram selecionadas quatro categorias de imunizantes que protagonizaram a campanha nacional de vacinação contra a Covid-19 no Brasil:
 
 \begin{itemize}
-    \item \textbf{Pfizer-BioNTech (Comirnaty)}
-    \item \textbf{AstraZeneca/Oxford (Fiocruz)}
-    \item \textbf{CoronaVac (Butantan)}
-    \item \textbf{Janssen (Johnson \& Johnson)}
+    \item \textbf{Pfizer-BioNTech (Comirnaty)};
+    \item \textbf{AstraZeneca/Oxford (Fiocruz)};
+    \item \textbf{CoronaVac (Butantan)};
+    \item \textbf{Janssen (Johnson \& Johnson)}.
 \end{itemize}
 
 
@@ -151,7 +150,7 @@ Essa abordagem apresenta diversas vantagens relevantes para o contexto do trabal
 \begin{itemize}
     \item \textbf{Escalabilidade}: permite o cálculo automático de todos os pares origem-destino, mesmo em cenários com grande número de localidades;
     \item \textbf{Reprodutibilidade}: depende apenas de dados estáticos (coordenadas geográficas), garantindo que os experimentos possam ser replicados;
-    \item \textbf{Ausência de custos financeiros}: não requer o uso de serviços pagos ou APIs externas;
+    \item \textbf{Ausência de custos financeiros}: não requer o uso de serviços pagos ou APIs externas.
 \end{itemize}
 
 Dessa forma, a abordagem baseada em distância geodésica com correção por fator de tortuosidade é adotada neste trabalho como a alternativa mais adequada para a obtenção dos dados de custo de transporte.
@@ -312,7 +311,7 @@ Além disso, segundo o mesmo documento \cite{LimaEtAl:2019}, após a chegada dos
 \delta^{rod} = 2{,}0 \text{ horas}
 \]
 
-Uma notícia o \cite{g1campinas:2021} relata um caso da entrega de vacinas da Pfizer e diz o tempo desde a chegada do imunizante no aereoporto até a colocação no caminhão reduzido de 42 para 29 minutos. Como a notícia relata um caso específico de otimização, será considerado o tempo padrão de 42 minutos (0,7 horas) para desembarque e carregamento do caminhão. E mosmo tempo será assumido para o embarque, já que o processo é similar. Além disso, assim como no modal rodoviário, também será considerado o tempo de 60 minutos de estabilização da temperatura. 
+Uma notícia \cite{g1campinas:2021} relata um caso da entrega de vacinas da Pfizer e diz o tempo desde a chegada do imunizante no aereoporto até a colocação no caminhão reduzido de 42 para 29 minutos. Como a notícia relata um caso específico de otimização, será considerado o tempo padrão de 42 minutos (0,7 horas) para desembarque e carregamento do caminhão. Da mesma forma, um tempo igual será assumido para o embarque, já que o processo é similar. Além disso, assim como no modal rodoviário, também será considerado o tempo de 60 minutos de estabilização da temperatura. 
 
 Dessa forma, para o modal aéreo, adota-se:
 
@@ -446,7 +445,7 @@ Dessa forma, considerando simultaneamente:
 \begin{itemize}
     \item a validação empírica realizada com trajetos reais;
     \item a robustez estatística da mediana frente a valores extremos;
-    \item e a consistência com referências acadêmicas da área logística;
+    \item e a consistência com referências acadêmicas da área logística.
 \end{itemize}
 
 adotou-se neste trabalho o seguinte valor para o fator de tortuosidade:
