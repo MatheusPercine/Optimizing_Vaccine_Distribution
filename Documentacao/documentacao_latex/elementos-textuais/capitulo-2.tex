@@ -36,7 +36,7 @@ Para representar adequadamente decisões discretas, utiliza-se a Programação L
 Um Problema de Programação Linear Inteira pode ser expresso como:
 
 \[
-\min \; z = c^T x \quad \text{sujeito a} \quad Ax \le b, \; x \in \mathbb{Z}_{\geq 0}
+\min \; z = c^T x \quad \text{sujeito a} \quad Ax \ge b, \; x \in \mathbb{Z}_{\geq 0}
 \]
 
 A principal diferença em relação à Programação Linear está na restrição de integralidade, que impõe que as variáveis de decisão assumam apenas valores inteiros.
@@ -53,8 +53,8 @@ O Problema de Transporte modela a distribuição de um produto a partir de múlt
 
 Considere:
 \begin{itemize}
-    \item um conjunto de origens $i \in I$, cada uma com uma quantidade disponível $s_i$;
-    \item um conjunto de destinos $j \in J$, cada um com uma demanda $d_j$;
+    \item um conjunto de origens $i \in I$, cada uma com uma quantidade disponível $a_i$;
+    \item um conjunto de destinos $j \in J$, cada um com uma demanda $b_j$;
     \item um custo de transporte $c_{ij}$ associado ao envio de uma unidade do produto da origem $i$ para o destino $j$.
 \end{itemize}
 
@@ -151,7 +151,8 @@ As principais diferenças incluem:
     \item presença de múltiplos tipos de vacinas;
     \item inclusão de restrições de capacidade de transporte;
     \item consideração de critérios temporais relacionados à validade;
-    \item possibilidade de múltiplas etapas logísticas.
+    \item possibilidade de múltiplas etapas logísticas;
+    \item diferentes modais de transporte.
 \end{itemize}
 
 Dessa forma, o modelo proposto se enquadra como um Problema de Programação Linear Inteira aplicado a redes de transporte, no qual a estrutura clássica é estendida para capturar características operacionais mais realistas.
@@ -164,8 +165,7 @@ Esta seção apresenta uma revisão de pesquisas recentes que abordam a otimiza�
 
 Utilizando conhecimentos de Engenharia de Produção, uma perspectiva focada na eficiência econômica de curto prazo e na reorganização de fluxos operacionais de transporte é apresentada por Lima et al (2019) \cite{LimaEtAl:2019}. Os autores conduzem um estudo de caso focado na distribuição física de imunizantes no âmbito de uma Superintendência Regional de Saúde (SRS) localizada em Varginha, Minas Gerais, responsável pelo abastecimento de 50 municípios jurisdicionados. O trabalho descreve um diagnóstico operacional ineficiente no qual o tráfego ponto a ponto gerava custos logísticos exorbitantes com combustível, manutenção de frotas, desgaste de veículos e de fretes.
 
-
-No estudo ele aplica o que ele chama de roteirização, descrito como atividades que procuram melhorar trajetos para um veículo realizar dentro de uma malha, com o intuito de reduzir tempo e/ou distância. No estudo, ele se propõe a otimizar o percurso focando em minimização de custo financeiro das rotas, por meio da minimização da distancia percorrida. Para realização dos calculo utilizaram como referencia a tabela do frete disponibilizada pela ANTT (Agência Nacional de Transportes Terrestres).
+No estudo ele aplica o que ele chama de roteirização, descrito como atividades que procuram melhorar trajetos para um veículo realizar dentro de uma malha, com o intuito de reduzir tempo e/ou distância. No estudo, ele se propõe a otimizar o percurso focando em minimização de custo financeiro das rotas, por meio da minimização da distancia percorrida. Para realização dos calculos utilizaram como referencia a tabela do frete disponibilizada pela ANTT (Agência Nacional de Transportes Terrestres).
 
 Para isso, utilizou-se o método da varredura (\textit{Sweep Algorithm}) para realizar o agrupamento geográfico inicial das cidades em setores.
 
@@ -246,7 +246,7 @@ Com isso, o problema de atribuição é transformado em um problema de fluxo de 
     \label{fig:grafico_bipartido_shukla}
 \end{figure}
 
-Conforme ilustrado na Figura, o modelo introduz nós artificiais de origem (\textit{source}) e destino (\textit{target}) que balanceiam a oferta e a demanda agregada em dias de serviço ($ltc\_days$). A soma das capacidades dos depósitos (\textit{depot}) representam a oferta agregada e a soma das demandas das clínicas (\textit{LTCF})representam a demanda agregada. Para respeitar a capacidade máxima de trabalho, cada depósito é desdobrado em nós auxiliares que representam as suas equipes em campo (frentes SNF e ALF). Por fim, as arestas que ligam essas equipes às clínicas carregam o peso logístico que o modelo busca minimizar, garantindo que as restrições de tempo e capacidade não sejam violadas.
+Conforme ilustrado na Figura, o modelo introduz nós artificiais de origem (\textit{source}) e destino (\textit{target}) que balanceiam a oferta e a demanda agregada em dias de serviço ($ltc\_days$). A soma das capacidades dos depósitos (\textit{depot}) representam a oferta agregada e a soma das demandas das clínicas (\textit{LTCF})      representam a demanda agregada. Para respeitar a capacidade máxima de trabalho, cada depósito é desdobrado em nós auxiliares que representam as suas equipes em campo (frentes SNF e ALF). Por fim, as arestas que ligam essas equipes às clínicas carregam o peso logístico que o modelo busca minimizar, garantindo que as restrições de tempo e capacidade não sejam violadas.
 
 O peso das arestas é definido pelo produto entre a distância ($dist$) e os dias de serviço ($ltc\_days$):
 
@@ -254,13 +254,13 @@ O peso das arestas é definido pelo produto entre a distância ($dist$) e os dia
 \text{Minimizar } Z = \sum (dist(a,m) \times ltc\_days(m))
 \]
 
-Na segunda fase, o agendamento das visitas é resolvido por um algoritmo heurístico que estima o tempo total de operação diária ($time$) para cada equipe. A fórmula considera a velocidade média de deslocamento (estimada em 20 milhas por hora), o tempo de aplicação (8 doses por hora) e um tempo adicional de preparação da vacina antes dela ir para o braço do paciente e que depende do tipo de vacina:
+Na segunda fase, o agendamento das visitas é resolvido por um algoritmo heurístico que estima o tempo total de operação diária ($time$) para cada equipe. A fórmula considera a velocidade média de deslocamento (estimada em 20 milhas por hora), a velocidade de aplicação (8 doses por hora) e um tempo adicional de preparação da vacina antes dela ir para o braço do paciente e que depende do tipo de vacina:
 
 \[
 time_{d}(\text{hours}) = \frac{2 \cdot dist(e)}{20} + \frac{doses(m)}{8} + 
 \begin{cases} 
     1.5 & \text{if Moderna} \\
-    1 + 0.5 & \text{if Pfizer} 
+    2.0 & \text{if Pfizer} 
 \end{cases}
 \]
 
@@ -274,9 +274,11 @@ onde:
 
 Diferentemente da abordagem sequencial de Shukla, o modelo proposto neste TCC não modela uma etapa de agendamento de aplicação das doses, mas somente foca na distribuição das vacinas. 
 
-Além disso, a modelagem aqui proposta incorpora a penalidade de perecibilidade ($\rho_{it}$) diretamente na função objetivo. Isso permite que a própria estrutura matemática priorize rotas não apenas pela distância física, mas pela urgência biológica do lote.
+Além disso, a modelagem aqui proposta incorpora a penalidade de perecibilidade ($\rho_{iv}$) diretamente na função objetivo. Isso permite que a própria estrutura matemática priorize rotas não apenas pela distância física, mas pela urgência biológica do lote.
 
 Diferentemente, o modelo aqui proposto integra os níveis intermunicipal, estadual e intramunicipal em uma única matriz de decisão. Isso permite que o sistema identifique se o gargalo temporal está na transferência entre municípios ou na distribuição dos postos.
+
+Ademais, este trabalho não se utiliza de heurísticas para a resolução do modelo, mas sim de um solver exato, garantindo a solução ótima global.
 
 \subsection{Modelo de Otimização de Distribuição de Vacinas Pela Minimização da Mortalidade}
 

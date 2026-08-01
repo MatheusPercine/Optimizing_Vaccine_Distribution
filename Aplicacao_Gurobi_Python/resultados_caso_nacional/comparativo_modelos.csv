@@ -2,4 +2,4 @@ Modelo,Usa_Penalidade,Custo_Medio_Horas_Por_Dose,Valor_Funcao_Objetivo,Total_Dos
 1,False,2.252,4551505.849,2021306,0.0,74.227,25.773,7.995,Pfizer,CampoGrande -> Manaus,5.683,2976,N/A,N/A,N/A,N/A,N/A,N/A,Manaus -> AM_Silas_Santos,2.312,13822
 1,True,2.283,30007.135,2021306,0.0,75.261,24.739,9.847,Pfizer,SaoPaulo -> BoaVista,7.768,913,N/A,N/A,N/A,N/A,N/A,N/A,BoaVista -> RR_CMI,2.080,2912
 2,False,2.265,4913942.423,2169246,0,69.971,30.029,11.003,CoronaVac,N/A,N/A,N/A,CampoGrande -> AC,5.892,652,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
-2,True,2.292,384203.914,2169246,0,70.588,29.412,12.530,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.418,4,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
+2,True,2.292,383351.281,2169246,0,70.588,29.412,12.530,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.418,4,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
