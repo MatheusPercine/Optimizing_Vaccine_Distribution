@@ -1,6 +1,6 @@
 \chapter{Modelagem do Processo de Redistribuição de Vacinas}
 
-Os modelos propostos não contemplam a etapa inicial de distribuição de vacinas a partir do nível federal. Assume-se que os estoques iniciais nos municípios já refletem a alocação realizada pelo Ministério da Saúde e o modelo começa depois disso. Dessa forma, o problema abordado concentra-se na redistribuição eficiente de vacinas entre municípios, considerando desequilíbrios locais de oferta e demanda.
+Os modelos propostos não contemplam a etapa inicial de distribuição de vacinas a partir do nível federal. Assume-se que os estoques iniciais nos municípios já refletem a alocação realizada pelo Ministério da Saúde e o modelo começa depois disso. Dessa forma, o problema abordado concentra-se na redistribuição eficiente de vacinas entre municípios, considerando desequilíbrios de oferta e demanda.
 
 \section{Modelo de Redistribuição Sem Intermediação Estadual}
 
@@ -287,9 +287,9 @@ Assim, tem-se:
 \begin{equation*}
 e_{jv} =
 \frac{
-\sum_{i \in I} o_{iv} \cdot \left( e_{iv} - C_{ij} \right)
+\sum\limits_{i \in I} o_{iv} \cdot \left( e_{iv} - C_{ij} \right)
 }{
-\sum_{i \in I} o_{iv}
+\sum\limits_{i \in I} o_{iv}
 },
 \quad \forall j \in J,\; v \in V
 \end{equation*}
@@ -362,7 +362,7 @@ onde:
     \item $u_{ij}$ representa a capacidade máxima (limite superior) de vacinas que pode ser transportada do município $i$ para o município $j$.
 \end{itemize}
 
-Como a variável $x_{ijv}$ representa a quantidade transportada, seus valor deve ser um número inteiro e não-negativo. Dessa forma, temos a \textbf{restrição de integralidade e não-negatividade} para a etapa intermunicipal:
+Como a variável $x_{ijv}$ representa a quantidade transportada, seu valor deve ser um número inteiro e não-negativo. Dessa forma, temos a \textbf{restrição de integralidade e não-negatividade} para a etapa intermunicipal:
 
 \begin{equation*}
     x_{ijv} \in \mathbb{Z}_{\geq 0}, \quad \forall i \in I, j \in J, v \in V \quad \text{(restrição de não-negatividade)}
@@ -385,7 +385,7 @@ z_{jpv} + f_{pv} = r_{pv},
 onde:
 \begin{itemize}
     \item $f_{pv}$ representa a quantidade não atendida da demanda;
-    \item $r_{pv}$ representa a demanda da vacina $t$ no ponto de destino $p$.
+    \item $r_{pv}$ representa a demanda da vacina $v$ no ponto de destino $p$.
 \end{itemize}
 
 Não há necessidade de somatório sobre os fluxos recebidos, pois cada posto $p$ recebe vacinas exclusivamente do município $j$ ao qual pertence.
@@ -596,10 +596,6 @@ Em suma, as variáveis de decisão são:
     \item $f_{pv}$.
 \end{itemize}
 
-Da mesma forma que modelo anterior, do ponto de vista operacional, o tempo total de entrega de uma dose de vacina corresponderia à soma dos tempos dessas três etapas. No entanto, de forma análoga ao modelo sem intermediação estadual, a estrutura matemática adotada não permite o rastreamento explícito do fluxo completo de cada unidade ao longo de toda a cadeia logística, pois não existe uma variável que represente simultaneamente o percurso completo de uma vacina desde a origem até o destino final. Como consequência, não é possível garantir que os fluxos modelados em cada etapa correspondam à mesma unidade transportada, inviabilizando a soma direta dos tempos por trajeto completo.
-
-Dessa forma, opta-se por uma abordagem consistente com a modelagem proposta, na qual o tempo total de distribuição é definido como a soma dos piores tempos de cada etapa.
-
 \subsection{Parâmetros de Entrada}
 
 \subsubsection{Tempos de Deslocamento dos Modais de Transporte}
@@ -719,9 +715,9 @@ Dessa forma, define-se o tempo médio de expiração no centro estadual $k$ como
 \begin{equation*}
 e_{kv} =
 \frac{
-\sum_{i \in I} o_{iv} \cdot \left( e_{iv} - C_{ik} \right)
+\sum\limits_{i \in I} o_{iv} \cdot \left( e_{iv} - C_{ik} \right)
 }{
-\sum_{i \in I} o_{iv}
+\sum\limits_{i \in I} o_{iv}
 },
 \quad \forall k \in K,\; v \in V
 \end{equation*}
@@ -730,21 +726,13 @@ Na segunda etapa, o problema se torna mais delicado. Diferentemente da primeira 
 
 Intuitivamente, as vacinas que chegam ao município $j$ já passaram por um processo de agregação no centro estadual $k$. Nesse processo, vacinas provenientes de diferentes origens são misturadas, perdendo-se completamente a informação sobre suas origens individuais. Como consequência, não é mais possível utilizar diretamente as ofertas iniciais $o_{iv}$ como pesos, nem reconstruir com precisão a contribuição de cada origem no estoque final de $j$.
 
-Para contornar essa limitação, adota-se uma aproximação baseada na ideia de que os centros estaduais mais próximos (com menor tempo de transporte $C_{kj}$) do município de destino $j$ recebem um peso matematicamente maior ($\frac{1}{C_{kj}}$) no cálculo da validade média que chega ao município. Além disso, considera-se novamente a perda de validade ao longo do transporte até o município $j$ dada por ($e_{kv} - C_{kj}$).
+Na segunda etapa, o cálculo da degradação temporal torna-se direto. Diferentemente da primeira etapa, na qual múltiplas origens convergem para um mesmo ponto, na segunda etapa da etapa intermunicipal, não ocorre uma nova mescla de lotes provenientes de múltiplos centros, pois o município de destino $j$ recebe vacinas exclusivamente do centro estadual $k$ associado ao seu próprio estado.
 
-Dessa forma, define-se o tempo médio de expiração no município $j$ como
+Logo, o tempo de expiração da vacina que chega ao município $j$ é determinada unicamente pela validade média remanescente no seu respectivo centro estadual emissor subtraída do tempo de transporte logístico entre as duas localidades. Logo, temos:
 
 \begin{equation*}
-e_{jv} =
-\frac{
-\sum_{k \in K} \frac{1}{C_{kj}} \cdot \left( e_{kv} - C_{kj} \right)
-}{
-\sum_{k \in K} \frac{1}{C_{kj}}
-},
-\quad \forall j \in J,\; v \in V
+e_{jv} = e_{kv} - C_{kj}, \quad \forall j \in J, \; v \in V
 \end{equation*}
-
-Além disso, assume-se que $C_{kj} > 0$, uma vez que sempre existe um custo temporal associado ao deslocamento entre o centro estadual e o município de destino.
 
 
 \subsection{Função Objetivo}

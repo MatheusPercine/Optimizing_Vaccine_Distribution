@@ -423,26 +423,22 @@ def calcular_e_jv_com_intermediacao_estadual():
     e_jv = {}
 
     for j in J:
+        # Encontra o centro estadual k_star que pertence ao mesmo estado do municipio j
+        k_star = None
+        for k in K:
+            if estado_de.get(k) == estado_de.get(j):
+                k_star = k
+                break
+        
         for v in V:
-            numerador = 0.0
-            denominador = 0.0
-
-            for k in K:
-                C_kj_val = C_kj.get((k, j), 0)
-
-                # proteção contra divisão por zero
-                if C_kj_val == 0:
-                    C_kj_val = 0.001
-
-                peso = 1.0 / C_kj_val
-                e_kv_val = e_kv.get((k, v), 0)
-
-                numerador += peso * (e_kv_val - C_kj_val)
-                denominador += peso
-
-            if denominador > 0:
-                e_jv[j, v] = numerador / denominador
+            if k_star is not None:
+                e_kv_val = e_kv.get((k_star, v), 0)
+                C_kj_val = C_kj.get((k_star, j), 0)
+                
+                # A validade é a validade do lote no centro k descontando o tempo da viagem
+                e_jv[j, v] = e_kv_val - C_kj_val
             else:
+                # Fallback de segurança 
                 e_jv[j, v] = 0
 
     return e_jv
