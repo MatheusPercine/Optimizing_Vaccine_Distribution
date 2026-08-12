@@ -248,7 +248,7 @@ Com isso, o problema de atribuição é transformado em um problema de fluxo de 
 
 Conforme ilustrado na Figura, o modelo introduz nós artificiais de origem (\textit{source}) e destino (\textit{target}) que balanceiam a oferta e a demanda agregada em dias de serviço ($ltc\_days$). A soma das capacidades dos depósitos (\textit{depot}) representam a oferta agregada e a soma das demandas das clínicas (\textit{LTCF})      representam a demanda agregada. Para respeitar a capacidade máxima de trabalho, cada depósito é desdobrado em nós auxiliares que representam as suas equipes em campo (frentes SNF e ALF). Por fim, as arestas que ligam essas equipes às clínicas carregam o peso logístico que o modelo busca minimizar, garantindo que as restrições de tempo e capacidade não sejam violadas.
 
-O peso das arestas é definido pelo produto entre a distância ($dist$) e os dias de serviço ($ltc\_days$):
+O peso das arestas é definido pelo produto entre os dias de serviço ($ltc\_days$) e a distância ($dist$) entre o depósito e a clínica:
 
 \[
 \text{Minimizar } Z = \sum (dist(a,m) \times ltc\_days(m))
