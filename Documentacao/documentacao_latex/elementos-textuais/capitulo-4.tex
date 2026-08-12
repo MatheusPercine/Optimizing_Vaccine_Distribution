@@ -199,7 +199,7 @@ onde:
 Além disso, sejam:
 
 \[
-U^{\text{rod}}, \quad U^{\text{aereo}} \in \mathbb{R}_{>0}
+U^{\text{rod}}, \quad U^{\text{aereo}} \in \mathbb{Z}_{\ge 0}
 \]
 
 onde:
@@ -213,11 +213,11 @@ Neste trabalho, a capacidade não representa apenas a capacidade física de um �
 Dessa forma, a capacidade efetiva de transporte por modal é definida como:
 
 \[
-u_{ij}^{\text{rod}} = W_i^{\text{rod}} \cdot U^{\text{rod}} \in \mathbb{R}_{\geq 0}
+u_{ij}^{\text{rod}} = W_i^{\text{rod}} \cdot U^{\text{rod}} \in \mathbb{Z}_{\ge 0}
 \]
 
 \[
-u_{ij}^{\text{aereo}} = W_i^{\text{aereo}} \cdot U^{\text{aereo}}  \in \mathbb{R}_{\geq 0}
+u_{ij}^{\text{aereo}} = W_i^{\text{aereo}} \cdot U^{\text{aereo}}  \in \mathbb{Z}_{\ge 0}
 \]
 
 Dessa forma, a capacidade efetiva de transporte entre os municípios $i$ e $j$ é definida de forma consistente com o custo escolhido, conforme:
@@ -233,7 +233,7 @@ u_{ij}^{\text{aereo}}, & \text{caso contrário}
 E para etapa intramunicipal, temos que a capacidade é definida por:
 
 \[
-q_{jp} = W_{j} * U^{rod} \in \mathbb{R}_{\geq 0}
+q_{jp} = W_{j} * U^{rod} \in \mathbb{Z}_{\ge 0}
 \]
 
 onde:
@@ -574,18 +574,18 @@ A separação dessas variáveis é necessária, pois os fluxos de entrada e saí
 \begin{itemize}
 \item Fluxo de entrada:
 \[
-x_{1kt} = 10, \quad x_{2kt} = 5 \quad \Rightarrow \quad \sum_{i \in I} x_{ikv} = 15;
+x_{1kv} = 10, \quad x_{2kv} = 5 \quad \Rightarrow \quad \sum_{i \in I} x_{ikv} = 15;
 \]
 
 \item Fluxo de saída:
 \[
-y_{k3t} = 8, \quad y_{k4t} = 7 \quad \Rightarrow \quad \sum_{j \in J} y_{kjv} = 15.
+y_{k3v} = 8, \quad y_{k4v} = 7 \quad \Rightarrow \quad \sum_{j \in J} y_{kjv} = 15.
 \]
 \end{itemize}
 
 Observa-se que, embora os fluxos individuais de entrada e saída sejam distintos, o total de vacinas que entra no centro é igual ao total que sai. Dessa forma, a separação entre $x_{ikv}$ e $y_{kjv}$ permite refletir a realidade operacional do sistema logístico.
 
-As variáveis de decisão para a etapa intramunicipal ($z_{jpv}$) e para a demanda não atendida ($f_{pv}$) são reaproveitdas neste modelo.
+As variáveis de decisão para a etapa intramunicipal ($z_{jpv}$) e para a demanda não atendida ($f_{pv}$) são reaproveitadas neste modelo.
 
 Em suma, as variáveis de decisão são:
 
@@ -657,7 +657,7 @@ Da mesma forma que no modelo anterior, é necessário considerar que a \textbf{c
 Para a \textbf{primeira etapa} (município $i$ $\rightarrow$ estado $k$), sejam:
 
 \[
-u_{ik}^{\text{rod}}, \quad u_{ik}^{\text{aereo}} \in \mathbb{R}_{\geq 0}
+u_{ik}^{\text{rod}}, \quad u_{ik}^{\text{aereo}} \in \mathbb{Z}_{\ge 0}
 \]
 
 onde:
@@ -671,15 +671,15 @@ A capacidade efetiva da primeira etapa é então definida de forma consistente c
 \begin{equation}
 u_{ik} =
 \begin{cases}
-u_{ik}^{\text{rod}}, & \text{se } C_{ik}^{\text{rod}} \le C_{ik}^{\text{aereo}} \\
-u_{ik}^{\text{aereo}}, & \text{caso contrário}
+u_{ik}^{\text{rod}} = W_i^{rod} \cdot U^{rod}, & \text{se } C_{ik}^{\text{rod}} \le C_{ik}^{\text{aereo}} \\
+u_{ik}^{\text{aereo}} = W_i^{rod} \cdot U^{aereo}, & \text{caso contrário}
 \end{cases}
 \end{equation}
 
 De forma análoga, para a \textbf{segunda etapa} (estado $k$ $\rightarrow$ município $j$), sejam:
 
 \[
-u_{kj}^{\text{rod}}, \quad u_{kj}^{\text{aereo}} \in \mathbb{R}_{\geq 0}
+u_{kj}^{\text{rod}}, \quad u_{kj}^{\text{aereo}} \in \mathbb{Z}_{\ge 0}
 \]
 
 onde:
@@ -751,7 +751,7 @@ Dessa forma, a \textbf{função objetivo} fica definida:
 \label{com_intermediacao_estadual_sem_penalidade}
 \end{equation}
 
-onde a primeira, segunda e terceira parcelas representam, respectivamente, os custos da primeira, segunda e tereira etapa do fluxo, e a quarta parcela penaliza o não atendimento da demanda.
+onde a primeira, segunda e terceira parcelas representam, respectivamente, os custos da primeira, segunda e terceira etapa do fluxo, e a quarta parcela penaliza o não atendimento da demanda.
 
 ou, com as penalidades:
 
