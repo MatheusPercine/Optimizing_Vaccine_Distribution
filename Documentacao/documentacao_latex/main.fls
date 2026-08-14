@@ -307,12 +307,12 @@ INPUT C:\Users\matheus\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-ec.enc
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr12.tfm
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr10.tfm
-INPUT .\figuras\ModeloMonografiaDCCUFRJ-img001.png
-INPUT .\figuras\ModeloMonografiaDCCUFRJ-img001.png
-INPUT .\figuras\ModeloMonografiaDCCUFRJ-img001.png
-INPUT .\figuras\ModeloMonografiaDCCUFRJ-img001.png
-INPUT .\figuras\ModeloMonografiaDCCUFRJ-img001.png
-INPUT .\figuras\ModeloMonografiaDCCUFRJ-img001.png
+INPUT .\figuras\ModeloMonografiaDCCUFRJ-img003.png
+INPUT .\figuras\ModeloMonografiaDCCUFRJ-img003.png
+INPUT .\figuras\ModeloMonografiaDCCUFRJ-img003.png
+INPUT .\figuras\ModeloMonografiaDCCUFRJ-img003.png
+INPUT .\figuras\ModeloMonografiaDCCUFRJ-img003.png
+INPUT .\figuras\ModeloMonografiaDCCUFRJ-img003.png
 INPUT .\elementos-pretextuais\folhadeaprovacao.tex
 INPUT .\elementos-pretextuais\folhadeaprovacao.tex
 INPUT elementos-pretextuais\folhadeaprovacao.tex
@@ -390,7 +390,6 @@ INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-maths
 INPUT .\main.toc
 INPUT .\main.toc
 INPUT main.toc
-INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbx10.tfm
 INPUT .\elementos-textuais\capitulo-1.tex
 INPUT .\elementos-textuais\capitulo-1.tex
 INPUT elementos-textuais\capitulo-1.tex
@@ -584,8 +583,6 @@ OUTPUT main.lof
 OUTPUT main.lot
 OUTPUT main.toc
 INPUT main.aux
-INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
-INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx12.pfb
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx12.pfb
 INPUT C:\Users\matheus\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx8.pfb
