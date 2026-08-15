@@ -1,6 +1,6 @@
 \chapter{INTRODUÇÃO}
 
-O impacto da pandemia no Brasil foi expressivo. Em março de 2023, o país ultrapassou a marca de 700 mil mortes causadas pela Covid-19, consolidando-se entre as nações mais afetadas pela crise sanitária mundial \cite{MS:2023}. Além das perdas humanas, a pandemia provocou forte pressão sobre a infraestrutura hospitar.
+O impacto da pandemia no Brasil foi expressivo. Em março de 2023, o país ultrapassou a marca de 700 mil mortes causadas pela Covid-19, consolidando-se entre as nações mais afetadas pela crise sanitária mundial \cite{MS:2023}. Além das perdas humanas, a pandemia provocou forte pressão sobre a infraestrutura hospitalar.
 
 Dessa forma, a pandemia de Covid-19 fez surgir a necessidade de distribuir o material em tempo recorde e a importância de uma estratégia logística eficiente na distribuição de vacinas em cenários de emergência sanitária. Em situações pandêmicas, a rapidez na distribuição de imunizantes torna-se um fator diretamente relacionado à redução da transmissão de doenças, à mitigação do colapso dos sistemas de saúde e à preservação de vidas humanas.
 
@@ -22,12 +22,12 @@ Embora o cenário ideal de planejamento exija a consideração dessas condiçõe
 
 Nesse contexto, torna-se fundamental o desenvolvimento de ferramentas que auxiliem a tomada de decisão na redistribuição de vacinas entre localidades com diferentes níveis de oferta e demanda, especialmente em cenários de emergência sanitária. E a utilização de ferramentas matemáticas de otimização se justifica por sua capacidade de fornecer soluções eficientes para esse tipo de problema.
 
-Logo, este trabalho objetivou minimizar o tempo de distribuição de vacinas e mitigar o desperdício das mesmas por meio da modelagem de um Problema de Programação Linear Inteira (PPLI) de forma a satisfazer a demanda de vacinas o máximo possível. Com esse modelo, entidades executivas, como o Ministério da Saúde e Prefeituras, poderiam mitigar os efeitos devastadores de uma pandemia, incluindo mortes, sobrecarga de infraestrutura hospitar e desperdício de vacinas.
+Logo, este trabalho objetivou minimizar o tempo de distribuição de vacinas e mitigar o seu desperdício por meio da modelagem de um Problema de Programação Linear Inteira (PPLI) de forma a satisfazer a demanda de vacinas o máximo possível. Com esse modelo, entidades executivas, como o Ministério da Saúde e Prefeituras, poderiam mitigar os efeitos devastadores de uma pandemia, incluindo mortes, sobrecarga de infraestrutura hospitalar e desperdício de vacinas.
 
 A importância de se minimizar o tempo de distribuição de vacinas se dá pelos seus impactos financeiros e sociais.
 Sob a ótica econômica, a redução do tempo de deslocamento por meio de uma roteirização mais eficiente se traduz em menor consumo de combustíveis. Paralelamente, na dimensão social, o transporte ágil assegura a rápida imunização da população.
 
-Ainda cabe ressaltar que o trabalho desenvolvido tem o potencial de ser aplicado e adaptado não somente à vacinas mas a qualquer outro insumo hospitalar de necessidade urgente, como medicamentos.
+Ainda cabe ressaltar que o trabalho desenvolvido tem o potencial de ser aplicado e adaptado não somente a vacinas, mas a qualquer outro insumo hospitalar de necessidade urgente, como medicamentos.
 
 Quanto à metodologia, inicialmente é desenvolvido um modelo intermunicipal sem intermediação de centros estaduais. Em seguida, é proposto um modelo com intermediação estadual, voltado a representar uma logística mais realista. As duas abordagens permitem avaliar o impacto dessa burocracia de intermédio dos Estados. As formulações consideram restrições de oferta, demanda, capacidade de transporte e viabilidade temporal associada à validade das vacinas. Os modelos são implementados computacionalmente em Python utilizando o solver Gurobi Optimizer, possibilitando a realização de experimentos computacionais e a análise dos resultados de cenários simulados para avaliação da eficiência das soluções obtidas.
 
