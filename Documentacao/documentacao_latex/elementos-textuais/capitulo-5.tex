@@ -6,12 +6,11 @@ Os experimentos computacionais foram realizados em um computador LENOVO (modelo 
 
 \section{Análise dos Métodos de Resolução De Problemas de Otimização}
 
-Para a aplicação, deve-se escolher um método adequeado de resolução do problema e para isso se faz necessário analisar as possibilidades para selecioná-las ou descartá-las.
+Para a aplicação, deve-se escolher um método adequado de resolução do problema e para isso se faz necessário analisar as possibilidades para selecioná-las ou descartá-las.
 
 \subsection{O Método Simplex}
 
-
-O método Simplex é um dos métodos mais tradicionais para a resolução de problemas de otimização. Os modelos clássicos de Programação Linear (PL) são caracterizados por um conjunto de hipóteses fundamentais que garantem sua validade matemática a aplicidade desse método. Entre essas hipóteses, destacam-se: 
+O método Simplex é um dos métodos mais tradicionais para a resolução de problemas de otimização. Os modelos clássicos de Programação Linear (PL) são caracterizados por um conjunto de hipóteses fundamentais que garantem sua validade matemática a aplicabilidade desse método. Entre essas hipóteses, destacam-se: 
 
 \begin{itemize}
 \item Proporcionalidade: estabelece que a contribuição de cada variável de decisão para a função objetivo e para as restrições deve ser diretamente proporcional ao seu valor. No problema em questão, essa hipótese é satisfeita, pois o custo total de transporte cresce proporcionalmente à quantidade de doses transportadas;
@@ -29,11 +28,14 @@ Dessa forma, a formulação do problema de otimização da distribuição de vac
 
 Por se tratar de um Problema de Programação Linear Inteira (PPLI), exige-se o uso de métodos de resolução mais sofisticados, capazes de lidar explicitamente com restrições de integralidade.
 
-Entre os métodos utilizados para resolver problemas de Programação Linear Inteira, destaca-se o algoritmo Branch-and-Bound. Esse método funciona como uma busca organizada por todas as possíveis soluções, mas de forma inteligente. Inicialmente, o problema é resolvido ignorando a exigência de que as variáveis sejam inteiras, permitindo valores fracionários. Essa versão simplificada é mais fácil de resolver e fornece uma estimativa da melhor solução possível. Em seguida, o método divide o problema em vários subproblemas menores, nos quais as variáveis passam a ser restringidas gradualmente a valores inteiros. Ao longo desse processo, regiões do espaço de soluções que não podem levar a resultados melhores são descartadas, reduzindo significativamente o número de casos que precisam ser analisados.
+Entre os métodos utilizados para resolver problemas de Programação Linear Inteira, destaca-se o algoritmo Branch-and-Bound. Esse método funciona como uma busca organizada por todas as possíveis soluções, mas de forma inteligente. Em cada nó da árvore de decisão, inicialmente, as restrições de integralidade são relaxadas (permitindo valores fracionários para as variáveis de decisão) e o Simplex é acionado para resolver aquele subproblema específico. Essa versão simplificada é mais fácil de resolver e fornece uma estimativa da melhor solução possível. Em seguida, o método divide o problema em vários subproblemas menores, nos quais as variáveis passam a ser restringidas gradualmente a valores inteiros. Ao longo desse processo, regiões do espaço de soluções que não podem levar a resultados melhores são descartadas, reduzindo significativamente o número de casos que precisam ser analisados.
+
+Por conta de o \textit{Branch-and-Bound} aplicar o método Simplex repetidas vezes ao longo de sua execução, a complexidade computacional para se resolver um PPLI por meio do algoritmo \textit{Branch-and-Bound} é drasticamente superior ao de um modelo contínuo resolvido de forma direta por meio do \textit{Simplex}.
+Como a árvore de decisão pode crescer exponencialmente em função do número de variáveis inteiras, exigindo um tempo de execução da ordem de $O(2^n)$ no pior caso, o algoritmo Simplex pode acabar sendo executado milhares ou milhões de vezes para encontrar a solução ótima inteira.
 
 Além disso, abordagens mais avançadas, como o Branch-and-Cut, aprimoram esse processo ao adicionar novas restrições ao modelo durante a execução. Essas restrições, chamadas de cortes, servem para eliminar soluções fracionárias inviáveis de forma mais eficiente, sem excluir soluções inteiras válidas. Com isso, o método consegue convergir mais rapidamente para a solução ótima, tornando o processo computacional mais eficiente.
 
-Nesse contexto, para a resolução do modelo, foi utilizado o \textit{solver} Gurobi Optimizer que é uma ferramenta de otimização de alto desempenho projetada para resolver problemas de Programação Linear, Programação Linear Inteira e suas variações. Internamente, o solver combina algoritmos como Branch-and-Bound, Branch-and-Cut, heurísticas de busca e técnicas de pré-processamento, além de utilizar métodos eficientes como o Simplex e algoritmos de pontos interiores para resolver as relaxações contínuas dos subproblemas.
+Nesse contexto, para a resolução do modelo, foi utilizado o \textit{solver} Gurobi Optimizer que é uma ferramenta de otimização de alto desempenho projetada para resolver problemas de Programação Linear, Programação Linear Inteira e suas variações. Internamente, o solver combina algoritmos como Branch-and-Bound, Branch-and-Cut, heurísticas de busca e técnicas de pré-processamento, além de utilizar métodos eficientes como o Simplex e algoritmos de pontos interiores para resolver as relaxações contínuas dos subproblemas. Além disso, o Gurobi executa um pré-processamento (\textit{presolve}) que permite reduzir ao máximo o número de variáveis e de restrições antes da otimização matemática. Além disso, a ferramenta realiza a escolha automática dentre um conjunto de métodos internos de resolução, selecionando dinamicamente a abordagem mais eficiente para a estrutura específica do problema abordado.
 
 A implementação computacional do modelo foi realizada na \textbf{linguagem de programação Python na versão 3.13.7}, utilizando a biblioteca \texttt{gurobipy} na versão 13.0.1, que constitui a interface oficial do Gurobi para essa linguagem. O Python foi escolhido por sua ampla utilização em aplicações científicas, facilidade de manipulação de dados e integração com bibliotecas de otimização. Nesse contexto, o papel do Python é servir como ambiente de modelagem e experimentação, enquanto o Gurobi atua como o mecanismo responsável pela resolução do problema de otimização propriamente dito.
 
@@ -79,7 +81,7 @@ No que se refere aos tipos de vacinas, foram selecionadas quatro categorias de i
 
 \section{Métodos de Obtenção dos Dados}
 
-A aplicação dos modelos de otimização dependem da pré-existência de dados que influenciam diretamente a função objetivo e as restrições de viabilidade temporal do modelo e para isso se faz necessário planejar e executar métodos de obtenção dos mesmos.
+A aplicação dos modelos de otimização depende da pré-existência de dados que influenciam diretamente a função objetivo e as restrições de viabilidade temporal do modelo e para isso se faz necessário planejar e executar métodos de obtenção dos mesmos.
 
 \subsection{Obtenção dos Dados de Custo em Horas}
 
@@ -87,10 +89,10 @@ Os dados de tempo de deslocamento são fundamentais para a construção dos par�
 
 Diante disso, torna-se necessário analisar os diferentes métodos possíveis para a obtenção desses dados, avaliando-os sob critérios como viabilidade prática, escalabilidade, custo, reprodutibilidade e adequação científica.
 
-Uma primeira ideia possível de obtenção seria a \textbf{coleta manual de Dados por meio do Google Maps} que mostra o tempo de deslocamento entre um ponto e outro do mapa de acordo com um certo modal escolhido. Apesar de fornecer valores bastante realistas, essa abordagem apresenta limitações severas. Em um cenário com $n$ localidades, seria necessário coletar aproximadamente $n^2$ pares origem-destino. Por exemplo, considerando as 27 capitais estaduais, isso resultaria em cerca de 729 consultas distintas. Tal volume de dados torna o processo impraticável do ponto de vista operacional, além de introduzir elevado risco de erros humanos durante a coleta.
+Uma primeira ideia possível de obtenção seria a \textbf{coleta manual de Dados por meio do Google Maps}, que mostra o tempo de deslocamento entre um ponto e outro do mapa de acordo com um certo modal escolhido. Apesar de fornecer valores bastante realistas, essa abordagem apresenta limitações severas. Em um cenário com $n$ localidades, seria necessário coletar aproximadamente $n^2$ pares origem-destino. Por exemplo, considerando as 27 capitais estaduais, isso resultaria em cerca de 729 consultas distintas. Tal volume de dados torna o processo impraticável do ponto de vista operacional, além de introduzir elevado risco de erros humanos durante a coleta.
 
 
-Outra possibilidade consiste na \textbf{utilização da API do Google Maps para a obtenção automatizada dos tempos de deslocamento entre localidades}. Essa abordagem apresenta vantagens em termos de automação e realismo dos dados. No entanto, essa alternativa também apresenta uma limitação importante, já que trata-se de um serviço pago, com custos que podem se tornar extremamente significativos à medida que o número de requisições aumenta. Dessa forma, apesar de sua precisão e automação, essa possibilidade também não é considerada a abordagem mais adequada para este trabalho.
+Outra possibilidade consiste na \textbf{utilização da API do Google Maps para a obtenção automatizada dos tempos de deslocamento entre localidades}. Essa abordagem apresenta vantagens em termos de automação e realismo dos dados. No entanto, essa alternativa também apresenta uma limitação importante, já se que trata de um serviço pago, com custos que podem se tornar extremamente significativos à medida que o número de requisições aumenta. Dessa forma, apesar de sua precisão e automação, essa possibilidade também não é considerada a abordagem mais adequada para este trabalho.
 
 % Outro ponto crítico diz respeito à dependência de serviços externos, o que compromete a reprodutibilidade do experimento.
 
@@ -98,7 +100,7 @@ A abordagem adotada neste trabalho baseia-se no \textbf{uso da distância geodé
 
 A distância geodésica representa a menor distância entre dois pontos sobre a superfície terrestre, considerando a curvatura da Terra. 
 
-Seja $(\phi_a, \lambda_a)$ e $(\phi_b, \lambda_b)$ as coordenadas geográficas (latitude e longitude, em radianos) das localidades $a$ e $b$, respectivamente. A distância geodésica $\Delta_{ab}$ é dada por:
+Sejam $(\phi_a, \lambda_a)$ e $(\phi_b, \lambda_b)$ as coordenadas geográficas (latitude e longitude, em radianos) das localidades $a$ e $b$, respectivamente. A distância geodésica $\Delta_{ab}$ é dada por:
 
 \begin{equation}
 \Delta_{ab} = 2R \cdot \arcsin\left( \sqrt{
@@ -159,7 +161,7 @@ Dessa forma, a abordagem baseada em distância geodésica com correção por fat
 
 \subsection{Obtenção dos Dados de Coordenadas e População dos Municípios}
 
-Para a obtenção da longitude e latitude dos municípios utilizou-se dados oficiais do IBGE \cite{IBGE:2022}. Estes dados servirão para os cálculos de dados Custo, em horas, entre duas localidades. 
+Para a obtenção da longitude e latitude dos municípios utilizaram-se dados oficiais do IBGE \cite{IBGE:2022}. Estes dados servirão para os cálculos de dados Custo, em horas, entre duas localidades. 
 
 Já para os dados da população de cada capital a fonte vem diretamente da Wikipédia \cite{Wiki:CapitaisPopulacao} e servirão para calcular os dados de demanda de cada posto.
 
@@ -280,7 +282,7 @@ O conjunto de dados de oferta foi construído de forma a garantir que a oferta t
 
 O parâmetro $e_{iv}$ representa o tempo restante, em horas, até a expiração das doses da vacina $v \in V$ disponíveis no município $i \in I$. Esse parâmetro é fundamental para refletir a necessidade de que a distribuição ocorra antes do vencimento dos imunizantes, nos modelos com penalidade.
 
-Dados reais sobre prazos de validade e, principalmente, sobre o tempo restante de validade dos estoques municipais não são publicamente disponíveis, por envolverem informações operacionais sensíveis da cadeia de suprimentos de saúde. Dessa forma, optou-se por uma abordagem sintética de geração dos dados de expiração (em horas) de cada vacina $v$ para cada municipio $i$.
+Dados reais sobre prazos de validade e, principalmente, sobre o tempo restante de validade dos estoques municipais não são publicamente disponíveis, por envolverem informações operacionais sensíveis da cadeia de suprimentos de saúde. Dessa forma, optou-se por uma abordagem sintética de geração dos dados de expiração (em horas) de cada vacina $v$ para cada município $i$.
 
 A modelagem de $e_{iv}$ foi realizada em duas etapas. Inicialmente, para cada tipo de vacina $v \in V$, define-se um parâmetro $\Omega_v$ correspondente à sua vida útil típica (em horas), considerando condições adequadas de armazenamento. Em seguida, introduz-se um fator de variabilidade na faixa de $(0,1]$, que representa a fração da validade ainda disponível no momento da distribuição.
 
@@ -302,16 +304,15 @@ Como os coeficientes de custo utilizados neste trabalho representam tempos de de
 \subsection{Processamento Logístico e Penalização do Modal Aéreo}
 
 
-Segundo o documento do Encontro Nacional de Engenharia de 2019 \cite{LimaEtAl:2019}, antes do transporte, as vacinas tem de ser armazenadas em caixas especiais e o tempo necessário 
-para a estabilização da temperatura destas caixas é em média \textbf{60 minutos}, e só após essa estabilização a mesma pode ser liberada para o transporte. 
+Segundo o documento do Encontro Nacional de Engenharia de 2019 \cite{LimaEtAl:2019}, antes do transporte, as vacinas têm de ser armazenadas em caixas especiais e o tempo necessário para a estabilização da temperatura destas caixas é, em média, \textbf{60 minutos}, e só após essa estabilização elas podem ser liberadas para o transporte. 
 
-Além disso, segundo o mesmo documento \cite{LimaEtAl:2019}, após a chegada dos caminhões ao destino de entrega, os municípios relataram que em média são gastos \textbf{30 minutos}, desde a chegada do caminhão, conferência das vacinas e armazenagem na câmara fria. Para o tempo de embarque, será considerado que uma logística parecida com o desembarque é aplicada.  Dessa forma, para o modal rodoviário, adota-se:
+Além disso, segundo o mesmo documento \cite{LimaEtAl:2019}, após a chegada dos caminhões ao destino de entrega, os municípios relataram que, em média, são gastos \textbf{30 minutos}, desde a chegada do caminhão, conferência das vacinas e armazenagem na câmara fria. Para o tempo de embarque, será considerado que uma logística parecida com o desembarque é aplicada.  Dessa forma, para o modal rodoviário, adota-se:
 
 \[
 \delta^{rod} = 2{,}0 \text{ horas}
 \]
 
-Uma notícia \cite{g1campinas:2021} relata um caso da entrega de vacinas da Pfizer e diz o tempo desde a chegada do imunizante no aereoporto até a colocação no caminhão reduzido de 42 para 29 minutos. Como a notícia relata um caso específico de otimização, será considerado o tempo padrão de 42 minutos (0,7 horas) para desembarque e carregamento do caminhão. Da mesma forma, um tempo igual será assumido para o embarque, já que o processo é similar. Além disso, assim como no modal rodoviário, também será considerado o tempo de 60 minutos de estabilização da temperatura. 
+Uma notícia \cite{g1campinas:2021} relata um caso da entrega de vacinas da Pfizer e diz o tempo desde a chegada do imunizante no aeroporto até a colocação no caminhão reduzido de 42 para 29 minutos. Como a notícia relata um caso específico de otimização, será considerado o tempo padrão de 42 minutos (0,7 horas) para desembarque e carregamento do caminhão. Da mesma forma, um tempo igual será assumido para o embarque, já que o processo é similar. Além disso, assim como no modal rodoviário, também será considerado o tempo de 60 minutos de estabilização da temperatura. 
 
 Dessa forma, para o modal aéreo, adota-se:
 
@@ -379,7 +380,7 @@ A velocidade média rodoviária de $60$ km/h representa uma aproximação conser
 
 Para o transporte aéreo, a velocidade de $800$ km/h corresponde a uma média operacional compatível com aeronaves de médio porte utilizadas em logística regional, já considerando efeitos de decolagem, pouso e possíveis esperas operacionais \cite{latam:2026}
 
-Segundo informações da \cite{latam:2026}, a velocidade de cruzeiro de um avião comercial chega a $850$ km/h. Para incorporar tempos operacionais adicionais (como embarque e desembarque), velocidades de decolagem e pouso, será considerado um valor um pouco abaixo da velocidade de cruzeiro.
+Segundo informações da companhia aérea, a velocidade de cruzeiro de um avião comercial chega a $850$ km/h \cite{latam:2026}. Para incorporar tempos operacionais adicionais (como embarque e desembarque), velocidades de decolagem e pouso, será considerado um valor um pouco abaixo da velocidade de cruzeiro.
 
 \subsection{Fator de Tortuosidade da Distância Geodésica}
 
@@ -439,7 +440,7 @@ Observa-se que os valores encontrados apresentam forte convergência com fatores
 
 Além disso, embora a média amostral obtida tenha sido aproximadamente $1.35$, optou-se por considerar a mediana como principal referência estatística para validação do parâmetro. A mediana é preferível à média em cenários sujeitos à presença de valores extremos, pois apresenta menor sensibilidade a outliers.
 
-No conjunto analisado, o valor máximo igual a $1.8714$ é referente a rota entre Manaus (no Norte) e Teresina (no Nordeste) e denota uma rota extremamente sinuosa capaz de elevar artificialmente a média amostral. A mediana, por sua vez, apresentou valor aproximado de $1.307$, mantendo forte aderência ao valor de referência utilizado na literatura.
+No conjunto analisado, o valor máximo igual a $1.8714$ é referente à rota entre Manaus (no Norte) e Teresina (no Nordeste) e denota uma rota extremamente sinuosa capaz de elevar artificialmente a média amostral. A mediana, por sua vez, apresentou valor aproximado de $1.307$, mantendo forte aderência ao valor de referência utilizado na literatura.
 
 Dessa forma, considerando simultaneamente:
 \begin{itemize}

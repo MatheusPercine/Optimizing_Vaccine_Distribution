@@ -1,6 +1,6 @@
 \chapter{Resultados e Análise}
 
-Os dados dos resultados foram exportados no formato csv, na pasta \texttt{``resultados\_caso\-\_regional''}, e para a exibição dos mesmos foi utilizada a ferramenta Power BI que é capaz de gerar diversos gráficos com certa praticidade e tendo arquivos do tipo csv como entrada. Outros dados também foram impressos pelo terminal do python. 
+Os dados dos resultados foram exportados no formato csv, na pasta \texttt{``resultados\_caso\-\_regional''}, e para suas exibições foi utilizada a ferramenta Power BI que é capaz de gerar diversos gráficos com certa praticidade e tendo arquivos do tipo csv como entrada. Outros dados também foram impressos pelo terminal do python. 
 
 Além disso, mapas geográficos interativos foram gerados utilizando a biblioteca \textit{Folium} do Python. Esses mapas foram dispostos em links online por meio do serviço de hospedagem da Netlify.
 
@@ -78,15 +78,23 @@ Modal & O modal de transporte utilizado para a movimentação da carga (Rodoviá
     \label{fig:grafico1_powerbi}
 \end{figure}
 
-Os tempos máximos são aproximados pelo valor do Limite Superior. 
+Os tempos máximos são aproximadosss pelo valor do Limite Superior. 
 
-Podemos verificar os modelos com penalidades possuem tempos maiores do que os modelos sem penalidades. Isso se deve ao fato de que a penalidade na função objetivo tem o efeito de priorizar o atendimento dos postos de saúde, mesmo que isso implique em rotas mais longas ou mais demoradas.
+Conforme ilustrado na \autoref{fig:grafico1_powerbi}, podemos verificar que os modelos com penalidades possuem tempos maiores do que os modelos sem penalidades. Isso se deve ao fato de que a penalidade na função objetivo tem o efeito de priorizar o atendimento dos postos de saúde, mesmo que isso implique em rotas mais longas ou mais demoradas.
 
-Observa-se também que as execuções do modelo 2 possuem um tempo maior do que as execuções do modelo 1, o que era esperado pelo modelo 2 incorporar mais etapas logísticas do que o modelo 1. Porém, agora conseguimos medir em quanto esse impacto é significativo.
+Observa-se também que as execuções do modelo 2 (com intermédio de estados) possuem um tempo maior do que as execuções do modelo 1 (sem intermédio de estados), o que era esperado, já que o modelo 2 incorpora mais etapas logísticas do que o modelo 1. Porém, agora conseguimos medir em quanto esse impacto é significativo.
 
-Entre os modelos 1 e 2, ambos sem penalidade, a diferença entre os tempos é de aproximadamente 3 horas, isso significa que o modelo 2 tem um tempo $27\%$ maior.
+Entre os modelos 1 e 2, ambos sem penalidade, a diferença entre os tempos máximos registrados é de $3{,}008$ horas ($11{,}003 - 7{,}995$). Tomando o tempo do Modelo 1 como referência do total ($100\%$), o acréscimo percentual é calculado explicitamente por:
 
-Considerando os modelos ambos com penalidade, a diferença entre os tempos é de 2,7 horas. Isso significa que o modelo 2 tem um tempo $21\%$ maior.
+$$ \frac{11{,}003 - 7{,}995}{7{,}995} = \frac{3{,}008}{7{,}995} \approx 0{,}376 $$
+
+Isso significa que o modelo 2 tem um tempo aproximadamente $37{,}6\%$ maior em relação ao modelo 1.
+
+Considerando ambos os modelos com penalidade, a diferença entre os tempos é de $2{,}683$ horas ($12{,}530 - 9{,}847$). Utilizando novamente o modelo 1 como base de cálculo ($100\%$), a proporção de aumento é dada por:
+
+$$ \frac{12{,}530 - 9{,}847}{9{,}847} = \frac{2{,}683}{9{,}847} \approx 0{,}272 $$
+
+Isso significa que, sob o efeito da penalidade, o modelo 2 tem um tempo aproximadamente $27{,}2\%$ maior.
 
 \begin{figure}[H]
     \centering
@@ -96,7 +104,7 @@ Considerando os modelos ambos com penalidade, a diferença entre os tempos é de
     \label{fig:grafico2_powerbi}
 \end{figure}
 
-Este gráfico denota uma grande diferença no valor da função objetivo entre um modelo sem penalidade e sua versão com penalidade, pois o modelo com penalidade é severamente punido, por diversas vezes, a cada hora que uma vacina com validade curta passa em trânsito.
+Este gráfico da \autoref{fig:grafico2_powerbi} denota uma grande diferença no valor da função objetivo entre um modelo sem penalidade e sua versão com penalidade, pois o modelo com penalidade é severamente punido, por diversas vezes, a cada hora que uma vacina com validade curta passa em trânsito.
 
 \begin{figure}[H]
     \centering
@@ -106,7 +114,7 @@ Este gráfico denota uma grande diferença no valor da função objetivo entre u
     \label{fig:grafico3_powerbi}
 \end{figure}
 
-Para a obtenção deste gráfico, gerou-se uma média ponderada do custo em horas utilizando a quantidade de doses como peso multiplicador. Embora a penalidade ative rotas intermunicipais muito mais longas (de até 8 horas) para escoar lotes críticos, a média global permanece estável. Essa estabilidade matemática ocorre porque a etapa intramunicipal ($j \to p$) concentra a grande maioria das entregas (cerca de 70\% a 75\% da matriz) com grandes quantidades de doses por entrega. Assim, o volume massivo de vacinas transportadas localmente em tempos curtos dilui o peso das viagens extremas de longa distância, ancorando o custo médio final.
+Para a obtenção deste gráfico da \autoref{fig:grafico3_powerbi}, gerou-se uma média ponderada do custo em horas utilizando a quantidade de doses como peso multiplicador. Embora a penalidade ative rotas intermunicipais muito mais longas (de até 8 horas) para escoar lotes críticos, a média global permanece estável. Essa estabilidade matemática ocorre porque a etapa intramunicipal ($j \to p$) concentra a grande maioria das entregas (cerca de 70\% a 75\% da matriz) com grandes quantidades de doses por entrega. Assim, o volume massivo de vacinas transportadas localmente em tempos curtos dilui o peso das viagens extremas de longa distância, ancorando o custo médio final.
 
 \begin{figure}[H]
     \centering
@@ -116,7 +124,9 @@ Para a obtenção deste gráfico, gerou-se uma média ponderada do custo em hora
     \label{fig:grafico4_powerbi}
 \end{figure}
 
-O total de doses movimentadas foi aumentado conforme mais etapas logísticas tinha o modelo. O modelo 2 apresentou o maior valor de doses movimentadas.
+Como ilustrado na \autoref{fig:grafico4_powerbi}, o total de doses aumentou conforme o modelo apresentava mais etapas, isso significa que o modelo 2 (com intermédio de estados) movimenta mais doses que o modelo 1 (sem intermédio de estados) porque uma mesma vacina é contabilizada duas vezes na viagem intermunicipal (uma vez indo para o estado, outra vez saindo do estado). 
+
+As barras True e False são exatamente da mesma altura dentro de um mesmo modelo. Isso mostra que, a penalidade pode influenciar a escolha de rotas, mas não desiste de entregar as vacinas.
 
 \begin{figure}[H]
     \centering
@@ -126,7 +136,7 @@ O total de doses movimentadas foi aumentado conforme mais etapas logísticas tin
     \label{fig:grafico5_powerbi}
 \end{figure}
 
-Nos modelos, há predominância do modal rodoviário.
+Como evidenciado na \autoref{fig:grafico5_powerbi}, os modelos, há predominância do modal rodoviário, por conta da predominância de rotas de curta distância intramunicipais (rotas da forma $j \to p$).
 
 Quase não há diferença nas porcentagens quando comparamos um modelo sem penalidade e sua versão com penalidade.
 
@@ -134,51 +144,51 @@ Quase não há diferença nas porcentagens quando comparamos um modelo sem penal
 
 Além da comparação entre os modelos, também é possível analisar o que acontece dentro de cada modelo de forma independente dos demais.
 
-\subsection{Resultados do Modelo 1}
+\subsection{Resultados do Modelo 1 (Sem Intermédio de Estados)}
 
 \begin{figure}[H]
     \centering
-    \caption{Os 10 Maiores Tempos Por Rota - Modelo 1}
+    \caption{Os 10 Maiores Tempos Por Rota - Modelo 1 (Sem Intermédio de Estados)}
     \includegraphics[width=16.0cm,height=12.5cm]{figuras/9-maiores_tempos_mod1.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico10_powerbi}
 \end{figure}
 
-No cenário sem penalidade, os maiores tempos de rota concentram-se em eixos que interligam capitais do Centro-Oeste e Nordeste em direção a Manaus (ex: Campo Grande $\to$ Manaus, Goiânia $\to$ Manaus, São Luís $\to$ Manaus), com tempos estabilizados na faixa de 5 a 6 horas.
+Conforme ilustrado na \autoref{fig:grafico10_powerbi}, no cenário sem penalidade, os maiores tempos de rota concentram-se em eixos que interligam capitais do Centro-Oeste e Nordeste em direção a Manaus (ex: Campo Grande $\to$ Manaus, Goiânia $\to$ Manaus, São Luís $\to$ Manaus), com tempos estabilizados na faixa de 5 a 6 horas.
 
-No cenário com penalidade, o Gurobi altera completamente o conjunto. Surgem eixos de longuíssima distância partindo do Sudeste, como por exemplo São Paulo $\to$ Boa Vista, São Paulo $\to$ Manaus e São Paulo $\to$ Belém. Na presença da penalidade, o teto do eixo vertical de custos em horas sobe de 6 horas para 8 horas.
+No cenário com penalidade, o Gurobi altera completamente o conjunto. Surgem eixos de longuíssima distância partindo do Sudeste, como por exemplo São Paulo $\to$ Boa Vista, São Paulo $\to$ Manaus e São Paulo $\to$ Belém. Na presença da penalidade, o teto do eixo vertical de custos em horas sobe de 6 horas para 8 horas. Isso significa que o solver aceita ativar rotas mais distantes para priorizar a entrega de lotes de vacinas com alto risco de vencimento.
 
 O trajeto irregular da linha laranja (Soma de Doses) em ambos os cenários confirma que não há proporcionalidade direta entre o tempo de voo e a quantidade de vacinas transportada.
 
 \begin{figure}[H]
     \centering
-    \caption{Os 10 Menores Tempos Por Rota - Modelo 1}
+    \caption{Os 10 Menores Tempos Por Rota - Modelo 1 (Sem Intermédio de Estados)}
     \includegraphics[width=16.0cm,height=12.5cm]{figuras/11-menores_tempos_mod1.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico14_powerbi}
 \end{figure}
 
-Diferentemente do que ocorre no gráfico de maiores tempos, a análise das rotas mais rápidas revela que a introdução da penalidade de perecibilidade não altera a configuração logística da base da rede. Em ambos os cenários (com e sem penalidade), o conjunto das 10 rotas mais curtas é rigorosamente idêntico.
+Na \autoref{fig:grafico14_powerbi}, diferentemente do que ocorre no gráfico de maiores tempos, a análise das rotas mais rápidas revela que a introdução da penalidade de perecibilidade não altera a configuração logística da base da rede. Em ambos os cenários (com e sem penalidade), o conjunto das 10 rotas mais curtas é rigorosamente idêntico.
 
-Observa-se que todas as rotas listadas são exclusivamente intramunicipais (fluxos do tipo $j \to p$), conectando as capitais aos seus respectivos postos de vacinação locais. O eixo de custo em horas apresenta um comportamento estático, formando uma barreira alinhada em, aproximdamente, 2 horas para todas as colunas. Esse fenômeno é explicado pela formulação matemática: como a distância geográfica dentro do mesmo município é muito curta, o custo total da rota passa a ser dominado pelo tempo fixo de processamento logístico do modal rodoviário ($\delta^{rod} = 2,0$ horas).
+Observa-se que todas as rotas listadas são exclusivamente intramunicipais (fluxos do tipo $j \to p$), conectando as capitais aos seus respectivos postos de vacinação locais. O eixo de custo em horas apresenta um comportamento estático, formando uma barreira alinhada em, aproximadamente, 2 horas para todas as colunas. Esse fenômeno é explicado pela formulação matemática: como a distância geográfica dentro do mesmo município é muito curta, o custo total da rota passa a ser dominado pelo tempo fixo de processamento logístico do modal rodoviário ($\delta^{rod} = 2,0$ horas).
 
 Os picos de volumes de doses em grandes centros populacionais (como São Paulo e Rio de Janeiro) indicam que estes locais recebem volumes massivos de doses, pois suas demandas são maiores.
 
 \begin{figure}[H]
     \centering
-    \caption{Percentual de Tipos de Rota - Modelo 1}
+    \caption{Percentual de Tipos de Rota - Modelo 1 (Sem Intermédio de Estados)}
     \includegraphics[width=16cm,height=5.5cm]{figuras/7-percentual_rotas_mod1.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico11_powerbi}
 \end{figure}
 
-Verifica-se predomínio, em, aproximadamente 75\%, das rotas do tipo $jp$ ($j \to p$), na qual o município realiza o abastecimento de seus postos. O restante (aproximadamente 25\%) é preenchido pelas rotas do tipo $ij$ ($i \to j$), o que corresponde a casos em que um município precisou pegar doses da oferta de outro município.
+Na \autoref{fig:grafico11_powerbi}, verifica-se predomínio, em, aproximadamente 75\%, das rotas do tipo $jp$ ($j \to p$), no qual o município realiza o abastecimento de seus postos. O restante (aproximadamente 25\%) é preenchido pelas rotas do tipo $ij$ ($i \to j$), o que corresponde a casos em que um município precisou pegar doses da oferta de outro município.
 
 Vacina do maior tempo de entrega e rotas gargalo por etapa:
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - Modelo 1 sem penalidade}
+    \caption{Informações do Terminal Com Python - Modelo 1 (Sem Intermédio de Estados) sem penalidade}
     \includegraphics[width=13.5cm,height=5.0cm]{figuras/modelo_1_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal7_python}
@@ -186,13 +196,13 @@ Vacina do maior tempo de entrega e rotas gargalo por etapa:
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - Modelo 1 com penalidade}
+    \caption{Informações do Terminal Com Python - Modelo 1 (Sem Intermédio de Estados) com penalidade}
     \includegraphics[width=13.5cm,height=5.0cm]{figuras/modelo_1_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal8_python}
 \end{figure}
 
-Verifica-se que rotas gargalo e seus detalhamentos são completamente diferentes entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas. Todas as demandas foram atendidas.
+Considerando a \autoref{fig:terminal7_python} e a \autoref{fig:terminal8_python}, verifica-se que rotas gargalo e seus detalhamentos são completamente diferentes entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesmo entre as duas saídas. Todas as demandas foram atendidas.
 
 Para complementar a análise espacial dos resultados, foram gerados mapas geográficos interativos utilizando a biblioteca \textit{Folium} em Python. Esses mapas permitem a visualização vetorial das rotas ativas, a distinção dos modais de transporte e a representação do volume de doses transportadas por meio da espessura das arestas. As versões interativas estão hospedadas online e podem ser acessadas nos links: 
 
@@ -203,7 +213,7 @@ Para complementar a análise espacial dos resultados, foram gerados mapas geogr�
 
 \begin{figure}[H]
     \centering
-    \caption{Mapa Geográfico de Distribuição - Modelo 1 sem penalidade}
+    \caption{Mapa Geográfico de Distribuição - Modelo 1 (Sem Intermédio de Estados) sem penalidade}
     \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m1_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:mapa_m1_false}
@@ -211,25 +221,25 @@ Para complementar a análise espacial dos resultados, foram gerados mapas geogr�
 
 \begin{figure}[H]
     \centering
-    \caption{Mapa Geográfico de Distribuição - Modelo 1 com penalidade}
+    \caption{Mapa Geográfico de Distribuição - Modelo 1 (Sem Intermédio de Estados) com penalidade}
     \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m1_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:mapa_m1_true}
 \end{figure}
 
-A análise visual corrobora estritamente os dados quantitativos obtidos. No mapa sem penalidade (Figura \ref{fig:mapa_m1_false}), observa-se uma rede de distribuição mais descentralizada e dispersa pelo território nacional. Em contrapartida, no mapa com penalidade (Figura \ref{fig:mapa_m1_true}), evidencia-se a reestruturação imposta pela pressão de perecibilidade dos lotes: destaca-se visualmente uma forte concentração de vetores aéreos (linhas tracejadas) de longa distância e grande espessura partindo da região Sudeste em direção direta às regiões Norte e Nordeste. Isso consolida a priorização matemática do \textit{solver} em escoar estoques críticos o mais rápido possível por meio do modal aéreo, independentemente da quilometragem física percorrida.
+A diferença entre os dois mapas evidencia a influência da penalidade na distribuição de vacinas. No mapa sem penalidade (Figura \ref{fig:mapa_m1_false}), observa-se uma rede de distribuição mais descentralizada e dispersa pelo território nacional, já que  temos trocas de vacinas entre municípios de regiões adjacentes entre si, por exemplo, trocas entre municípios da região Norte e do Nordeste. Em contrapartida, no mapa com penalidade (Figura \ref{fig:mapa_m1_true}), destaca-se visualmente uma forte concentração de vetores aéreos (linhas tracejadas) de longa distância e grande espessura partindo da região Sudeste em direção direta às regiões Norte e Nordeste, ou seja, uma conexão entre regiões não adjacentes entre si. Isso consolida a priorização matemática do \textit{solver} em escoar estoques críticos o mais rápido possível mesmo que isso signifique ativar rotas mais longas.
 
-\subsection{Resultados do Modelo 2}
+\subsection{Resultados do Modelo 2 (Com Intermédio de Estados)}
 
 \begin{figure}[H]
     \centering
-    \caption{Os 10 Maiores Tempos Por Rota - Modelo 2}
+    \caption{Os 10 Maiores Tempos Por Rota - Modelo 2 (Com Intermédio de Estados)}
     \includegraphics[width=16.0cm,height=12.5cm]{figuras/10-maiores_tempos_mod2.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico12_powerbi}
 \end{figure}
 
-No cenário sem penalidade, os arcos mais demorados concentram-se no abastecimento de estados da Região Norte e parte do Nordeste a partir do Centro-Oeste e de capitais nordestinas (ex: Campo Grande $\to$ AC, Campo Grande $\to$ AM, Goiânia $\to$ AM, São Luís $\to$ RR). O tempo físico dessas rotas satura de forma homogênea na faixa de 5 a 6 horas.
+Conforme ilustrado na \autoref{fig:grafico12_powerbi}, no cenário sem penalidade, os arcos mais demorados concentram-se no abastecimento de estados da Região Norte e parte do Nordeste a partir do Centro-Oeste e de capitais nordestinas (ex: Campo Grande $\to$ AC, Campo Grande $\to$ AM, Goiânia $\to$ AM, São Luís $\to$ RR). O tempo físico dessas rotas satura de forma homogênea na faixa de 5 a 6 horas.
 
 No cenário com penalidade, o Gurobi reconfigura o topo da lista. Eixos partindo do Nordeste e do Sudeste assumem a liderança crítica (ex: Teresina $\to$ AC, São Paulo $\to$ AM, Manaus $\to$ CE). O solver aceita deliberadamente ativar rotas mais distantes e severas para garantir que os lotes de vacinas com alto risco de vencimento sejam escoados imediatamente de seus polos em direção aos estados receptores. Além disso, na presença da penalidade, o limite do eixo vertical salta de 6 horas para 8 horas.
 
@@ -237,35 +247,35 @@ Da mesma forma que no modelo anterior, o trajeto irregular da linha laranja (Som
 
 \begin{figure}[H]
     \centering
-    \caption{Os 10 Menores Tempos Por Rota - Modelo 2}
+    \caption{Os 10 Menores Tempos Por Rota - Modelo 2 (Com Intermédio de Estados)}
     \includegraphics[width=16.0cm,height=12.5cm]{figuras/12-menores_tempos_mod2.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico15_powerbi}
 \end{figure}
 
-A estabilidade frente à penalidade se repete, ou seja, o conjunto das 10 rotas mais curtas é idêntico nos dois casos.
+Na \autoref{fig:grafico15_powerbi}, a estabilidade frente à penalidade se repete, ou seja, o conjunto das 10 rotas mais curtas é idêntico nos dois casos.
 
-No modelo 2, a diferença estrutural em relação ao Modelo 1 está na composição desse ranking. O gráfico mescla rotas intramunicipais ($j \to p$) com fluxos do tipo $k \to j$ cuja presença decorre de os centros de distribuição estaduais poderem estar localizados próximos às capitais do mesmo estado.
+No modelo 2, a diferença estrutural em relação ao Modelo 1 (sem intermédio de estados) está na composição desse ranking. O gráfico mescla rotas intramunicipais ($j \to p$) com fluxos do tipo $k \to j$ cuja presença decorre de os centros de distribuição estaduais poderem estar localizados próximos às capitais do mesmo estado.
 
 Nota-se que o tempo fixo de 2 horas do processamento logístico padrão ($\delta^{rod}$) é dominante no custo da rota pelo mesmo motivo apontado na análise feita para o mesmo gráfico do modelo 1.
 
-Novamente, a linha de volume de doses registra picos em entregas à postos locais de capitais populosas e vales em repasses estaduais de menor volume.
+Novamente, a linha de volume de doses registra picos em entregas a postos locais de capitais populosas e vales em repasses estaduais de menor volume.
 
 \begin{figure}[H]
     \centering
-    \caption{Percentual de Tipos de Rota - Modelo 2}
+    \caption{Percentual de Tipos de Rota - Modelo 2 (Com Intermédio de Estados)}
     \includegraphics[width=16.0cm,height=5.0cm]{figuras/8-percentual_rotas_mod2.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:grafico13_powerbi}
 \end{figure}
 
-Verifica-se predomínio, em pouco mais da metade, do uso das rotas do tipo $jp$, na qual o município realiza o abastecimento de seus postos. O tipo $ik$ aparece em segundo lugar com aproximadamente 20\% e esse número denota que, na maioria das vezes não foi necessário usar esse tipo de rota tipicamente acionada quando é necessário usar a oferta de outro município. O restante (aproximadamente 15\%) é preenchido pelas rotas do tipo $kj$, na qual o Estado realiza o abastecimento de sua capital. 
+Na \autoref{fig:grafico13_powerbi}, verifica-se predomínio, em pouco mais da metade, do uso das rotas do tipo $jp$, na qual o município realiza o abastecimento de seus postos. O tipo $ik$ aparece em segundo lugar com aproximadamente 20\% e esse número denota que, na maioria das vezes não foi necessário usar esse tipo de rota tipicamente acionada quando é necessário usar a oferta de outro município. O restante (aproximadamente 15\%) é preenchido pelas rotas do tipo $kj$, na qual o Estado realiza o abastecimento de sua capital. 
 
 Vacina do maior tempo de entrega e rotas gargalo por etapa:
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - Modelo 2 sem penalidade}
+    \caption{Informações do Terminal Com Python - Modelo 2 (Com Intermédio de Estados) sem penalidade}
     \includegraphics[width=15.0cm,height=5.3cm]{figuras/modelo_2_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal9_python}
@@ -273,13 +283,13 @@ Vacina do maior tempo de entrega e rotas gargalo por etapa:
 
 \begin{figure}[H]
     \centering
-    \caption{Informações do Terminal Com Python - Modelo 2 com penalidade}
+    \caption{Informações do Terminal Com Python - Modelo 2 (Com Intermédio de Estados) com penalidade}
     \includegraphics[width=15.0cm,height=5.3cm]{figuras/modelo_2_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:terminal10_python}
 \end{figure}
 
-Exceto pela etapa $ik$, verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas. Todas as demandas foram atendidas.
+Considerando a \autoref{fig:terminal9_python} e a \autoref{fig:terminal10_python}, exceto pela etapa $ik$, verifica-se que rotas gargalo e seus detalhamentos são exatamente iguais entre uma versão de modelo sem penalidade e sua versão com penalidade. O tipo de vacina da entrega mais demorada é a mesma entre as duas saídas. Todas as demandas foram atendidas.
 
 Também foram gerados mapas geográficos interativos utilizando a biblioteca \textit{Folium} em Python. As versões interativas estão hospedadas online e podem ser acessadas nos links: 
 
@@ -290,7 +300,7 @@ Também foram gerados mapas geográficos interativos utilizando a biblioteca \te
 
 \begin{figure}[H]
     \centering
-    \caption{Mapa Geográfico de Distribuição - Modelo 2 sem penalidade}
+    \caption{Mapa Geográfico de Distribuição - Modelo 2 (Com Intermédio de Estados) sem penalidade}
     \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m2_false.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:mapa_m2_false}
@@ -298,7 +308,7 @@ Também foram gerados mapas geográficos interativos utilizando a biblioteca \te
 
 \begin{figure}[H]
     \centering
-    \caption{Mapa Geográfico de Distribuição - Modelo 2 com penalidade}
+    \caption{Mapa Geográfico de Distribuição - Modelo 2 (Com Intermédio de Estados) com penalidade}
     \includegraphics[width=12.0cm,height=12.0cm]{figuras/mapa_m2_true.png} 
     \legend{Fonte: Elaborado pelo autor (2026)}
     \label{fig:mapa_m2_true}
