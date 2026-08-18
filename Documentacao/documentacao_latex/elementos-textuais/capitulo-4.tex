@@ -76,7 +76,7 @@ Entretanto, permitir faltas sem qualquer penalização faria com que o modelo pu
 
 Além da variável de decisão, é importante definir alguns \textbf{parâmetros}.
 
-\subsubsection{Tempos de Deslocamento dos Modais de Transporte}
+\subsubsection{tempos de deslocamento dos modais de transporte}
 
 Para a etapa intramunicipal, somente o modal rodoviário é considerado.
 
@@ -103,7 +103,7 @@ onde:
 %     \item transporte rodoviário do aeroporto de destino até o município final.
 % \end{itemize} 
 
-\subsubsection{Tempos de Processamento Logístico dos Modais de Transporte}
+\subsubsection{tempos de processamento logístico dos modais de transporte}
 
 Na prática, o processo de distribuição de vacinas não se limita apenas ao tempo de deslocamento entre os pontos de origem e destino. Ao longo da cadeia logística, existem etapas intermediárias que incluem atividades como embarque, desembarque, tempo de estabilização da temperatura, conferência, armazenamento temporário e redistribuição das vacinas.
 
@@ -123,7 +123,7 @@ onde:
     \item $\delta^{aereo}$ representa o tempo de processamento logístico do modal aéreo.
 \end{itemize}
 
-\subsubsection{Penalização do Modal Aéreo}
+\subsubsection{penalização do modal aéreo}
 
 Ainda, é necessário considerar as diferenças de custo financeiro e de complexidade logística entre os dois tipos de modais. O transporte aéreo é mais rápido, porém mais caro financeiramente e mais complexo logisticamente.
 
@@ -137,7 +137,7 @@ um \textbf{fator de penalização associado ao transporte aéreo} e que reflete 
 
 Essa abordagem permite modelar a preferência pelo transporte rodoviário em situações onde ambos os modais são viáveis, ao mesmo tempo em que mantém o transporte aéreo como alternativa para cenários em que o ganho de tempo é significativo. Essa abordagem permite capturar as diferenças operacionais entre modais sem aumentar a complexidade do modelo.
 
-\subsubsection{Parâmetros de Custo Total}
+\subsubsection{parâmetros de custo total}
 
 Modelar explicitamente etapas de processamento logístico exigiria a introdução de novas variáveis de decisão e restrições, caracterizando um problema mais complexo e poderia comprometer a tratabilidade computacional. Em vez disso, os tempos de deslocamento e de processamento logístico e a escolha do modal mais adequado (rodoviário ou aéreo) serão incorporados, implicitamente, a \textbf{parâmetros de custo total}.
 
@@ -177,7 +177,7 @@ Na etapa intramunicipal, considera-se que o transporte é realizado exclusivamen
 Essa abordagem não introduz novas variáveis de decisão e, dessa forma, mantém a eficiência computacional do modelo, ao mesmo tempo em que aumenta sua aderência à realidade operacional do sistema de distribuição de vacinas.
 
 
-\subsubsection{Capacidade Por Município e Modal de Transporte}
+\subsubsection{capacidade Por município e modal de transporte}
 
 Além das diferenças de tempo entre os modais de transporte, é necessário considerar que a \textbf{capacidade de transporte} também pode variar de acordo com o número de veículos disponíveis para cada modal em um município.
 
@@ -243,7 +243,7 @@ onde:
 
 
 
-\subsubsection{Fatores de Penalização Associados ao Tempo Restante de Validade da Vacina}
+\subsubsection{fatores de penalização associados ao tempo restante de validade da vacina}
 
 Pode-se, opcionalmente, incorporar à função objetivo fatores de penalização associados ao tempo restante de validade da vacina do tipo $v$. Essa abordagem visa priorizar a entrega de vacinas com menor tempo restante de validade, minimizando o risco de expiração e desperdício.
 
@@ -333,7 +333,7 @@ Esta função tem um objetivo ligeiramente diferente: \textbf{minimizar o tempo 
 
 \subsection{Restrições}
 
-\subsubsection{Restrições da Etapa Intermunicipal}
+\subsubsection{restrições da etapa intermunicipal}
 
 Primeiramente, temos a \textbf{restrição de oferta} de cada vacina $v$ em cada município $i$.
 
@@ -374,7 +374,7 @@ A restrição de demanda a nível intermunicipal não deve ser formulada, uma ve
 A manutenção simultânea da restrição de demanda no nível intermunicipal e no nível intramunicipal introduziria redundância e potencial inconsistência no modelo, podendo torná-lo inviável caso os valores agregados não coincidam exatamente.
 
 
-\subsubsection{Restrições da Etapa Intramunicipal}
+\subsubsection{restrições da etapa intramunicipal}
 
 A \textbf{restrição de demanda} estabelece que sua demanda total é igual ao número de vacinas enviadas para os postos mais um valor referente à demanda não suprida:
 
@@ -414,7 +414,7 @@ A restrição de oferta no nível intramunicipal foi desconsiderada devido à re
 No modelo unificado, a quantidade de vacinas disponível para distribuição dentro de cada município é determinada endogenamente pela soma do estoque inicial local com o fluxo recebido de outros municípios. Dessa forma, a imposição de uma restrição adicional intramunicipal limitando a saída com base em um parâmetro fixo de oferta tornaria o modelo inconsistente, pois poderia restringir indevidamente o fluxo de vacinas disponível para atendimento da demanda final.
 
 
-\subsubsection{Restrições Globais}
+\subsubsection{restrições globais}
 
 As \textbf{restrições de viabilidade temporal} são relativas à ideia de remover pares onde o tempo de transporte é maior que o tempo restante até o vencimento.
 
@@ -599,7 +599,7 @@ Em suma, as variáveis de decisão são:
 
 \subsection{Parâmetros de Entrada}
 
-\subsubsection{Tempos de Deslocamento dos Modais de Transporte}
+\subsubsection{tempos de deslocamento dos modais de transporte}
 
 De forma análoga ao modelo intermunicipal sem intermediação estadual, temos:
 
@@ -615,7 +615,7 @@ onde:
     \item $\tau_{kj}^{aereo}$ é o tempo de deslocamento do modal aéreo entre o centro estadual de origem $k$ e o município de destino $j$.
 \end{itemize}
 
-\subsubsection{Parâmetros de Custo Total}
+\subsubsection{parâmetros de custo total}
 
 Sejam:
 \begin{itemize}
@@ -651,7 +651,7 @@ C_{ik} = \min \left( \quad C_{ik}^{rod} \quad , \quad C_{ik}^{aereo} \quad \righ
 C_{kj} = \min \left( \quad C_{kj}^{rod} \quad , \quad C_{kj}^{aereo} \quad \right),  \quad C_{kj} \in \mathbb{R}_{\geq 0}
 \]
 
-\subsubsection{Capacidade Por Município e Modal de Transporte}
+\subsubsection{capacidade por município e modal de transporte}
 
 Da mesma forma que no modelo anterior, é necessário considerar que a \textbf{capacidade de transporte} varia de acordo com o modal.
 
@@ -701,7 +701,7 @@ u_{kj}^{\text{aereo}} = W_k^{aereo} \cdot U^{aereo}, & \text{caso contrário}
 
 onde $W_k^{rod}$ e $W_k^{aereo}$ representam a quantidade de veículos disponíveis no centro estadual $k$ para cada modal.
 
-\subsubsection{Fatores de Penalização Associado ao Tempo Restante de Validade da Vacina}
+\subsubsection{fatores de penalização associado ao tempo restante de validade da vacina}
 
 As definições de $\rho_{iv}$ e $\rho_{jv}$ são reaproveitadas neste modelo, porém o desafio se torna formular uma nova relação entre $e_{iv}$ e $e_{jv}$.
 
