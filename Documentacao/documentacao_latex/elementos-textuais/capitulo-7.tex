@@ -4,7 +4,7 @@
 
 Intuitivamente, a complexidade do problema decorre da necessidade de decidir simultaneamente a alocação e o roteamento de fluxos em uma rede com múltiplos níveis.
 
-No âmbito da Teoria da Complexidade Computacional, o problema é classificado como NP-difícil, uma vez que se trata de um Problema de Programação Linear Inteira e para problemas desta natureza não se conhece nenhum algoritmo capaz de resolvê-los em tempo polinomial no pior caso.
+No âmbito da Teoria da Complexidade Computacional, o problema é classificado como NP-difícil, uma vez que se trata de um Problema de Programação Linear Inteira e para problemas desta natureza não se conhece nenhum algoritmo capaz de resolvê-los em tempo polinomial no pior caso e para a solução encontrada, não se consegue verificar em tempo polinomial se ela é, de fato, a melhor a ótima global sem praticamente comparar com outros planos de rotas.
 
 No pior caso, o algoritmo pode ser forçado a explorar praticamente todas as combinações possíveis de soluções. Como o número dessas combinações cresce exponencialmente com o tamanho da instância, o tempo de execução pode apresentar comportamento exponencial, isto é:
 
@@ -14,7 +14,7 @@ No pior caso, o algoritmo pode ser forçado a explorar praticamente todas as com
 
 onde $n$ representa o tamanho da instância. No contexto da Programação Linear Inteira, esse tamanho está em função do limite do espaço de busca explorado pelos algoritmos de otimização (como o \textit{Branch-and-Bound}) e esse limite é ditado pelo número total de variáveis de decisão do sistema.
 
-O Modelo 2 (sem penalidade) foi idealizado sob uma ótica mais realista que os demais modelos e, por isso, é válido analisar a complexidade computacional gerada por essa abordagem.
+O Modelo 2 (com intermédio de estados) e sem penalidade foi idealizado sob uma ótica mais realista que os demais modelos e, por isso, é válido analisar a complexidade computacional gerada por essa abordagem.
 
 O Modelo 2 exige a operação com três tipos de variáveis de decisão tridimensionais ($x_{ikv}$, $y_{kjv}$ e $z_{jpv}$) e uma variável bidimensional de falta ($f_{pv}$). Como consequência, a quantidade de vezes que as variáveis aparecem na função objetivo e o tamanho da matriz de restrições crescem de forma multiplicativa em relação ao tamanho dos conjuntos de municípios de origem ($|I|$), municípios de destino ($|J|$), centros estaduais ($|K|$), postos de vacinação ($|P(j)|$) e tipos de vacina ($|V|$).
 
@@ -102,7 +102,7 @@ Esse número torna colossal o nível de complexidade gerado por essa modelagem, 
 
 \section{Limitações da Modelagem}
 
-Para garantir a tratabilidade computacional foram adotadas simplificações que distanciam a simulação de um cenário logístico real em sua totalidade. Dessa forma, a modelagem possui uma série de limitações, como:
+Para garantir a tratabilidade computacional, foram adotadas simplificações que distanciam a simulação de um cenário logístico real em sua totalidade. Dessa forma, a modelagem possui uma série de limitações, como:
 
 \begin{itemize}
     \item \textbf{Negligência de Instâncias Administrativas Intermediárias:} O modelo adota uma estrutura de rede condensada composta por, no máximo, três níveis principais de fluxo de suprimentos ($I \to K \to J \to P$). Contudo, na estrutura organizacional real do Sistema Único de Saúde (SUS), estados de grande extensão territorial, como o de Minas Gerais, podem operar com um nível adicional composto pelas Superintendências Regionais de Saúde (SRS), configurando um fluxo do tipo $I \to K \to \text{SRS} \to J \to P$;
@@ -119,7 +119,7 @@ Embora o modelo matemático desenvolvido apresente solidez teórica para a otimi
 
 \begin{itemize}
     \item \textbf{Sigilo dos Dados:} Informações sobre estoques e demandas de vacinas e datas de validade dos lotes não são dados públicos e são tratados como dados sensíveis pelas secretarias de saúde;
-    \item \textbf{Atualização dos Dados:} A aplicação do modelo não depende somente da obtenção dos dados sigilosos, mas também que eles estejam 100\% atualizados, o que é um desafio dado o número massivo de lotes de vacinas por todo o país;
+    \item \textbf{Atualização dos Dados:} A aplicação do modelo não depende somente da obtenção dos dados sigilosos, mas também de que eles estejam 100\% atualizados, o que é um desafio dado o número massivo de lotes de vacinas por todo o país;
     \item \textbf{Volume Massivo de Dados:} O Brasil possui mais de 5.000 municípios e dezenas de milhares de postos de saúde, o que torna a coleta e a organização manuais desses dados uma tarefa humanamente impraticável. Por isso, se faz necessária uma coleta e organização automatizada desses dados.
 \end{itemize}
 
@@ -135,15 +135,15 @@ Primeiramente, ressalta-se que toda a estruturação da modelagem matemática, b
 
 A pesquisa cumpriu com êxito o seu objetivo central: modelar, implementar e resolver o problema de redistribuição de vacinas em um cenário pandêmico no Brasil sob a ótica da Programação Linear Inteira, buscando minimizar o tempo logístico de transporte, ampliar o atendimento da demanda vacinal e contribuir para respostas mais eficientes em contextos de emergência sanitária.
 
-Por meio da modelagem matemática, níveis de cadeia logística e a burocracia foram traduzidos com precisão por meio de variáveis de decisão e restrições, como a restrição da conservação do fluxo e a de consistência estadual. Essa robustez matemática trouxe flexibilidade estrutural do modelo quanto à sua abrangência espacial. A formulação matemática elaborada compreende e adapta-se facilmente a diferentes escalas de operação, podendo ser aplicada em malhas logísticas de nível estritamente municipal, estadual, nacional, ou em redes híbridas que integrem uma ou até três dessas esferas simultaneamente. Apesar das limitações listadas, a modelagem desenvolvida provou ser fortemente fidedigna ao problema logístico real.
+Por meio da modelagem matemática, níveis de cadeia logística e a burocracia foram traduzidos com precisão por meio de variáveis de decisão e restrições, como a restrição da conservação do fluxo e a de consistência estadual. Essa robustez matemática trouxe flexibilidade estrutural do modelo quanto à sua abrangência espacial. A formulação matemática elaborada compreende e adapta-se facilmente a diferentes escalas de operação, podendo ser aplicada em malhas logísticas de nível estritamente municipal, estadual, nacional, ou em redes híbridas que integrem uma isoladamente ou até três dessas esferas simultaneamente. Apesar das limitações listadas, a modelagem desenvolvida provou ser fortemente fidedigna ao problema logístico real.
 
-Os resultados gerados pelo sistema foram extremamente precisos e informativos. O auxilio do Power BI permitiu uma interpretação visual clara dos dados gerados pelo algoritmo em Python. Por meio dos resultados, foi possível identificar rotas gargalo na rede logística, o percentual de uso dos modais, o total de doses movimentadas e o tempo exato ou aproximado usado para realizar toda a distribuição e entender o impacto da existência da intermediação estadual no processo.
+Os resultados gerados pelo sistema foram extremamente precisos e informativos. O auxílio do Power BI permitiu uma interpretação visual clara dos dados gerados pelo algoritmo em Python. Por meio dos resultados, foi possível identificar rotas gargalo na rede logística, o percentual de uso dos modais, o total de doses movimentadas e o tempo exato ou aproximado usado para realizar toda a distribuição e entender o impacto da existência da intermediação estadual no processo.
 
 Mesmo diante de um cenário de complexidade colossal, o Gurobi foi capaz de encontrar a solução ótima das instâncias de forma quase instantânea. Dessa forma o \textit{solver} revelou-se excepcionalmente poderoso.
 
 A relevância deste estudo também se estende à sua notável adaptabilidade. A lógica de otimização para redistribuição em uma rede previamente conhecida pode ser reaproveitada para o transporte de outros insumos, tanto na área da saúde quanto em setores estratégicos, como o militar. A aplicação do modelo abrange desde a logística ágil de materiais de emergência até a gestão eficiente de materiais de fornecimento contínuo amparados por contratos previamente firmados.
 
-Embora tenha sido feita simplificações, este trabalho comprova que uma formulação matemática coesa com a realidade e aliada a um algoritmo de ponta, prova ser uma ferramenta de gestão tática de alto nível e aplicável ao mundo real.
+Embora tenham sido feita simplificações, este trabalho comprova que uma formulação matemática coesa com a realidade e aliada a um algoritmo de ponta, prova ser uma ferramenta de gestão tática de alto nível e aplicável ao mundo real.
 
 Este trabalho reafirma a importância da pesquisa operacional como recurso indispensável para a gestão da saúde pública. A transição de um planejamento de rotas empírico e manual para um sistema automatizado e guiado por dados cumpre o propósito maior de garantir a imunização da população de forma eficiente. O trabalho desenvolvido deixa um legado prático, escalável e cientificamente embasado para o enfrentamento de crises de pandemia, mitigação de desperdício de vacinas e preservação de vidas no mundo.
 \bigskip

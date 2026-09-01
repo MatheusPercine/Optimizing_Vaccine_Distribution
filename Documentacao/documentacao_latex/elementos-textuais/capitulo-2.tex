@@ -5,7 +5,7 @@
 
 O desafio logístico de alocação e distribuição de vacinas constitui, por sua própria natureza, um problema de otimização, pois exige a melhor tomada de decisão possível em um cenário de alta complexidade combinatória e condições de restrição.
 
-Diante disso, esta seção reúne os conceitos teóricos retirados do livro \cite{DantzigThapa:1997} necessários para a compreensão das modelagens matemáticas de problemas de otimzação e são discutidos os princípios da Programação Linear, da Programação Linear Inteira e a estrutura clássica do Problema de Transporte, essencial para representar adequadamente o problema de distribuição de vacinas.
+Diante disso, esta seção reúne os conceitos teóricos retirados do livro \cite{DantzigThapa:1997} necessários para a compreensão das modelagens matemáticas de problemas de otimização e são discutidos os princípios da Programação Linear, da Programação Linear Inteira e a estrutura clássica do Problema de Transporte, essencial para representar adequadamente o problema de distribuição de vacinas.
 
 \subsection{Programação Linear}
 
@@ -96,7 +96,7 @@ A primeira restrição garante que toda a oferta disponível em cada origem seja
     \label{fig:network_dantzig}
 \end{figure}
 
-O Problema de Transporte pode ser interpretado como um problema de fluxo em rede.
+Conforme ilustrado na \autoref{fig:network_dantzig}, o Problema de Transporte pode ser interpretado como um problema de fluxo em rede.
 
 Nessa interpretação:
 \begin{itemize}
@@ -165,11 +165,11 @@ Esta seção apresenta uma revisão de pesquisas recentes que abordam a otimiza�
 
 Utilizando conhecimentos de Engenharia de Produção, uma perspectiva focada na eficiência econômica de curto prazo e na reorganização de fluxos operacionais de transporte é apresentada por Lima et al (2019) \cite{LimaEtAl:2019}. Os autores conduzem um estudo de caso focado na distribuição física de imunizantes no âmbito de uma Superintendência Regional de Saúde (SRS) localizada em Varginha, Minas Gerais, responsável pelo abastecimento de 50 municípios jurisdicionados. O trabalho descreve um diagnóstico operacional ineficiente no qual o tráfego ponto a ponto gerava custos logísticos exorbitantes com combustível, manutenção de frotas, desgaste de veículos e de fretes.
 
-No estudo ele aplica o que ele chama de roteirização, descrito como atividades que procuram melhorar trajetos para um veículo realizar dentro de uma malha, com o intuito de reduzir tempo e/ou distância. No estudo, ele se propõe a otimizar o percurso focando em minimização de custo financeiro das rotas, por meio da minimização da distancia percorrida. Para realização dos calculos utilizaram como referencia a tabela do frete disponibilizada pela ANTT (Agência Nacional de Transportes Terrestres).
+No estudo eles aplicam o que eles chamam de roteirização, descrito como atividades que procuram melhorar trajetos para um veículo realizar dentro de uma malha, com o intuito de reduzir tempo e/ou distância. No estudo, ele se propõem a otimizar o percurso focando na minimização de custo financeiro das rotas, por meio da minimização da distância percorrida. Para realização dos cálculos utilizaram como referencia a tabela do frete disponibilizada pela ANTT (Agência Nacional de Transportes Terrestres).
 
 Para isso, utilizou-se o método da varredura (\textit{Sweep Algorithm}) para realizar o agrupamento geográfico inicial das cidades em setores.
 
-Nesse algoritmo, a partir de um centro de distribuição (CD), é traçado um eixo horizontal que vai girando no sentido anti-horário e varrendo o espaço ao redor e identificando os pontos de demanda até que se atinja o limite de uma restrição. Quando uma restrição é atingida, os pontos são agrupados e o processo continua até que todos os pontos de demanda sejam varridos e agrupados. \cite{tumenas:2020}.
+Conforme ilustrado na \autoref{fig:metodo_varredura},nesse algoritmo, a partir de um centro de distribuição (CD), é traçado um eixo horizontal que vai girando no sentido anti-horário e varrendo o espaço ao redor e identificando os pontos de demanda até que se atinja o limite de uma restrição. Quando uma restrição é atingida, os pontos são agrupados e o processo continua até que todos os pontos de demanda sejam varridos e agrupados. \cite{tumenas:2020}.
 
 \begin{figure}[ht]
     \centering
@@ -207,11 +207,11 @@ Para a aplicação do método das economias, certas as restrições fora adotada
 \end{itemize}
 
 
-\subsubsection{Diferenças em Relação ao Trabalho Proposto e Críticas ao Artigo}
+\subsubsection{diferenças em relação ao trabalho proposto e críticas ao artigo}
 
-Apesar dos resultados expressivos na contenção de gastos públicos locais, o trabalho concentra-se prioritariamente em aspectos puramente econômicos. O modelo não considera explicitamente a urgência na entrega em um pandemia e a data de expiração das doses de vacina.
+Apesar dos resultados expressivos na contenção de gastos públicos locais, o trabalho concentra-se prioritariamente em aspectos puramente econômicos. O modelo não considera explicitamente a urgência na entrega em uma pandemia e a data de expiração das doses de vacina.
 
-O  modelo de Lima et al. (2019) é limitado geograficamente a um subconjunto de municípios do Estado de Minas Gerais, sem considerar aplicação a nível nacional com diferentes modais de transportes e etapas intermunicipais, estaduais e intramunicipais de distribuição.
+O  modelo de Lima et al. (2019) é limitado geograficamente a um subconjunto de municípios do Estado de Minas Gerais, sem considerar aplicação em nível nacional com diferentes modais de transportes e etapas intermunicipais, estaduais e intramunicipais de distribuição.
 
 Sob a perspectiva da Ciência da Computação e da Pesquisa Operacional, reside uma fragilidade crucial na escolha do método de resolução aproximado. O método das economias é um algoritmo guloso local que busca melhorias passo a passo sem avaliar o impacto global das decisões. Embora eficiente para gerar soluções rápidas em problemas de roteamento comerciais, ele não garante a otimalidade matemática e não possui convergência para o ótimo global.
 
@@ -246,7 +246,7 @@ Com isso, o problema de atribuição é transformado em um problema de fluxo de 
     \label{fig:grafico_bipartido_shukla}
 \end{figure}
 
-Conforme ilustrado na Figura, o modelo introduz nós artificiais de origem (\textit{source}) e destino (\textit{target}) que balanceiam a oferta e a demanda agregada em dias de serviço ($ltc\_days$). A soma das capacidades dos depósitos (\textit{depot}) representam a oferta agregada e a soma das demandas das clínicas (\textit{LTCF})      representam a demanda agregada. Para respeitar a capacidade máxima de trabalho, cada depósito é desdobrado em nós auxiliares que representam as suas equipes em campo (frentes SNF e ALF). Por fim, as arestas que ligam essas equipes às clínicas carregam o peso logístico que o modelo busca minimizar, garantindo que as restrições de tempo e capacidade não sejam violadas.
+Conforme ilustrado na \autoref{fig:grafico_bipartido_shukla}, o modelo introduz nós artificiais de origem (\textit{source}) e destino (\textit{target}) que balanceiam a oferta e a demanda agregada em dias de serviço ($ltc\_days$). A soma das capacidades dos depósitos (\textit{depot}) representa a oferta agregada e a soma das demandas das clínicas (\textit{LTCF}) representa a demanda agregada. Para respeitar a capacidade máxima de trabalho, cada depósito é desdobrado em nós auxiliares que representam as suas equipes em campo (frentes SNF e ALF). Por fim, as arestas que ligam essas equipes às clínicas carregam o peso logístico que o modelo busca minimizar, garantindo que as restrições de tempo e capacidade não sejam violadas.
 
 O peso das arestas é definido pelo produto entre os dias de serviço ($ltc\_days$) e a distância ($dist$) entre o depósito e a clínica:
 
@@ -254,7 +254,7 @@ O peso das arestas é definido pelo produto entre os dias de serviço ($ltc\_day
 \text{Minimizar } Z = \sum (dist(a,m) \times ltc\_days(m))
 \]
 
-Na segunda fase, o agendamento das visitas é resolvido por um algoritmo heurístico que estima o tempo total de operação diária ($time$) para cada equipe. A fórmula considera a velocidade média de deslocamento (estimada em 20 milhas por hora), a velocidade de aplicação (8 doses por hora) e um tempo adicional de preparação da vacina antes dela ir para o braço do paciente e que depende do tipo de vacina:
+Na segunda fase, o agendamento das visitas é resolvido por um algoritmo heurístico que estima o tempo total de operação diária ($time$) para cada equipe. A fórmula considera a velocidade média de deslocamento (estimada em 20 milhas por hora), a velocidade de aplicação (8 doses por hora) e um tempo adicional de preparação da vacina antes de ela ir para o braço do paciente e que depende do tipo de vacina:
 
 \[
 time_{d}(\text{hours}) = \frac{2 \cdot dist(e)}{20} + \frac{doses(m)}{8} + 
@@ -270,7 +270,7 @@ onde:
     \item $doses(m)$ é o número de doses iniciais demandadas pela clínica $m$.
 \end{itemize}
 
-\subsubsection{Diferenças em Relação ao Trabalho Proposto e Críticas ao Artigo}
+\subsubsection{diferenças em relação ao trabalho proposto e críticas ao artigo}
 
 Diferentemente da abordagem sequencial de Shukla, o modelo proposto neste TCC não modela uma etapa de agendamento de aplicação das doses, mas somente foca na distribuição das vacinas. 
 
@@ -325,12 +325,12 @@ S_i = R_o \times C_i \times E_i \times I_i.
 onde:
 \begin{itemize}
     \item $R_o$ é a taxa de transmissão básica do vírus;
-    \item $C_i$ é a influência do grupo $i$ na propagação da vírus;
+    \item $C_i$ é a influência do grupo $i$ na propagação do vírus;
     \item $E_i$ é a eficácia da vacina para o grupo $i$;
     \item $I_i$ é o nível inicial de infecção do grupo $i$.
 \end{itemize}
 
-\subsubsection{Diferenças em Relação ao Trabalho Proposto e Críticas ao Artigo}
+\subsubsection{diferenças em relação ao trabalho proposto e críticas ao artigo}
 
 O artigo não especifica o método de solução utilizado para resolver o modelo, apenas alega ter feito uso de métodos de PL.
 
@@ -346,7 +346,7 @@ O VRPTW consiste em encontrar a rota com o menor tempo de forma que cada cliente
 
 Aplicando o modelo de transporte, o modelo matemático é estruturado como um problema multiobjetivo:
 
-\textbf{1. Função Objetivo Multiobjetivo:}
+\textbf{1. Função Multiobjetivo:}
 
 \begin{equation}
 \min\{F_1, F_2\} = \min \left\{ \sum_{j \in V_s} \sum_{s \in S} x_{0j}^s, \sum_{s \in S} \sum_{i \in V_s} \sum_{j \in V_s \setminus \{i\}} c_{ij}x_{ij}^s \right\}
@@ -354,7 +354,7 @@ Aplicando o modelo de transporte, o modelo matemático é estruturado como um pr
 
 Nesta função, há uma hierarquia de prioridade, primeiro minimiza-se o número de veículos ($F_1$) e, para aquele número fixo de veículos, busca-se a menor distância total ($F_2$).
 
-Aqui, $x_{0j}^s$ contabiliza as saídas do depósito (nó 0), enquanto $c_{ij}$ representa a distância entre os pontos $i$ e $j$, e $x_{ij}^s$ binária indica se os veículos atenderão o cliente j depois de terem atendido o cliente i, podendo $x_{ij}^s$ assumir o valor 1 (sim) ou 0 (não).
+Aqui, $x_{0j}^s$ contabiliza as saídas do depósito (nó 0), enquanto $c_{ij}$ representa a distância entre os pontos $i$ e $j$, e $x_{ij}^s$ binária indica se os veículos atenderão o cliente $j$ depois de terem atendido o cliente $i$, podendo $x_{ij}^s$ assumir o valor 1 (sim) ou 0 (não).
 
 \textbf{2. Restrições de Fluxo e Continuidade:}
 
@@ -399,7 +399,7 @@ Garante que cliente $i$ seja visitado por exatamente um único veículo.
 
 Onde $|V_s|$ representa a número total de visitas do veículo $s$, limitando as conexões internas para forçar o retorno ao ponto de origem.
 
-Dessa forma, essa restrição garante que se, se um veículo visita 4 localidades ($|V_s| = 4$), ele só pode percorrer no máximo 3 ($4-1=3$) viagens entre essas localidades, forçando o retorno ao depósito para completar a rota.
+Dessa forma, essa restrição garante que se um veículo visita 4 localidades ($|V_s| = 4$), ele só pode percorrer no máximo 3 ($4-1=3$) viagens entre essas localidades, forçando o retorno ao depósito para completar a rota.
 
 \textbf{7. Janelas de Tempo (\textit{Hard Time Windows}):}
 Define o intervalo $[a_i, b_i]$ para o início do atendimento $s_i$.
@@ -407,9 +407,9 @@ Define o intervalo $[a_i, b_i]$ para o início do atendimento $s_i$.
 a_i \leq s_i \leq b_i, \quad \forall i \in I
 \end{equation}
 
-\subsubsection{Diferenças em Relação ao Trabalho Proposto e Críticas ao Artigo}
+\subsubsection{diferenças em relação ao trabalho proposto e críticas ao artigo}
 
-Apesar de Oliveira et al. (2023) apresentarem uma solução robusta para o roteamento urbano, a resolução do modelo é baseada em métodos heurísticos e meta-heurísticos (Algoritmos Genéticos) implementados com o auxílio do \textit{Solver} do Excel e implementação dos algoritmos de resolução em Python. Tais métodos, embora eficazes para encontrar soluções satisfatórias rapidamente, não são exatos, pois não garantem a otimalidade matemática do resultado e podem apresentar limitações em cenários de alta complexidade combinatória.
+Apesar de Oliveira et al. (2023) apresentarem uma solução robusta para o roteamento urbano, a resolução do modelo é baseada em métodos heurísticos e meta-heurísticos (Algoritmos Genéticos) implementados com o auxílio do \textit{Solver} do Excel e programação dos algoritmos de resolução em Python. Tais métodos, embora eficazes para encontrar soluções satisfatórias rapidamente, não são exatos, pois não garantem a otimalidade matemática do resultado e podem apresentar limitações em cenários de alta complexidade combinatória.
 
 O presente trabalho diferencia-se e evolui em relação a esta abordagem em dois pilares: escala e método de resolução. Enquanto Oliveira et al. focam na micro-logística regional, este modelo integra as dimensões intermunicipal e intramunicipal, com diferentes modais de transporte. Além disso, optou-se pelo uso do \textit{solver} Gurobi integrado ao Python, garantindo a solução ótima global para o problema.
 

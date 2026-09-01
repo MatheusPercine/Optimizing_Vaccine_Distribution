@@ -3,3 +3,11 @@ Modelo,Usa_Penalidade,Custo_Medio_Horas_Por_Dose,Valor_Funcao_Objetivo,Total_Dos
 1,True,2.283,30007.135,2021306,0.0,75.261,24.739,9.847,Pfizer,SaoPaulo -> BoaVista,7.768,913,N/A,N/A,N/A,N/A,N/A,N/A,BoaVista -> RR_CMI,2.080,2912
 2,False,2.265,4913942.423,2169246,0,69.971,30.029,11.003,CoronaVac,N/A,N/A,N/A,CampoGrande -> AC,5.892,652,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
 2,True,2.292,383351.281,2169246,0,70.588,29.412,12.530,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.418,4,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
+2,True,2.292,383351.281,2169246,0,70.588,29.412,12.530,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.418,4,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
+2,True,2.292,383351.281,2169246,0,70.588,29.412,12.530,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.418,4,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
+2,True,2.292,383351.281,2169246,0,70.588,29.412,12.530,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.418,4,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
+2,True,2.151,28363.887,1873366,0,100.000,0.000,2.391,Pfizer,N/A,N/A,N/A,N/A,0.000,0,N/A,0.000,0,Florianopolis -> SC_Jurere,2.391,3524
+2,True,2.292,383351.281,2169246,0,70.588,29.412,12.530,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.418,4,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
+2,True,2.416,180726814997.327,80192,1807268,96.899,3.101,10.874,Pfizer,N/A,N/A,N/A,RioBranco -> SP,6.798,7,SP -> SaoPaulo,2.015,7,SaoPaulo -> SP_Mooca_I,2.061,27
+2,True,2.292,383351.281,2169246,0,70.588,29.412,12.530,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.418,4,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334
+2,True,2.292,383351.281,2169246,0,70.588,29.412,12.530,CoronaVac,N/A,N/A,N/A,Teresina -> AC,7.418,4,AC -> RioBranco,2.935,652,RioBranco -> AC_Rozangela_Pimentel,2.177,2334

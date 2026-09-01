@@ -72,6 +72,27 @@
 \renewcommand{\ABNTEXsectionfontsize}{\normalsize}
 \renewcommand{\ABNTEXsubsectionfont}{\bfseries}         % Subseções em Bold apenas
 \renewcommand{\ABNTEXsubsectionfontsize}{\normalsize}
+
+%-------------------------------
+%-------------------------------
+%-------------------------------
+% retira negrito da seção quarternaria
+
+\renewcommand{\ABNTEXsubsubsectionfont}{\rmfamily\mdseries} 
+\renewcommand{\ABNTEXsubsubsectionfontsize}{\normalsize}
+
+% Redefine a fonte da subsubsection NO SUMÁRIO (sem alterar recuos/alinhamentos)
+\makeatletter
+\renewcommand{\cftsubsubsectionfont}{\normalfont\rmfamily\mdseries}
+\renewcommand{\cftsubsubsectionpagefont}{\normalfont\rmfamily\mdseries}
+\makeatother
+%-------------------------------
+%-------------------------------
+%-------------------------------
+
+
+
+
 \renewcommand{\lstlistingname}{Código}                  % Nome para os códigos no texto
 \renewcommand{\lstlistlistingname}{Lista de \lstlistingname s}
 %\makeatletter                                          % %Configura a linha da lista de códigos
@@ -158,7 +179,7 @@
 \flushright
 Orientadora: \imprimirorientador\\
 
-Co-orientadora: \imprimircoorientador\\
+Coorientadora: \imprimircoorientador\\
 \vfill
 \begin{center}
 \large\imprimirlocal
