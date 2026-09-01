@@ -54,7 +54,7 @@ Acesse as visualizações completas e interativas geradas para cada cenário:
 ### 2. Instalação das dependências
 Clone o repositório e instale as bibliotecas necessárias:
 ```bash
-git clone [https://github.com/MatheusPercine/Optimizing_Vaccine_Distribution.git](https://github.com/MatheusPercine/Optimizing_Vaccine_Distribution.git)
+git clone https://github.com/MatheusPercine/Optimizing_Vaccine_Distribution.git
 cd Optimizing_Vaccine_Distribution
 pip install -r requirements.txt
 ```
